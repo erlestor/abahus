@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="665.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="logo" layoutX="49.0" layoutY="43.0" text="NAME OF SITE" />
+      <Label fx:id="email" layoutX="605.0" layoutY="14.0" />
+      <Label fx:id="houses" layoutX="49.0" layoutY="119.0" text="Available houses" />
+      <Label fx:id="listHouse" layoutX="49.0" layoutY="151.0" prefHeight="256.0" prefWidth="171.0" />
+      <Label fx:id="myHouses" layoutX="273.0" layoutY="119.0" text="My houses" />
+      <Label fx:id="futureTrips" layoutX="459.0" layoutY="119.0" text="Future trips" />
+      <Label fx:id="myHousesList" layoutX="273.0" layoutY="151.0" prefHeight="256.0" prefWidth="159.0" />
+      <Label fx:id="futureTripsList" layoutX="459.0" layoutY="151.0" prefHeight="256.0" prefWidth="159.0" />
+   </children>
+</AnchorPane>
