@@ -18,11 +18,25 @@ public class Main {
     private Collection<House> houses = new ArrayList<>();
     private User currentUser;
 
-    public void registerUser(String email, String password) {
+    // kalles ved registrering
+    public Main(String email, String password, String confirmPassword) {
+        registerUser(email, password, confirmPassword);
+        logInUser(email, password);
+    }
+
+    // kalles ved innlogging
+    public Main(String email, String password) {
+        logInUser(email, password);
+    }
+
+    public void registerUser(String email, String password, String confirmPassword) {
+        if (!password.equals(confirmPassword))
+            throw new IllegalArgumentException("password must match confirmation");
+
         users.add(new User(email, password));
     } 
 
-    public void logInUser(String email, String password) {
+    private void logInUser(String email, String password) {
         User currentUser = users.stream()
                                 .filter(user -> user.getEmail().equals(email) && user.getPassword().equals(password))
                                 .findFirst().orElse(null);
@@ -60,9 +74,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Main program = new Main();
-        program.registerUser("erl@mail.com", "123");
-        program.logInUser("erl@mail.com", "123");
+        Main program = new Main("erl@mail.com", "123", "123");
         program.HostNewHouse("adresse 72b");
         System.out.println(program.getAvailableHousing());
     }
