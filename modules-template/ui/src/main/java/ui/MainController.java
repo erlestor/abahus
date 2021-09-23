@@ -12,4 +12,8 @@ public class MainController {
 		this.main = main;
 	}
 	
+	//mekke sånn at eposten automatisk dukker opp i hjørnet, og hente ledige hus, mine hus og framtidige reiser
+	//
+	
+	
 }
