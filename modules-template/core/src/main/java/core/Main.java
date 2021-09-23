@@ -3,15 +3,17 @@ package core;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-// Main klassen inneholder listen over boliger og brukere
+// Main klassen inneholder listen over boliger og brukere og består av hovedfunksjonaliteten
 // Det er denne kontrolleren skal ha tilgang til
 // Vurder å lag flere hjelpeklasser til denne
-// registrer bruker, log inn bruker, få liste over tilgjengelige hus, legge ut hus
+// Funksjoner: registrer bruker, logg inn bruker, få liste over tilgjengelige hus, legge ut hus
+// Antar her at lokasjon er unik til hvert hus
 
 public class Main {
-    // foreløpig starter disse som tomme hver gang, men de vil bli hentet fra lagring etterhvert
+    // foreløpig starter users/houses som tomme hver gang, men de vil bli hentet fra lagring etterhvert
     private Collection<User> users = new ArrayList<>();
     private Collection<House> houses = new ArrayList<>();
     private User currentUser;
@@ -31,14 +33,37 @@ public class Main {
         this.currentUser = currentUser;
     }
 
-    public List<House> getAvailableHousing() {
+    private List<House> getHousesWithFilter(Predicate<House> pr) {
         return new ArrayList<House>(houses.stream()
-                                            .filter(house -> house.isAvailable())
+                                            .filter(pr)
                                             .collect(Collectors.toList()));
     }
 
+    public List<House> getAvailableHousing() {
+        return getHousesWithFilter(house -> house.isAvailable());
+    }
+
+    public List<House> getHousing() {
+        return new ArrayList<House>(houses);
+    }
+
     public void HostNewHouse(String location) {
+        // må sjekke om lokasjonen er unik
+        if (getHousesWithFilter(house -> house.getLocation().equals(location)).size() > 0)
+            throw new IllegalArgumentException("this house is already registered");
+
+        if (currentUser == null)
+            throw new IllegalStateException("you must login before hosting a house");
+
         House house = new House(location, currentUser);
         houses.add(house);
+    }
+
+    public static void main(String[] args) {
+        Main program = new Main();
+        program.registerUser("erl@mail.com", "123");
+        program.logInUser("erl@mail.com", "123");
+        program.HostNewHouse("adresse 72b");
+        System.out.println(program.getAvailableHousing());
     }
 }

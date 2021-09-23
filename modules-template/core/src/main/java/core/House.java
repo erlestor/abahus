@@ -32,4 +32,15 @@ public class House {
     public void setAvailable(boolean isAvailable) {
         this.isAvailable = isAvailable;
     }
+    
+
+    @Override
+    public String toString() {
+        return "{" +
+            " location='" + getLocation() + "'" +
+            ", user='" + getUser() + "'" +
+            ", isAvailable='" + isAvailable() + "'" +
+            "}";
+    }
+
 }
