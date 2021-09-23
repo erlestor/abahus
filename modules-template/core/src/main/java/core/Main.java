@@ -29,7 +29,7 @@ public class Main {
         logInUser(email, password);
     }
 
-    public void registerUser(String email, String password, String confirmPassword) {
+    private void registerUser(String email, String password, String confirmPassword) {
         if (!password.equals(confirmPassword))
             throw new IllegalArgumentException("password must match confirmation");
 
