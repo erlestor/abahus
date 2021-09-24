@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import org.junit.jupiter.api.Test;
@@ -43,6 +45,11 @@ public class JsonTest {
         // only checks if error was thrown
         System.out.println("Asserting equality for test email netteland97@gmail.com");
         assertEquals(Json.checkPassword("netteland97@gmail.com", "123"), true);
-        
+    }
+
+    @Test
+    public void getHouses() throws JsonParseException, JsonMappingException, IOException {
+        System.out.println("All houses:");
+        System.out.println(Json.getAllHouses());
     }
 }

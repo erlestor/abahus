@@ -68,11 +68,15 @@ public class Json {
         List<User> map = rf("data/users.json", User[].class);
         
         for (User user : map) {
-            if (user.email.equals(email)) {
-                return user.password.equals(pwd);
+            if (user.getEmail().equals(email)) {
+                return user.getPassword().equals(pwd);
             }
         }
         return false;        
+     }
+
+     public static List<House> getAllHouses() throws JsonParseException, JsonMappingException, IOException {
+         return rf("data/houses.json", House[].class);
      }
 
     
