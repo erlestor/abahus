@@ -1,8 +1,6 @@
-{
-  "users": [
-    {
-      "email": "netteland97@gmail.com",
-      "password": "123"
-    }
-  ]
-}
+[
+  {
+    "email": "netteland97@gmail.com",
+    "password": "123"
+  }
+]

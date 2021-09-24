@@ -25,7 +25,7 @@ public class JsonTest {
     @Test
     public void readFile() throws IOException {
         // Read value from jsonTestData
-        Map<String, String> map = Json.readFile("src/test/java/core/jsonTestData.json");
+        Map<String, ?> map = Json.readFile("src/test/java/core/jsonTestData.json");
 
         // In case jsonTestData was changed, actual value must be updated to match
         Map<String,String> actualValue = new HashMap<>();
@@ -33,14 +33,16 @@ public class JsonTest {
         actualValue.put("age", "24");
 
         // Check equality
-        for (Map.Entry<String, String> entry : map.entrySet()) {
+        for (Map.Entry<String, ?> entry : map.entrySet()) {
             assertEquals(entry.getValue().toString(), actualValue.get(entry.getKey()).toString());
         }
     }
 
     @Test
-    public void readUsers() throws IOException {
+    public void checkPassword() throws IOException {
         // only checks if error was thrown
-        Json.getUsers();
+        System.out.println("Asserting equality for test email netteland97@gmail.com");
+        assertEquals(Json.checkPassword("netteland97@gmail.com", "123"), true);
+        
     }
 }
