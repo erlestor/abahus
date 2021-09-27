@@ -1,7 +1,8 @@
 package ui;
 
-import core.Calc;// husk å importere logikk
+import core.Main;// husk å importere logikk
 
+import java.io.IOException;
 import java.util.List;
 import java.util.function.BinaryOperator;
 import java.util.function.UnaryOperator;
@@ -23,7 +24,7 @@ public class DashboardController {
 	private Main main;
 
     @FXML
-    public void handleCreateUser(ActionEvent event) {
+    public void handleCreateUser(ActionEvent event) throws IOException {
     	String eMail = registerEmail.getText();
     	String create = createPassword.getText();
     	String confirm = confirmPassword.getText();
@@ -37,7 +38,7 @@ public class DashboardController {
     }
     
     @FXML
-    public void handleLogIn(ActionEvent event) {
+    public void handleLogIn(ActionEvent event) throws IOException {
     	String eMail = logInEmail.getText();
     	String password = passwordLogIn.getText();
     	
@@ -49,7 +50,7 @@ public class DashboardController {
     	
     }
     
-    private void newStage() {
+    private void newStage() throws IOException {
     	FXMLLoader loader = new FXMLLoader(getClass().getResource("Main.fxml"));
     	Parent root = (Parent)loader.load();
     	

@@ -1,5 +1,7 @@
 package ui;
 
+import core.Main;
+
 //husk å importere logikk
 
 public class MainController {
