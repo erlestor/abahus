@@ -33,6 +33,9 @@ public class Main {
         if (!password.equals(confirmPassword))
             throw new IllegalArgumentException("password must match confirmation");
 
+        if (users.stream().anyMatch(user -> user.getEmail().equals(email)))
+            throw new IllegalStateException("There already exists a user with the same email");
+
         users.add(new User(email, password));
     } 
 
