@@ -1,5 +1,4 @@
 package core;
-
 import java.util.UUID;
 
 // En user skal lagre email, passord og en tilfeldig valgt ID (bruker library til sistnevnte)
