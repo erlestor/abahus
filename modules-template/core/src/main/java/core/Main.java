@@ -55,14 +55,7 @@ public class Main {
     } 
 
     private boolean isEmailValid(String email) {
-        boolean result = true;
-        try {
-            InternetAddress emailAddr = new InternetAddress(email);
-            emailAddr.validate();
-        } catch (AddressException ex) {
-            result = false;
-        }
-        return result;
+        return true; // her vil vi faktisk validere mail
     }
 
     private void logInUser(String email, String password) {
