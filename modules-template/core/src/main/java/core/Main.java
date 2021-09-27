@@ -47,9 +47,23 @@ public class Main {
         if (users.stream().anyMatch(user -> user.getEmail().equals(email)))
             throw new IllegalStateException("There already exists a user with the same email");
 
+        if (!isEmailValid(email))
+            throw new IllegalArgumentException("Email is not valid");
+
         Json.addUser(email, password);
         loadJson();
     } 
+
+    private boolean isEmailValid(String email) {
+        boolean result = true;
+        try {
+            InternetAddress emailAddr = new InternetAddress(email);
+            emailAddr.validate();
+        } catch (AddressException ex) {
+            result = false;
+        }
+        return result;
+    }
 
     private void logInUser(String email, String password) {
         User currentUser = users.stream()
@@ -84,7 +98,6 @@ public class Main {
         if (currentUser == null)
             throw new IllegalStateException("you must login before hosting a house");
 
-        House house = new House(location, currentUser);
         Json.addHouse(location, currentUser.getEmail());
         loadJson();
     }
