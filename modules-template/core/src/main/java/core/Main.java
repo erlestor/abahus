@@ -1,10 +1,14 @@
 package core;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 // Main klassen inneholder listen over boliger og brukere og består av hovedfunksjonaliteten
 // Det er denne kontrolleren skal ha tilgang til
@@ -19,24 +23,32 @@ public class Main {
     private User currentUser;
 
     // kalles ved registrering
-    public Main(String email, String password, String confirmPassword) {
+    public Main(String email, String password, String confirmPassword) throws JsonParseException, JsonMappingException, IOException {
+        loadJson();
         registerUser(email, password, confirmPassword);
         logInUser(email, password);
     }
 
     // kalles ved innlogging
-    public Main(String email, String password) {
+    public Main(String email, String password) throws JsonParseException, JsonMappingException, IOException {
+        loadJson();
         logInUser(email, password);
     }
 
-    private void registerUser(String email, String password, String confirmPassword) {
+    private void loadJson() throws JsonParseException, JsonMappingException, IOException {
+        houses = Json.getAllHouses();
+        users = Json.getAllUsers();
+    }
+
+    private void registerUser(String email, String password, String confirmPassword) throws IllegalArgumentException, IOException {
         if (!password.equals(confirmPassword))
             throw new IllegalArgumentException("password must match confirmation");
 
         if (users.stream().anyMatch(user -> user.getEmail().equals(email)))
             throw new IllegalStateException("There already exists a user with the same email");
 
-        users.add(new User(email, password));
+        Json.addUser(email, password);
+        loadJson();
     } 
 
     private void logInUser(String email, String password) {
@@ -64,7 +76,7 @@ public class Main {
         return new ArrayList<House>(houses);
     }
 
-    public void HostNewHouse(String location) {
+    public void hostNewHouse(String location) throws JsonParseException, JsonMappingException, IllegalArgumentException, IOException {
         // må sjekke om lokasjonen er unik
         if (getHousesWithFilter(house -> house.getLocation().equals(location)).size() > 0)
             throw new IllegalArgumentException("this house is already registered");
@@ -73,12 +85,17 @@ public class Main {
             throw new IllegalStateException("you must login before hosting a house");
 
         House house = new House(location, currentUser);
-        houses.add(house);
+        Json.addHouse(location, currentUser.getEmail());
+        loadJson();
     }
 
-    public static void main(String[] args) {
+    public User getUser() {
+        return currentUser;
+    }
+
+    public static void main(String[] args) throws JsonParseException, JsonMappingException, IOException {
         Main program = new Main("erl@mail.com", "123", "123");
-        program.HostNewHouse("adresse 72b");
+        program.hostNewHouse("adresse 72b");
         System.out.println(program.getAvailableHousing());
     }
 }

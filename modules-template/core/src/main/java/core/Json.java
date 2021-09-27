@@ -13,8 +13,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SequenceWriter;
 
 
-
-
 public class Json {
 
     private static Path dirPath = Paths.get("").toAbsolutePath();
