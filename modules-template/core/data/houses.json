@@ -1,6 +1,1 @@
-[
-  {
-    "location": "Oscar Wistings vei 6",
-    "user": "netteland97@gmail.com"
-  }
-]
+[{"location":"Oscar Wistings vei 6","user":{"email":"netteland97@gmail.com","password":"123"},"available":true}]
