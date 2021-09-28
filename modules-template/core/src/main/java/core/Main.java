@@ -95,10 +95,22 @@ public class Main {
         loadJson();
     }
 
-    public User getUser() {
+    public User getCurrentUser() {
         return currentUser;
     }
 
+    public String getHousesAsString() {
+        Collection<House> houses = getAvailableHousing();
+        String s = "";
+
+        for (House house : houses) {
+            s += "Location: " + house.getLocation() + ". Owner: " + house.getUser().getEmail() + "\n";
+        }
+
+        return s.substring(0, s.length() - 3);
+    }
+
+    // brukes til testing
     public static void main(String[] args) throws JsonParseException, JsonMappingException, IOException {
         Main program = new Main("erl@mail.com", "123", "123");
         program.hostNewHouse("adresse 72b");
