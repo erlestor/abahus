@@ -18,7 +18,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class DashboardController {
+public class DashboardController extends MainController{
 	
 	@FXML private TextField registerEmail, createPassword, confirmPassword, logInEmail, passwordLogIn;
 	private Main main;
@@ -29,11 +29,15 @@ public class DashboardController {
     	String create = createPassword.getText();
     	String confirm = confirmPassword.getText();
     	
-    	this.main = new Main(eMail, create, confirm);
+		try {
+			this.main = new Main(eMail, create, confirm);
     	
-    	this.newStage();
-    	
-    	//Dette må gi melding om at noe er feil hvis det ikke burde funke
+			this.newStage();
+		}
+    	catch(Exception e){
+			e.getMessage();
+			//lag en label og sett teksten der
+		}
     	
     }
     
@@ -42,12 +46,15 @@ public class DashboardController {
     	String eMail = logInEmail.getText();
     	String password = passwordLogIn.getText();
     	
-    	this.main = new Main(eMail, password);
+    	try {
+			this.main = new Main(eMail, password);
     	
-    	this.newStage();
-    	
-    	//Dette må gi melding om at noe er feil hvis det ikke burde funke
-    	
+			this.newStage();
+		}
+    	catch(Exception e){
+			e.getMessage();
+			//lag en label og sett teksten der
+		}
     }
     
     private void newStage() throws IOException {
@@ -55,9 +62,16 @@ public class DashboardController {
     	Parent root = (Parent)loader.load();
     	
     	MainController mainController = loader.getController();
+
+		//det kan hende at alt dette er feil:))
+
+		//mainController.email.setText(main.getUser().getEmail()); //det må sannsynligvis gjøres noe her for å sammarbeide med FXML-fila
+		//mainController.listHouse.setText(main.getAvailableHousing()); // det må lages en metode for å konvertere lista om til en string
+
     	mainController.sendMain(this.main);
     	Stage stage = new Stage();
     	stage.setScene(new Scene(root));
     	stage.show();
     }
+
 }
