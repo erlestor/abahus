@@ -65,8 +65,8 @@ public class DashboardController extends MainController{
 
 		//det kan hende at alt dette er feil:))
 
-		mainController.email.setText(main.getUser().getEmail()); //det må sannsynligvis gjøres noe her for å sammarbeide med FXML-fila
-		mainController.listHouse.setText(main.getAvailableHousing());
+		//mainController.email.setText(main.getUser().getEmail()); //det må sannsynligvis gjøres noe her for å sammarbeide med FXML-fila
+		//mainController.listHouse.setText(main.getAvailableHousing()); // det må lages en metode for å konvertere lista om til en string
 
     	mainController.sendMain(this.main);
     	Stage stage = new Stage();
