@@ -1,3 +1,3 @@
-module calc.core {
+module housing.core {
     exports core;
 }

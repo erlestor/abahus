@@ -1,4 +1,5 @@
-[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.stud.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/javafx-template)
+[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.stud.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/groups-2021/gr2129/gr2129.git)
+
 # Javafx template
 
 A repository with three variants of a javafx projects, with maven setup for Java 16 and JavaFX 16, and JUnit 5 (Jupiter) and TestFX for testing.
@@ -7,15 +8,15 @@ To make the project(s) more interesting, it is the start of an [RPN](https://en.
 
 ## javafx-template
 
-Template for  single-module, single-package javafx project.
+Template for single-module, single-package javafx project.
 
 ## packages-template
 
-Template for  single-module, multi-package javafx project.
+Template for single-module, multi-package javafx project.
 
 ## modules-template
 
-Template for  multi-module, multi-package javafx project.
+Template for multi-module, multi-package javafx project.
 
 ## Trying it out
 

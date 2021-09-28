@@ -1,7 +1,8 @@
 package ui;
 
-import core.Calc;// husk å importere logikk
+import core.Main;// husk å importere logikk
 
+import java.io.IOException;
 import java.util.List;
 import java.util.function.BinaryOperator;
 import java.util.function.UnaryOperator;
@@ -64,8 +65,8 @@ public class DashboardController extends MainController{
 
 		//det kan hende at alt dette er feil:))
 
-		super.email.setText(main.getUser().getEmail()); //det må sannsynligvis gjøres noe her for å sammarbeide med FXML-fila
-		super.listHouse.setText(main.getAvailableHousing());
+		mainController.email.setText(main.getUser().getEmail()); //det må sannsynligvis gjøres noe her for å sammarbeide med FXML-fila
+		mainController.listHouse.setText(main.getAvailableHousing());
 
     	mainController.sendMain(this.main);
     	Stage stage = new Stage();
