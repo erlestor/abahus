@@ -1,3 +1,3 @@
-module housing.core {
+module core {
     exports core;
 }

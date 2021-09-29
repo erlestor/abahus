@@ -1,5 +1,5 @@
-module housing.ui {
-    requires housing.core;
+module ui {
+    requires core;
     requires javafx.controls;
     requires javafx.fxml;
 	requires javafx.graphics;
