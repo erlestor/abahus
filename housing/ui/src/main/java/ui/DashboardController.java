@@ -62,6 +62,7 @@ public class DashboardController extends MainController{
 
     	mainController.sendMain(this.main);
     	Stage stage = new Stage();
+		stage.setTitle("Housing");
     	stage.setScene(new Scene(root));
     	stage.show();
     }
