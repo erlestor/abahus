@@ -1,20 +1,14 @@
 package ui;
 
-import core.Main;// husk å importere logikk
+import core.Main;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.function.BinaryOperator;
-import java.util.function.UnaryOperator;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.Labeled;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -62,8 +56,6 @@ public class DashboardController extends MainController{
     	Parent root = (Parent)loader.load();
     	
     	MainController mainController = loader.getController();
-
-		//det kan hende at alt dette er feil:))
 
 		//mainController.email.setText(main.getUser().getEmail()); //det må sannsynligvis gjøres noe her for å sammarbeide med FXML-fila
 		//mainController.listHouse.setText(main.getAvailableHousing()); // det må lages en metode for å konvertere lista om til en string
