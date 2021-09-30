@@ -30,7 +30,7 @@
          </font>
       </Label>
       <TextField fx:id="logInEmail" layoutX="425.0" layoutY="184.0" />
-      <TextField fx:id="password" layoutX="425.0" layoutY="222.0" />
+      <TextField fx:id="passwordLogIn" layoutX="425.0" layoutY="222.0" />
       <Button fx:id="logIn" layoutX="425.0" layoutY="313.0" mnemonicParsing="false" onAction="#handleLogIn" style="-fx-background-color: #B4CDDA #B4CDDA;" text="Log in" />
       <Label layoutX="376.0" layoutY="189.0" text="E-mail" />
       <Label layoutX="358.0" layoutY="227.0" text="Password" />

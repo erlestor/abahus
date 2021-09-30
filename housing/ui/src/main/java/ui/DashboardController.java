@@ -31,6 +31,7 @@ public class DashboardController extends MainController{
 			this.newStage();
 		}
     	catch(Exception e){
+			e.printStackTrace();
 			e.getMessage();
 			//lag en label og sett teksten der
 		}
@@ -43,11 +44,13 @@ public class DashboardController extends MainController{
     	String password = passwordLogIn.getText();
     	
     	try {
+			System.out.println("heisann");
 			this.main = new Main(eMail, password);
-    	
+			System.out.println("heisann");
 			this.newStage();
 		}
     	catch(Exception e){
+			e.printStackTrace();
 			e.getMessage();
 			//lag en label og sett teksten der
 		}
