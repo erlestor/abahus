@@ -4,7 +4,7 @@
     <artifactId>ui</artifactId>
 
     <parent>
-        <groupId>gr2129.housing</groupId>
+        <groupId>gr2129</groupId>
         <artifactId>housing</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
@@ -12,7 +12,7 @@
     <dependencies>
 
         <dependency>
-            <groupId>gr2129.housing</groupId>
+            <groupId>gr2129</groupId>
             <artifactId>core</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>

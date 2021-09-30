@@ -1,6 +1,6 @@
 package ui;
 
-import core.Main;
+import core.*;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
