@@ -1,6 +1,6 @@
 package core;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
@@ -12,11 +12,11 @@ public class HouseTest {
 	@Test
 	public void testConstructor(){
 	    house = new House(location, user);
-	    //assertEquals(location, house.getLocation());
-	    //assertEqualts(user, house.getUser());
+	    assertEquals(location, house.getLocation());
+	    assertEquals(user, house.getUser());
 
 	    assertThrows(IllegalArgumentException.class, () -> {new House("", user);});
 	        
-	    assertThrows(IllegalArgumentException.class, () -> {new House(null, null);});
+	    assertThrows(NullPointerException.class, () -> {new House(null, null);});
 	}
 }
