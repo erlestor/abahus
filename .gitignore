@@ -1,7 +1,11 @@
 # ignore maven build folder
-target/
+**/target/
 
 # pom-derived eclipse jdt files
-.project
-.classpath
+**/.project
+**/.classpath
 org.eclipse.*.prefs
+
+
+# local vscode config
+.vscode/**

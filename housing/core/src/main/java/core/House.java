@@ -10,6 +10,7 @@ public class House {
     public House(String location, User user) {
         if (location == null || user == null)
             throw new NullPointerException("input cannot be null");
+            
         if (location.isBlank())
             throw new IllegalArgumentException("Location cannot be blank");
 

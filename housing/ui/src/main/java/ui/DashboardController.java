@@ -18,6 +18,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import com.fasterxml.jackson.core.JsonParseException;
+
 public class DashboardController extends MainController{
 	
 	@FXML private TextField registerEmail, createPassword, confirmPassword, logInEmail, passwordLogIn;
