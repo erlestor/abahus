@@ -13,6 +13,13 @@ public class MainController {
 	public void sendMain(Main main) {
 		this.main = main;
 	}
+	public void setEmail(String email) {
+		this.email.setText(email);
+	}
+
+	public void sendListHouse(String listHouse) {
+		this.listHouse.setText(listHouse);
+	}
 	
 
 }

@@ -12,8 +12,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import com.fasterxml.jackson.core.JsonParseException;
-
 public class DashboardController extends MainController{
 	
 	@FXML private TextField registerEmail, createPassword, confirmPassword, logInEmail, passwordLogIn;
@@ -62,7 +60,8 @@ public class DashboardController extends MainController{
     	
     	MainController mainController = loader.getController();
 
-		//mainController.email.setText(main.getUser().getEmail()); //det må sannsynligvis gjøres noe her for å sammarbeide med FXML-fila
+
+		mainController.setEmail(main.getCurrentUser().getEmail()); //det må sannsynligvis gjøres noe her for å sammarbeide med FXML-fila
 		//mainController.listHouse.setText(main.getAvailableHousing()); // det må lages en metode for å konvertere lista om til en string
 
     	mainController.sendMain(this.main);
