@@ -13,11 +13,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SequenceWriter;
 
 
+
+
 public class Json {
 
     private static Path dirPath = Paths.get("").toAbsolutePath();
-    private static String housePath = "data/houses.json";
-    private static String userPath = "data/users.json";
+    private static String housePath = "src/data/houses.json";
+    private static String userPath = "src/data/users.json";
     private static ObjectMapper mapper = getDefaultObjectMapper();
 
     private static ObjectMapper getDefaultObjectMapper() {

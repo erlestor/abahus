@@ -7,7 +7,14 @@ import java.util.UUID;
 public class User {
     private final String email;
     private final String password;
-    private final String userId  = UUID.randomUUID().toString();;
+    private final String userId  = UUID.randomUUID().toString();
+
+    public User() {
+        this.email = "";
+        this.password = "";
+    }
+
+   
    
     public User(String email, String password) {
         if (email == null || password == null || email.isBlank() || password.isBlank())

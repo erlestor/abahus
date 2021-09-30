@@ -7,6 +7,11 @@ public class House {
     private User user;
     private boolean isAvailable = true;
 
+    public House() {
+        this.location = "";
+        this.user = new User();
+    }
+
     public House(String location, User user) {
         if (location == null || user == null)
             throw new NullPointerException("input cannot be null");
