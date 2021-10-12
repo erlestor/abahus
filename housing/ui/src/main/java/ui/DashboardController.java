@@ -12,7 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class DashboardController extends MainController{
+public class DashboardController {
 	
 	@FXML private TextField registerEmail, createPassword, confirmPassword, logInEmail, passwordLogIn;
 	private Main main;
@@ -67,6 +67,9 @@ public class DashboardController extends MainController{
 		stage.setTitle("Housing");
     	stage.setScene(new Scene(root));
     	stage.show();
+
+		Stage currentStage = (Stage) logInEmail.getScene().getWindow();
+		currentStage.close();
     }
 
 }

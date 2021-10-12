@@ -4,9 +4,14 @@ import core.House;
 import core.Main;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.fxml.FXMLLoader;
 
 import java.io.IOException;
 import java.util.List;
@@ -15,6 +20,7 @@ public class MainController {
 
 	@FXML public Label email, listHouse;
 	@FXML public Pane myHousesList;
+	@FXML public TextField newHouseText;
 	private Main main;
 
 	@FXML
@@ -37,7 +43,7 @@ public class MainController {
 				housePane.getChildren().add(houseLabel);
 
 				Button deleteButton = new Button("delete");
-				deleteButton.setOnMouseClicked(c-> handleDeleteClicked(house));
+				deleteButton.setOnMouseClicked(c-> handleRemoveHouse(house));
 				housePane.getChildren().add(deleteButton);
 			}
 		}
@@ -45,16 +51,36 @@ public class MainController {
 
 	@FXML
 	public void handleAddHouse() {
-		//
+		try {
+			main.hostNewHouse(newHouseText.getText());
+		} catch (IllegalArgumentException | IOException e) {
+			e.printStackTrace();
+		}
+		newHouseText.setText("");
+		showMyHouses();
+
 	}
 
-	private void handleDeleteClicked(House house) {
+	@FXML
+	public void handleRemoveHouse(House house) {
 		try {
 			main.removeHouse(house);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		showMyHouses();
+	}
+
+	public void handleLogOut() throws IOException {
+		FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("Dashboard.fxml"));
+        Parent parent = fxmlLoader.load();
+		Stage stage = new Stage();
+        stage.setTitle("Housing");
+        stage.setScene(new Scene(parent));
+        stage.show();
+
+		Stage currentStage = (Stage) email.getScene().getWindow();
+		currentStage.close();
 	}
 	
 	public void sendMain(Main main) {
