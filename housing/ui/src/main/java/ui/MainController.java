@@ -1,22 +1,16 @@
 package ui;
 
-import core.*;
-
-import java.io.IOException;
-import java.util.Collection;
-
+import core.House;
+import core.Main;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-
-
+import javafx.scene.layout.Pane;
+import java.util.List;
 
 public class MainController {
 
-	@FXML public Label email, listHouse, myHousesList;
+	@FXML public Label email, listHouse;
+	@FXML public Pane myHousesList;
 	private Main main;
 
 	@FXML
@@ -28,7 +22,13 @@ public class MainController {
     public void showMyHouses() {
 		System.out.println("initializing MainController");
 		if (main != null) {
-			myHousesList.setText(main.getHousesAsString(main.getMyHouses()));
+			List<House> housing = main.getAvailableHousing();
+			for (int i = 0; i < housing.size(); i++) {
+				Label l = new Label();
+				l.setTranslateY(myHousesList.getTranslateY() + 30*i);
+				l.setText(housing.get(i).getLocation());
+				myHousesList.getChildren().add(l);
+			}
 		}
     }
 	
