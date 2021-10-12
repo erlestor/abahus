@@ -42,15 +42,19 @@ public class AppTest1 extends ApplicationTest {
 
     }
 
-    @Test 
-    public void testHandleLogIn() {
-        Label eMail = (Label) GuiTest.find("#logInEmail");
-        write("hei@gmail.com");
+   // @Test 
+    public void testHandleLogIn(String Email, String Password) {
 
-        Label password = (Label) GuiTest.find("#passwordLogIn");
-        write("password");
+        final TextField eMail = (TextField) getRootNode().lookup("#logInEmail");
+        clickOn(eMail).write(Email.toString());
 
-        //clickOn("#logIn");
+        final TextField password = (TextField) getRootNode().lookup("#passwordLogIn");
+        clickOn(password).write(Password.toString());
+
+        final Button logIn = (Button) getRootNode().lookup("#logIn");
+        clickOn(logIn);
+        Assertions.assertEquals(Email, getRootNode().lookup("#logInEmail").getText());
+        Assertions.assertEquals(Password, getRootNode().lookup("#passwordLogIn").getText());
 
     }
 
