@@ -1,1 +1,6 @@
-[{"email":"netteland97@gmail.com","password":"123"},{"email":"erl@mail.com","password":"123"},{"email":"1@2.com","password":"123"}]
+[
+  { "email": "netteland97@gmail.com", "password": "123" },
+  { "email": "erl@mail.com", "password": "123" },
+  { "email": "1@2.com", "password": "123" },
+  { "email": "1@2.no", "password": "123" }
+]
