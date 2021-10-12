@@ -19,6 +19,8 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.matcher.control.LabeledMatchers;
 
+import org.testfx.api.FxToolkit;
+
 
 public class AppTest1 extends ApplicationTest {
 
@@ -43,15 +45,15 @@ public class AppTest1 extends ApplicationTest {
     @Test 
     public void testHandleLogIn() {
         Label eMail = (Label) GuiTest.find("#logInEmail");
-        
-        eMail.write("hei@gmail.com");
+        write("hei@gmail.com");
 
         Label password = (Label) GuiTest.find("#passwordLogIn");
-        password.write("password");
+        write("password");
 
         //clickOn("#logIn");
 
     }
+
 
 
 }
