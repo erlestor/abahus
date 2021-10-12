@@ -42,9 +42,7 @@ public class DashboardController extends MainController{
     	String password = passwordLogIn.getText();
     	
     	try {
-			System.out.println("heisann");
 			this.main = new Main(eMail, password);
-			System.out.println("heisann");
 			this.newStage();
 		}
     	catch(Exception e){

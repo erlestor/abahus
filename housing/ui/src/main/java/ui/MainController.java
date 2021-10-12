@@ -3,8 +3,12 @@ package ui;
 import core.House;
 import core.Main;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+
+import java.io.IOException;
 import java.util.List;
 
 public class MainController {
@@ -20,17 +24,38 @@ public class MainController {
 
 	@FXML
     public void showMyHouses() {
-		System.out.println("initializing MainController");
 		if (main != null) {
-			List<House> housing = main.getAvailableHousing();
+			List<House> housing = main.getMyHouses();
+			myHousesList.getChildren().clear();
 			for (int i = 0; i < housing.size(); i++) {
-				Label l = new Label();
-				l.setTranslateY(myHousesList.getTranslateY() + 30*i);
-				l.setText(housing.get(i).getLocation());
-				myHousesList.getChildren().add(l);
+				House house = housing.get(i);
+				HBox housePane = new HBox(5);
+				housePane.setTranslateY(myHousesList.getTranslateY() + 60*i);
+				myHousesList.getChildren().add(housePane);
+				
+				Label houseLabel = new Label("Location: " + house.getLocation() + "\n" + "Owner: " + house.getUser().getEmail() + "\n");
+				housePane.getChildren().add(houseLabel);
+
+				Button deleteButton = new Button("delete");
+				deleteButton.setOnMouseClicked(c-> handleDeleteClicked(house));
+				housePane.getChildren().add(deleteButton);
 			}
 		}
     }
+
+	@FXML
+	public void handleAddHouse() {
+		//
+	}
+
+	private void handleDeleteClicked(House house) {
+		try {
+			main.removeHouse(house);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		showMyHouses();
+	}
 	
 	public void sendMain(Main main) {
 		this.main = main;

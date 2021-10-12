@@ -114,6 +114,11 @@ public class Main {
         return s.substring(0, s.length() - 2);
     }
 
+    public void removeHouse(House house) throws IOException {
+        Json.removeHouse(house.getLocation(), house.getUser().getEmail());
+        loadJson();
+    }
+
     // brukes til testing
     public static void main(String[] args) throws JsonParseException, JsonMappingException, IOException {
         Main program = new Main("erl@mail.com", "123", "123");
