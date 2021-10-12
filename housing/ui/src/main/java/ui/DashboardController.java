@@ -16,6 +16,7 @@ public class DashboardController extends MainController{
 	
 	@FXML private TextField registerEmail, createPassword, confirmPassword, logInEmail, passwordLogIn;
 	private Main main;
+	private MainController mainController;
 
     @FXML
     public void handleCreateUser(ActionEvent event) throws IOException {
@@ -58,7 +59,7 @@ public class DashboardController extends MainController{
     	FXMLLoader loader = new FXMLLoader(getClass().getResource("Main.fxml"));
     	Parent root = (Parent)loader.load();
     	
-    	MainController mainController = loader.getController();
+    	mainController = loader.getController();
 
 
 		mainController.setEmail(main.getCurrentUser().getEmail()); //det må sannsynligvis gjøres noe her for å sammarbeide med FXML-fila
@@ -70,5 +71,9 @@ public class DashboardController extends MainController{
     	stage.setScene(new Scene(root));
     	stage.show();
     }
+
+	public MainController getMainController(){
+		return mainController; 
+	}
 
 }
