@@ -28,6 +28,7 @@ public class AppTest extends ApplicationTest {
 
     private DashboardController dashboardController; 
     private Parent root; 
+    
 
     @Override 
     public void start(Stage stage) throws IOException {
@@ -41,22 +42,30 @@ public class AppTest extends ApplicationTest {
 
     public Parent getRootNode(){
         return root; 
-
     }
 
-   // @Test 
-    public void testHandleLogIn(String Email, String Password) {
+    @BeforeEach
+    public void setStrings(){
+        String Email = "email@email.com";
+        String Password = "password";
+        String correctPasswordConfirm = "password";
+        String incorrertPasswordConfirm = "notEqual";
+    }
+
+
+    @Test 
+    public void testHandleLogIn() {
 
         final TextField eMail = (TextField) getRootNode().lookup("#logInEmail");
-        clickOn(eMail).write(Email.toString());
+        clickOn(eMail).write(Email);
 
         final TextField password = (TextField) getRootNode().lookup("#passwordLogIn");
         clickOn(password).write(Password.toString());
 
         final Button logIn = (Button) getRootNode().lookup("#logIn");
         clickOn(logIn);
-        //Assertions.assertEquals(Email, getRootNode().lookup("#logInEmail").getText());
-        //Assertions.assertEquals(Password, getRootNode().lookup("#passwordLogIn").getText());
+        Assertions.assertEquals(Email, getRootNode().lookup("#logInEmail").getText());
+        Assertions.assertEquals(Password, getRootNode().lookup("#passwordLogIn").getText());
 
     }
 

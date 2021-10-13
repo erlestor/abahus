@@ -2,6 +2,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <artifactId>ui</artifactId>
+    <properties> <skipUiTests>true</skipUiTests> </properties>
 
     <parent>
         <groupId>gr2129</groupId>
@@ -75,6 +76,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
         		<artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
+                    <skipTests>${skipUiTests}</skipTests>
                     <argLine>
                     --add-opens ui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
                     </argLine>
