@@ -8,7 +8,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="665.0" style="-fx-background-color: #B4DBF1;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.DashboardController">
    <children>
-      <Label layoutX="49.0" layoutY="43.0" text="NAME OF SITE">
+      <Label layoutX="49.0" layoutY="43.0" text="AbaHus">
          <font>
          </font>
       </Label>
@@ -34,5 +34,6 @@
       <Button fx:id="logIn" layoutX="425.0" layoutY="313.0" mnemonicParsing="false" onAction="#handleLogIn" style="-fx-background-color: #B4CDDA #B4CDDA;" text="Log in" />
       <Label layoutX="376.0" layoutY="189.0" text="E-mail" />
       <Label layoutX="358.0" layoutY="227.0" text="Password" />
+      <Label fx:id="error" layoutX="240.0" layoutY="350.0" text="" />
    </children>
 </AnchorPane>

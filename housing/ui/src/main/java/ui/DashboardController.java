@@ -9,12 +9,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class DashboardController extends MainController{
 	
 	@FXML private TextField registerEmail, createPassword, confirmPassword, logInEmail, passwordLogIn;
+	@FXML private Label error;
 	private Main main;
 	private MainController mainController;
 
@@ -32,7 +34,7 @@ public class DashboardController extends MainController{
     	catch(Exception e){
 			e.printStackTrace();
 			e.getMessage();
-			//lag en label og sett teksten der
+			error.setText(e.getMessage());
 		}
     	
     }
@@ -51,7 +53,7 @@ public class DashboardController extends MainController{
     	catch(Exception e){
 			e.printStackTrace();
 			e.getMessage();
-			//lag en label og sett teksten der
+			error.setText(e.getMessage());
 		}
     }
     
