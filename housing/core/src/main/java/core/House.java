@@ -36,6 +36,9 @@ public class House {
     }
 
     public void setAvailable(boolean isAvailable) {
+        if (isAvailable == false && isAvailable() == false){
+            throw new IllegalArgumentException("House is already in use");
+        }
         this.isAvailable = isAvailable;
     }
     

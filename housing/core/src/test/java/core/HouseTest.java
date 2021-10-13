@@ -12,12 +12,21 @@ public class HouseTest {
 	@Test
 	public void testConstructor(){
 	    house = new House(location, user);
-	    // assertEquals(location, house.getLocation());
-	    // assertEquals(user, house.getUser());
+	    assertEquals(location, house.getLocation());
+	    assertEquals(user, house.getUser());
 
-	//     assertThrows(IllegalArgumentException.class, () -> {new House("", user);});
+		assertThrows(IllegalArgumentException.class, () -> {new House("", user);});
 	        
-	//     assertThrows(IllegalArgumentException.class, () -> {new House(null, null);});
+		assertThrows(NullPointerException.class, () -> {new House(null, null);});
 	
+	}
+
+	@Test
+	public void testAlreadyInUse(){
+		house = new House(location, user);
+		house.setAvailable(false);
+
+		assertThrows(IllegalArgumentException.class, () -> {house.setAvailable(false);});
+
 	}
 }
