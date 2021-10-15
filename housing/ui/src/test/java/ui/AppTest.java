@@ -33,8 +33,16 @@ public class AppTest extends ApplicationTest {
     private String password = "password";
     private String correctPasswordConfirm = "password";
     private String incorrertPasswordConfirm = "notEqual";
-
-    final Label error = (Label) getRootNode().lookup("#error");
+    
+    private final Button createUser = (Button) getRootNode().lookup("#createUser");
+    private final Button logIn = (Button) getRootNode().lookup("#logIn");
+    private final Label error = (Label) getRootNode().lookup("#error");
+    private final TextField logInMail = (TextField) getRootNode().lookup("#logInEmail");
+    private final TextField passwordField = (TextField) getRootNode().lookup("#passwordLogIn");
+    private final TextField registerMail = (TextField) getRootNode().lookup("#registerEmail");
+    private final TextField createPassword = (TextField) getRootNode().lookup("#createPassword");
+    private final TextField confirmPassword = (TextField) getRootNode().lookup("#confirmPassword");
+    
     
 
     @Override 
@@ -51,19 +59,9 @@ public class AppTest extends ApplicationTest {
         return root; 
     }
     
-    // @BeforeEach 
-    // public void setStrings(){
-    //     final Label error = (Label) getRootNode().lookup("#error");
-    // }
-
     private void helpLogIn(String passwordCheck) {
-        final TextField mail = (TextField) getRootNode().lookup("#logInEmail");
-        clickOn(mail).write(eMail);
-
-        final TextField passwordField = (TextField) getRootNode().lookup("#passwordLogIn");
+        clickOn(logInMail).write(eMail);
         clickOn(passwordField).write(passwordCheck);
-
-        final Button logIn = (Button) getRootNode().lookup("#logIn");
         clickOn(logIn);
     }
 
@@ -76,8 +74,8 @@ public class AppTest extends ApplicationTest {
 
         //log in with correct password 
         helpLogIn(password); 
-        Assertions.assertEquals(eMail, getRootNode().lookup("#logInEmail"));
-        Assertions.assertEquals(password, getRootNode().lookup("#passwordLogIn"));
+        Assertions.assertEquals(eMail, logInMail.getText()); // getRootNode().lookup("#logInEmail").MANGLER);
+        Assertions.assertEquals(password, passwordField.getText()); //getRootNode().lookup("#passwordLogIn").MANGLER);
 
         Assertions.assertNotNull(dashboardController.getMainController());
 
@@ -88,21 +86,21 @@ public class AppTest extends ApplicationTest {
     @Test
     public void testSendMain(){
         Assertions.assertNull(dashboardController.getMainController()); 
-        helpLogIn();
+        helpLogIn(password);
         Assertions.assertEquals(dashboardController.getMain(), dashboardController.getMainController().getMain());
     }
 
     private void helpRegisterUser(String confirmationPassword){
-        final TextField mail = (TextField) getRootNode().lookup("#registerEmail");
-        clickOn(mail).write(eMail);
+        
+        clickOn(registerMail).write(eMail);
 
-        final TextField createPassword = (TextField) getRootNode().lookup("#createPassword");
+        
         clickOn(createPassword).write(password);
 
-        final TextField confirmPassword = (TextField) getRootNode().lookup("#confirmPassword");
+        
         clickOn(confirmPassword).write(confirmationPassword);
 
-        final Button createUser = (Button) getRootNode().lookup("#createUser");
+        
         clickOn(createUser);
 
     }
@@ -116,9 +114,9 @@ public class AppTest extends ApplicationTest {
         clickOn(confirmPassword).write(correctPasswordConfirm);
         clickOn(createUser); 
 
-        Assertions.assertEquals(eMail, getRootNode().lookup("#registerEmail").getText());
-        Assertions.assertEquals(password, getRootNode().lookup("#createPassword").getText());
-        Assertions.assertEquals(password, getRootNode().lookup("#confirmPassword").getText());
+        Assertions.assertEquals(eMail, registerMail.getText()); 
+        Assertions.assertEquals(password, createPassword.getText()); 
+        Assertions.assertEquals(password, confirmPassword.getText()); 
 
         Assertions.assertNotNull(dashboardController.getMainController());
 
