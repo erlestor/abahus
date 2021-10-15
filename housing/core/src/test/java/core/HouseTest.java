@@ -1,4 +1,5 @@
 package core;
+import jsonworker.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
