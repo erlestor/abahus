@@ -79,8 +79,13 @@ public class Main {
                                             .collect(Collectors.toList()));
     }
 
+    // returns list of houses that logged in user owns
+    public List<House> getMyHouses() {
+        return getHousesWithFilter(h -> h.getUser().getEmail().equals(currentUser.getEmail()));
+    }
+
     public List<House> getAvailableHousing() {
-        return getHousesWithFilter(house -> house.isAvailable());
+        return getHousesWithFilter(house -> house.isAvailable() && !house.getUser().getEmail().equals(currentUser.getEmail()));
     }
 
     public List<House> getHousing() {
@@ -103,15 +108,19 @@ public class Main {
         return currentUser;
     }
 
-    public String getHousesAsString() {
-        Collection<House> houses = getAvailableHousing();
+    public String getHousesAsString(Collection<House> houses) {
         String s = "";
 
         for (House house : houses) {
-            s += "Location: " + house.getLocation() + ". Owner: " + house.getUser().getEmail() + "\n";
+            s += "Location: " + house.getLocation() + "\n" + "Owner: " + house.getUser().getEmail() + "\n\n";
         }
 
-        return s.substring(0, s.length() - 3);
+        return s.substring(0, s.length() - 2);
+    }
+
+    public void removeHouse(House house) throws IOException {
+        Json.removeHouse(house.getLocation(), house.getUser().getEmail());
+        loadJson();
     }
 
     // brukes til testing
