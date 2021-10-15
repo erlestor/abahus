@@ -28,6 +28,11 @@ public class AppTest extends ApplicationTest {
 
     private DashboardController dashboardController; 
     private Parent root; 
+    private String eMail = "email@email.com";
+    private String password = "password";
+    private String correctPasswordConfirm = "password";
+    private String incorrertPasswordConfirm = "notEqual";
+    
 
     @Override 
     public void start(Stage stage) throws IOException {
@@ -39,27 +44,81 @@ public class AppTest extends ApplicationTest {
 
     }
 
-    public Parent getRootNode(){
+    private Parent getRootNode(){
         return root; 
-
+    }
+    
+    @BeforeEach 
+    public void setStrings(){
+        final Label error = (Label) getRootNode().lookup("#error");
     }
 
-   // @Test 
-    public void testHandleLogIn(String Email, String Password) {
+    private void helpLogIn(String passwordCheck) {
+        final TextField mail = (TextField) getRootNode().lookup("#logInEmail");
+        clickOn(mail).write(eMail);
 
-        final TextField eMail = (TextField) getRootNode().lookup("#logInEmail");
-        clickOn(eMail).write(Email.toString());
-
-        final TextField password = (TextField) getRootNode().lookup("#passwordLogIn");
-        clickOn(password).write(Password.toString());
+        final TextField passwordField = (TextField) getRootNode().lookup("#passwordLogIn");
+        clickOn(passwordField).write(passwordCheck);
 
         final Button logIn = (Button) getRootNode().lookup("#logIn");
         clickOn(logIn);
-        //Assertions.assertEquals(Email, getRootNode().lookup("#logInEmail").getText());
-        //Assertions.assertEquals(Password, getRootNode().lookup("#passwordLogIn").getText());
+    }
+
+    //checks that the email and password are the same as those written in the textfields. 
+    @Test 
+    public void testHandleLogIn() {
+        //log in with wrong password 
+        helpLogIn("456");
+        Assertions.assertEquals(error.getMessage(), "password must match confirmation");
+
+        //log in with correct password 
+        helpLogIn(password); 
+        Assertions.assertEquals(eMail, getRootNode().lookup("#logInEmail").getText());
+        Assertions.assertEquals(password, getRootNode().lookup("#passwordLogIn").getText());
+
+        Assertions.assertNotNull(dashboardController.getMainController());
 
     }
 
+    //checks that mainController is empty befor the login button is pressed. 
+    //checks that the same main is sent from dashboardController to mainController. 
+    @Test
+    public void testSendMain(){
+        Assertions.assertNull(dashboardController.getMainController()); 
+        helpLogIn();
+        Assertions.assertEquals(dashboardController.getMain(), dashboardController.getMainController().getMain());
+    }
 
+    private void helpRegisterUser(String confirmationPassword){
+        final TextField mail = (TextField) getRootNode().lookup("#registerEmail");
+        clickOn(mail).write(eMail);
+
+        final TextField createPassword = (TextField) getRootNode().lookup("#createPassword");
+        clickOn(createPassword).write(password);
+
+        final TextField confirmPassword = (TextField) getRootNode().lookup("#confirmPassword");
+        clickOn(confirmPassword).write(confirmationPassword);
+
+        final Button createUser = (Button) getRootNode().lookup("#createUser");
+        clickOn(createUser);
+
+    }
+
+    //checks that the createUser method works and gives error message.
+    @Test
+    public void testHandleCreateUser(){
+        helpRegisterUser(incorrertPasswordConfirm);
+        Assertions.assertEquals(error.getMessage(), "password must match confirmation");
+
+        clickOn(confirmPassword).write(correctPasswordConfirm);
+        clickOn(createUser); 
+
+        Assertions.assertEquals(eMail, getRootNode().lookup("#registerEmail").getText());
+        Assertions.assertEquals(password, getRootNode().lookup("#createPassword").getText());
+        Assertions.assertEquals(password, getRootNode().lookup("#confirmPassword").getText());
+
+        Assertions.assertNotNull(dashboardController.getMainController());
+
+    }
 
 }

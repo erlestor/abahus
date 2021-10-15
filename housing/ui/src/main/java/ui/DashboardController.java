@@ -78,4 +78,8 @@ public class DashboardController extends MainController{
 		return mainController; 
 	}
 
+	public void getMain() {
+		return this.main; 
+	}
+
 }

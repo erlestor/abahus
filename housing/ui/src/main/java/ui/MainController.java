@@ -20,6 +20,10 @@ public class MainController {
 	public void sendListHouse(String listHouse) {
 		this.listHouse.setText(listHouse);
 	}
+
+	public void getMain(){
+		return this.main; 
+	}
 	
 
 }
