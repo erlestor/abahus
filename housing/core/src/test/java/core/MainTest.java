@@ -26,7 +26,7 @@ public class MainTest {
 	@Test
 	public void testConstructor1(){
 		assertThrows(IllegalArgumentException.class, () -> {new Main("heisann@gmail.com", "mamma", "pappa");});
-		assertThrows(IllegalStateException.class, () -> {new Main("netteland97@gmail.com", "123", "123");});
+		assertThrows(IllegalStateException.class, () -> {new Main("netteland97@gmail.com", "passord", "passord");});
 
 	}
 
@@ -48,5 +48,4 @@ public class MainTest {
 
 	}
 
-	//Burde også teste at get houses as a string fungerer
 }

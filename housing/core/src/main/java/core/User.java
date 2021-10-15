@@ -9,13 +9,6 @@ public class User {
     private final String password;
     private final String userId  = UUID.randomUUID().toString();
 
-    public User() {
-        this.email = "";
-        this.password = "";
-    }
-
-   
-   
     public User(String email, String password) {
         if (email == null || password == null || email.isBlank() || password.isBlank())
             throw new IllegalArgumentException("Email and password must not be null or empty");
@@ -27,11 +20,9 @@ public class User {
         this.password = password;
     }
 
-
     public String getEmail() {
         return this.email;
     }
-
 
     public String getPassword() {
         return this.password;
@@ -44,7 +35,6 @@ public class User {
         java.util.regex.Matcher m = p.matcher(email);
         return m.matches();
     }
-
 
     @Override
     public String toString() {
