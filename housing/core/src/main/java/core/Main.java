@@ -119,7 +119,7 @@ public class Main {
     }
 
     public void removeHouse(House house) throws IOException {
-        Json.removeHouse(house.getLocation(), house.getUser().getEmail());
+        Jsonworker.removeHouse(house.getLocation(), house.getUser().getEmail());
         loadJson();
     }
 
