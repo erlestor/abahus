@@ -51,16 +51,9 @@ public class Main {
         if (users.stream().anyMatch(user -> user.getEmail().equals(email)))
             throw new IllegalStateException("There already exists a user with the same email");
 
-        if (!isEmailValid(email))
-            throw new IllegalArgumentException("Email is not valid");
-
         Jsonworker.addUser(email, password);
         loadJson();
     } 
-
-    private boolean isEmailValid(String email) {
-        return true; // her vil vi faktisk validere mail
-    }
 
     private void logInUser(String email, String password) {
         User currentUser = users.stream()
@@ -123,10 +116,11 @@ public class Main {
         loadJson();
     }
 
-    // brukes til testing
+    /*
     public static void main(String[] args) throws JsonParseException, JsonMappingException, IOException {
         Main program = new Main("erl@mail.com", "123", "123");
         program.hostNewHouse("adresse 72b");
         System.out.println(program.getAvailableHousing());
     }
+    */
 }

@@ -8,8 +8,8 @@ public class House {
     private boolean isAvailable = true;
 
     public House() {
-        this.location = "";
-        this.user = new User();
+        user = new User();
+        location = "";
     }
 
     public House(String location, User user) {
@@ -36,6 +36,9 @@ public class House {
     }
 
     public void setAvailable(boolean isAvailable) {
+        if (isAvailable == false && isAvailable() == false){
+            throw new IllegalArgumentException("House is already in use");
+        }
         this.isAvailable = isAvailable;
     }
     

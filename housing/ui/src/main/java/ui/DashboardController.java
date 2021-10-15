@@ -9,13 +9,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class DashboardController {
 	
 	@FXML private TextField registerEmail, createPassword, confirmPassword, logInEmail, passwordLogIn;
+	@FXML private Label error;
 	private Main main;
+	private MainController mainController;
 
     @FXML
     public void handleCreateUser(ActionEvent event) throws IOException {
@@ -31,7 +34,7 @@ public class DashboardController {
     	catch(Exception e){
 			e.printStackTrace();
 			e.getMessage();
-			//lag en label og sett teksten der
+			error.setText(e.getMessage());
 		}
     	
     }
@@ -48,7 +51,7 @@ public class DashboardController {
     	catch(Exception e){
 			e.printStackTrace();
 			e.getMessage();
-			//lag en label og sett teksten der
+			error.setText(e.getMessage());
 		}
     }
     
@@ -56,7 +59,7 @@ public class DashboardController {
     	FXMLLoader loader = new FXMLLoader(getClass().getResource("Main.fxml"));
     	Parent root = (Parent)loader.load();
     	
-    	MainController mainController = loader.getController();
+    	mainController = loader.getController();
 
 
 		mainController.setEmail(main.getCurrentUser().getEmail()); //det må sannsynligvis gjøres noe her for å sammarbeide med FXML-fila
@@ -71,5 +74,9 @@ public class DashboardController {
 		Stage currentStage = (Stage) logInEmail.getScene().getWindow();
 		currentStage.close();
     }
+
+	public MainController getMainController(){
+		return mainController; 
+	}
 
 }
