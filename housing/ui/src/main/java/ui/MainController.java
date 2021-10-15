@@ -1,6 +1,6 @@
 package ui;
 
-import core.House;
+import jsonworker.*;
 import core.Main;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

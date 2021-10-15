@@ -1,5 +1,9 @@
 package core;
 
+import jsonworker.Jsonworker;
+import jsonworker.User;
+import jsonworker.House;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -36,8 +40,8 @@ public class Main {
     }
 
     private void loadJson() throws JsonParseException, JsonMappingException, IOException {
-        houses = Json.getAllHouses();
-        users = Json.getAllUsers();
+        houses = Jsonworker.getAllHouses();
+        users = Jsonworker.getAllUsers();
     }
 
     private void registerUser(String email, String password, String confirmPassword) throws IllegalArgumentException, IOException {
@@ -50,7 +54,7 @@ public class Main {
         if (!isEmailValid(email))
             throw new IllegalArgumentException("Email is not valid");
 
-        Json.addUser(email, password);
+        Jsonworker.addUser(email, password);
         loadJson();
     } 
 
@@ -96,7 +100,7 @@ public class Main {
         if (currentUser == null)
             throw new IllegalStateException("you must login before hosting a house");
 
-        Json.addHouse(location, currentUser.getEmail());
+        Jsonworker.addHouse(location, currentUser.getEmail());
         loadJson();
     }
 
@@ -115,7 +119,7 @@ public class Main {
     }
 
     public void removeHouse(House house) throws IOException {
-        Json.removeHouse(house.getLocation(), house.getUser().getEmail());
+        Jsonworker.removeHouse(house.getLocation(), house.getUser().getEmail());
         loadJson();
     }
 

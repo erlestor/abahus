@@ -1,4 +1,4 @@
-package core;
+package jsonworker;
 
 // Et hus skal inneholde adresse, beskrivelse og tilhørende bruker
 
