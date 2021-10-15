@@ -78,7 +78,7 @@ public class DashboardController extends MainController{
 		return mainController; 
 	}
 
-	public void getMain() {
+	public Main getMain() {
 		return this.main; 
 	}
 

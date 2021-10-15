@@ -21,7 +21,7 @@ public class MainController {
 		this.listHouse.setText(listHouse);
 	}
 
-	public void getMain(){
+	public Main getMain(){
 		return this.main; 
 	}
 	

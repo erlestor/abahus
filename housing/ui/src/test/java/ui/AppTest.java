@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -32,6 +33,8 @@ public class AppTest extends ApplicationTest {
     private String password = "password";
     private String correctPasswordConfirm = "password";
     private String incorrertPasswordConfirm = "notEqual";
+
+    final Label error = (Label) getRootNode().lookup("#error");
     
 
     @Override 
@@ -48,10 +51,10 @@ public class AppTest extends ApplicationTest {
         return root; 
     }
     
-    @BeforeEach 
-    public void setStrings(){
-        final Label error = (Label) getRootNode().lookup("#error");
-    }
+    // @BeforeEach 
+    // public void setStrings(){
+    //     final Label error = (Label) getRootNode().lookup("#error");
+    // }
 
     private void helpLogIn(String passwordCheck) {
         final TextField mail = (TextField) getRootNode().lookup("#logInEmail");
@@ -69,12 +72,12 @@ public class AppTest extends ApplicationTest {
     public void testHandleLogIn() {
         //log in with wrong password 
         helpLogIn("456");
-        Assertions.assertEquals(error.getMessage(), "password must match confirmation");
+        Assertions.assertEquals(error.getText(), "password must match confirmation");
 
         //log in with correct password 
         helpLogIn(password); 
-        Assertions.assertEquals(eMail, getRootNode().lookup("#logInEmail").getText());
-        Assertions.assertEquals(password, getRootNode().lookup("#passwordLogIn").getText());
+        Assertions.assertEquals(eMail, getRootNode().lookup("#logInEmail"));
+        Assertions.assertEquals(password, getRootNode().lookup("#passwordLogIn"));
 
         Assertions.assertNotNull(dashboardController.getMainController());
 
@@ -108,7 +111,7 @@ public class AppTest extends ApplicationTest {
     @Test
     public void testHandleCreateUser(){
         helpRegisterUser(incorrertPasswordConfirm);
-        Assertions.assertEquals(error.getMessage(), "password must match confirmation");
+        Assertions.assertEquals(error.getText(), "password must match confirmation");
 
         clickOn(confirmPassword).write(correctPasswordConfirm);
         clickOn(createUser); 
