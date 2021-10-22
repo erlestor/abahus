@@ -39,16 +39,16 @@ The user needs to be able to enter email and password into a form such that this
 and the user can login later. The user then wants to be automatically logged in and sent
 to the main dashboard.
 
-## Login (us-1)
+## Login (us-2)
 
 A user wishes to login to a previously created account using email and password.
 The user then wants to be sent to the main dashboard.
 
-## View available houses (us-1)
+## View available houses (us-3)
 
 A user wishes to view the houses that are available
 
-## Add and delete houses (us-1)
+## Add and delete houses (us-4)
 
 The user needs to be able to add a new house with location such that other users can see the house.
 Then the user should be able to do delete any of his listed houses.
