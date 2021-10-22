@@ -79,4 +79,8 @@ public class DashboardController {
 		return mainController; 
 	}
 
+	public Main getMain() {
+		return this.main; 
+	}
+
 }

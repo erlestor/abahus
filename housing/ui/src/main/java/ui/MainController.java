@@ -95,6 +95,10 @@ public class MainController {
 	public void sendListHouse(String listHouse) {
 		this.listHouse.setText(listHouse);
 	}
+
+	public Main getMain(){
+		return this.main; 
+	}
 	
 
 }
