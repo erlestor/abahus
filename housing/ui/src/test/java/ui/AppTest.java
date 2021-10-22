@@ -1,17 +1,17 @@
-package ui; 
+// package ui; 
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.stage.Stage;
+// import javafx.fxml.FXMLLoader;
+// import javafx.scene.Parent;
+// import javafx.scene.Scene;
+// import javafx.scene.control.Label;
+// import javafx.scene.control.TextField;
+// import javafx.scene.control.Button;
+// import javafx.scene.control.ListView;
+// import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.stream.Stream;
+// import java.io.IOException;
+// import java.util.List;
+// import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,10 +22,10 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.matcher.control.LabeledMatchers;
 
-import org.testfx.api.FxToolkit;
+// import org.testfx.api.FxToolkit;
 
 
-public class AppTest extends ApplicationTest {
+// public class AppTest extends ApplicationTest {
 
     private DashboardController dashboardController; 
     private Parent root; 
@@ -45,13 +45,13 @@ public class AppTest extends ApplicationTest {
     
     
 
-    @Override 
-    public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("Dashboard.fxml"));
-        root = fxmlLoader.load();
-        dashboardController = fxmlLoader.getController();
-        stage.setScene(new Scene (root));
-        stage.show();
+//     @Override 
+//     public void start(Stage stage) throws IOException {
+//         FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("Dashboard.fxml"));
+//         root = fxmlLoader.load();
+//         dashboardController = fxmlLoader.getController();
+//         stage.setScene(new Scene (root));
+//         stage.show();
 
         createUser = (Button) getRootNode().lookup("#createUser");
         logIn = (Button) getRootNode().lookup("#logIn");
@@ -91,7 +91,10 @@ public class AppTest extends ApplicationTest {
 
         //Assertions.assertNotNull(dashboardController.getMainController());
 
-    }
+//         final Button logIn = (Button) getRootNode().lookup("#logIn");
+//         clickOn(logIn);
+//         Assertions.assertEquals(Email, getRootNode().lookup("#logInEmail").getText());
+//         Assertions.assertEquals(Password, getRootNode().lookup("#passwordLogIn").getText());
 
     //checks that mainController is empty befor the login button is pressed. 
     //checks that the same main is sent from dashboardController to mainController. 
@@ -129,4 +132,5 @@ public class AppTest extends ApplicationTest {
 
     }
 
-}
+
+// }

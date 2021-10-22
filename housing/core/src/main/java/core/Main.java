@@ -1,5 +1,9 @@
 package core;
 
+import jsonworker.Jsonworker;
+import jsonworker.User;
+import jsonworker.House;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -36,8 +40,8 @@ public class Main {
     }
 
     private void loadJson() throws JsonParseException, JsonMappingException, IOException {
-        houses = Json.getAllHouses();
-        users = Json.getAllUsers();
+        houses = Jsonworker.getAllHouses();
+        users = Jsonworker.getAllUsers();
     }
 
     private void registerUser(String email, String password, String confirmPassword) throws IllegalArgumentException, IOException {
@@ -47,16 +51,9 @@ public class Main {
         if (users.stream().anyMatch(user -> user.getEmail().equals(email)))
             throw new IllegalStateException("There already exists a user with the same email");
 
-        if (!isEmailValid(email))
-            throw new IllegalArgumentException("Email is not valid");
-
-        Json.addUser(email, password);
+        Jsonworker.addUser(email, password);
         loadJson();
     } 
-
-    private boolean isEmailValid(String email) {
-        return true; // her vil vi faktisk validere mail
-    }
 
     private void logInUser(String email, String password) {
         User currentUser = users.stream()
@@ -75,8 +72,13 @@ public class Main {
                                             .collect(Collectors.toList()));
     }
 
+    // returns list of houses that logged in user owns
+    public List<House> getMyHouses() {
+        return getHousesWithFilter(h -> h.getUser().getEmail().equals(currentUser.getEmail()));
+    }
+
     public List<House> getAvailableHousing() {
-        return getHousesWithFilter(house -> house.isAvailable());
+        return getHousesWithFilter(house -> house.isAvailable() && !house.getUser().getEmail().equals(currentUser.getEmail()));
     }
 
     public List<House> getHousing() {
@@ -91,7 +93,7 @@ public class Main {
         if (currentUser == null)
             throw new IllegalStateException("you must login before hosting a house");
 
-        Json.addHouse(location, currentUser.getEmail());
+        Jsonworker.addHouse(location, currentUser.getEmail());
         loadJson();
     }
 
@@ -99,21 +101,26 @@ public class Main {
         return currentUser;
     }
 
-    public String getHousesAsString() {
-        Collection<House> houses = getAvailableHousing();
+    public String getHousesAsString(Collection<House> houses) {
         String s = "";
 
         for (House house : houses) {
-            s += "Location: " + house.getLocation() + ". Owner: " + house.getUser().getEmail() + "\n";
+            s += "Location: " + house.getLocation() + "\n" + "Owner: " + house.getUser().getEmail() + "\n\n";
         }
 
-        return s.substring(0, s.length() - 3);
+        return s.substring(0, s.length() - 2);
     }
 
-    // brukes til testing
+    public void removeHouse(House house) throws IOException {
+        Jsonworker.removeHouse(house.getLocation(), house.getUser().getEmail());
+        loadJson();
+    }
+
+    /*
     public static void main(String[] args) throws JsonParseException, JsonMappingException, IOException {
         Main program = new Main("erl@mail.com", "123", "123");
         program.hostNewHouse("adresse 72b");
         System.out.println(program.getAvailableHousing());
     }
+    */
 }

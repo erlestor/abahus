@@ -1,4 +1,4 @@
-package core;
+package jsonworker;
 
 // Et hus skal inneholde adresse, beskrivelse og tilhørende bruker
 
@@ -8,8 +8,8 @@ public class House {
     private boolean isAvailable = true;
 
     public House() {
-        this.location = "";
-        this.user = new User();
+        user = new User();
+        location = "";
     }
 
     public House(String location, User user) {

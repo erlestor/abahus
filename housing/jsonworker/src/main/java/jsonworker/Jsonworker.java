@@ -1,4 +1,4 @@
-package core;
+package jsonworker;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.SequenceWriter;
 
 
 
-public class Json {
+public class Jsonworker {
 
     private static Path dirPath = Paths.get("").toAbsolutePath();
     private static String housePath = "data/houses.json";

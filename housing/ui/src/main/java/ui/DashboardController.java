@@ -13,7 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class DashboardController extends MainController{
+public class DashboardController {
 	
 	@FXML private TextField registerEmail, createPassword, confirmPassword, logInEmail, passwordLogIn;
 	@FXML private Label error;
@@ -45,9 +45,7 @@ public class DashboardController extends MainController{
     	String password = passwordLogIn.getText();
     	
     	try {
-			System.out.println("heisann");
 			this.main = new Main(eMail, password);
-			System.out.println("heisann");
 			this.newStage();
 		}
     	catch(Exception e){
@@ -72,6 +70,9 @@ public class DashboardController extends MainController{
 		stage.setTitle("Housing");
     	stage.setScene(new Scene(root));
     	stage.show();
+
+		Stage currentStage = (Stage) logInEmail.getScene().getWindow();
+		currentStage.close();
     }
 
 	public MainController getMainController(){
