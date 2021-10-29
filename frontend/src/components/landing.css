@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.page {
+  @apply flex flex-col justify-center text-left my-8;
+}
+
+.page h2 {
+  @apply w-80 mb-2 text-4xl;
+}
+
+.houses {
+  @apply flex items-center flex-wrap;
+}
+
+.house {
+  @apply border-2 border-gray-400 rounded-xl p-4 flex items-center  h-24 space-x-4  my-4 text-2xl;
+}
+
+.house-location {
+  @apply text-2xl w-48 overflow-hidden overflow-ellipsis;
+}
+
+.divider {
+  @apply w-4;
+}

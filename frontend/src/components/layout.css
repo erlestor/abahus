@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.layout {
+  @apply h-full mx-24;
+  flex: 2;
+}

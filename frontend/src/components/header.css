@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.header {
+  @apply flex justify-between p-8 align-middle items-center select-none;
+}
+
+.signInButton {
+  @apply bg-red-500 p-4 text-white font-bold rounded-xl text-2xl;
+}
+
+.header h1 {
+  @apply p-0 text-4xl leading-normal;
+}
