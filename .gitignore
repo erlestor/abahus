@@ -9,3 +9,6 @@ org.eclipse.*.prefs
 
 # local vscode config
 .vscode/**
+
+# frontend
+frontend/node_modules
