@@ -1,19 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import Landing from "./components/landing";
 import Login from "./components/login";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import data from "./dummyData.json";
 
-const Component = () => {
+const RouterConfig = () => {
   const [user, setUser] = useState(null);
+  const [houses, setHouses] = useState([]);
+
+  useEffect(() => {
+    setHouses(data.houses);
+  }, []);
 
   return (
     <React.StrictMode>
       <Router>
         <Switch>
           <Route path="/" exact>
-            <Landing />
+            <Landing houses={houses} />
           </Route>
           <Route path="/login" exact>
             <Login />
@@ -24,4 +30,4 @@ const Component = () => {
   );
 };
 
-ReactDOM.render(<Component />, document.getElementById("root"));
+ReactDOM.render(<RouterConfig />, document.getElementById("root"));

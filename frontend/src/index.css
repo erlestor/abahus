@@ -2,8 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  font-family: Courier;
+}
+
 /* Utility classes go here (classes you can use @apply on) */
 @layer {
 }
-
-/* Normal classes go here */

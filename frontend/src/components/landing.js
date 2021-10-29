@@ -1,23 +1,24 @@
 import React from "react";
 import "./landing.css";
+import House from "./house";
+import Layout from "./layout";
 
-function LandingPage() {
+function LandingPage({ houses }) {
+  console.log({ houses });
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout>
+      <div className="page">
+        <h2>Available houses</h2>
+        <div className="houses">
+          {houses.map((house) => (
+            <>
+              {house.available ? <House house={house} /> : <></>}
+              <div className="divider" />
+            </>
+          ))}
+        </div>
+      </div>
+    </Layout>
   );
 }
 

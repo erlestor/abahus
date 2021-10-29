@@ -1,0 +1,58 @@
+{
+  "houses": [
+    {
+      "location": "Oscar Wistings vei 6",
+      "user": { "email": "netteland97@gmail.com", "password": "123" },
+      "available": true
+    },
+    {
+      "location": "locationlocationlocationlocationlocation",
+      "user": { "email": "email@email.com", "password": "passord" },
+      "available": true
+    },
+    {
+      "location": "location",
+      "user": { "email": "email@email.com", "password": "passord" },
+      "available": true
+    },
+    {
+      "location": "location",
+      "user": { "email": "email@email.com", "password": "passord" },
+      "available": true
+    },
+    {
+      "location": "location",
+      "user": { "email": "email@email.com", "password": "passord" },
+      "available": true
+    },
+    {
+      "location": "location",
+      "user": { "email": "email@email.com", "password": "passord" },
+      "available": true
+    },
+    {
+      "location": "location",
+      "user": { "email": "email@email.com", "password": "passord" },
+      "available": true
+    },
+    {
+      "location": "location",
+      "user": { "email": "email@email.com", "password": "passord" },
+      "available": true
+    },
+    {
+      "location": "location",
+      "user": { "email": "email@email.com", "password": "passord" },
+      "available": true
+    },
+    {
+      "location": "location",
+      "user": { "email": "email@email.com", "password": "passord" },
+      "available": true
+    }
+  ],
+  "users": [
+    { "email": "netteland97@gmail.com", "password": "123" },
+    { "email": "email@email.com", "password": "passord" }
+  ]
+}

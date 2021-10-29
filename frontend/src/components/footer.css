@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.footerContainer {
+  @apply flex justify-center p-8 align-middle items-center bg-blue-500 h-28 w-full text-white;
+}
+
+.footerContainer h3 {
+  @apply mr-2;
+}
