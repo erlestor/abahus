@@ -1,6 +1,5 @@
 module ui {
     requires core;
-    requires jsonworker;
     requires javafx.controls;
     requires javafx.fxml;
 	requires javafx.graphics;

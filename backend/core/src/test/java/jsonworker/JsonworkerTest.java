@@ -2,14 +2,13 @@ package jsonworker;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import core.*;
+
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.JsonNode;
 
 import org.junit.jupiter.api.Test;
 
@@ -31,12 +30,12 @@ public class JsonworkerTest {
     @Test
     public void addUser() throws IOException {
         System.out.println("Adding user...");
-        Jsonworker.addUser("test@gmail.com", "123");
+        Jsonworker.addUser("testing@gmail.com", "123");
     }
 
     @Test void removeUser() throws IOException {
         System.out.println("Removing user...");
-        Jsonworker.removeUser("test@gmail.com");
+        Jsonworker.removeUser("testing@gmail.com");
     }
 
     @Test

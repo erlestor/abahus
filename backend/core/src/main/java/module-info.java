@@ -1,6 +1,7 @@
 module core {
     requires com.fasterxml.jackson.databind;
-    requires jsonworker;
     exports core;
+    exports jsonworker;
     opens core;
+    opens jsonworker;
 }
