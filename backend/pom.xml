@@ -78,6 +78,5 @@
     <modules>
         <module>core</module>
         <module>ui</module>
-        <module>jsonworker</module>
     </modules>
 </project>

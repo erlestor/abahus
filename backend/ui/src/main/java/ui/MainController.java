@@ -1,7 +1,6 @@
 package ui;
 
-import jsonworker.*;
-import core.Main;
+import core.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;

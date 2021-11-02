@@ -1,8 +1,6 @@
 package core;
 
-import jsonworker.Jsonworker;
-import jsonworker.User;
-import jsonworker.House;
+import jsonworker.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
