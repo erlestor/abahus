@@ -1,7 +1,7 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { ImHome } from "react-icons/im";
-import "./header.css";
+import React from "react"
+import { Link } from "react-router-dom"
+import { ImHome } from "react-icons/im"
+import "./header.css"
 
 const Header = () => {
   return (
@@ -15,7 +15,7 @@ const Header = () => {
         Sign in
       </Link>
     </div>
-  );
-};
+  )
+}
 
-export default Header;
+export default Header
