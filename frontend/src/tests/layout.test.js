@@ -24,7 +24,7 @@ describe("Layout", () => {
     cy.get(".layout").next().should("have.class", "footerContainer")
   })
 
-  it("Children are rendererd", () => {
+  it("Children are rendered", () => {
     setup()
 
     cy.get(".layout").find("h").contains("Heisann")
