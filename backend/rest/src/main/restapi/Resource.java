@@ -14,9 +14,7 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import backend.core.AbstractBackend;
-import backend.core.House; 
-import backend.core.User;
+import backend.core.AbstractMain;
 import backend.core.Main;
 import backend.core.Model; 
 import backend.jsonworker.Persistence; 
@@ -29,7 +27,7 @@ public class Resource {
 
   private final Model Model;
   private final String name;
-  private final AbstractBackend backend; //endre alle disse 
+  private final AbstractMain main; //endre alle disse 
 
   @Context
   private Persistence persistence;
@@ -46,18 +44,18 @@ public class Resource {
     this.backend = backend;
   }
 
-  private void checkBackend() {
-    if (this.backend == null) {
-      throw new IllegalArgumentException("No House named \"" + name + "\"");
-    }
+  private void checkMain() {
+      if (this.main == null) {
+        throw new IllegalArgumentException("No House named \"" + name + "\"");
+      }
   }
 
  
   @GET
-  public AbstractBackend getBackend() {
-    checkBackend();
-    LOG.debug("getBackend({})", name);
-    return this.backend;
+  public AbstractMain getMain() {
+    checkMain();
+    LOG.debug("getMain({})", name);
+    return this.main;
   }
 
   private void autoSaveModel() {
@@ -73,37 +71,37 @@ public class Resource {
  
   @PUT
   @Consumes(MediaType.APPLICATION_JSON)
-  public boolean putBackend(AbstractBackend BackendArg) {
-    LOG.debug("putBackend({})", BackendArg);
-    AbstractBackend oldBackend = this.model.putBackend(BackendArg);
+  public boolean putMain(AbstractMain mainArg) {
+    LOG.debug("putMain({})", mainArg);
+    AbstractMain oldMain = this.model.putMain(mainArg);
     autoSaveModel();
-    return oldBackend == null;
+    return oldMain == null;
   }
 
  
   @PUT
-  public boolean putBackend() {
-    return putBackend(new Backend(name));
+  public boolean putMain() {
+    return putMain(new Main(name));
   }
 
   
   @POST
   @Path("/rename")
-  public boolean renameBackend(@QueryParam("newName") String newName) {
-    checkBackend();
-    if (this.model.getBackend(newName) != null) {
+  public boolean renameMain(@QueryParam("newName") String newName) {
+    checkMain();
+    if (this.model.getMain(newName) != null) {
       throw new IllegalArgumentException("A house named \"" + newName + "\" already exists");
     }
-    this.backend.setName(newName);
+    this.main.setName(newName);
     autoSaveModel();
     return true;
   }
 
  
   @DELETE
-  public boolean removeBackend() {
-    checkBackend();
-    this.model.removeBackend(this.backend);
+  public boolean removeMain() {
+    checkMain();
+    this.model.removeMain(this.main);
     autoSaveModel();
     return true;
   }

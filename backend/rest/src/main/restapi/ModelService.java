@@ -8,11 +8,11 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import backend.core.AbstractBackend; 
+import backend.core.AbstractMain; 
 import backend.core.Model;
 import backend.jsonworker.Persistence; 
-import backend.core.House; 
-import backend.core.User;
+//import backend.core.House; 
+//import backend.core.User;
 import backend.core.Main;
 
 
@@ -43,11 +43,11 @@ public class ModelService {
     }
 
     @Path("/usikker på hva som skal inn her")
-    public Resource getBackend (@PathParam("name" String name)) {
-        AbstractBackend backend = getModel().getBackend(name);
-        LOG.debug("Sub-resource for Backend " + name + ":" + backend);
-        Resource resource = new Resource(model, name, backend);
-        resource.setPersistence(Persistence);
+    public Resource getMain (@PathParam("name" String name)) {
+        AbstractMain main = getModel().getMain(name);
+        LOG.debug("Sub-resource for Backend " + name + ":" + main);
+        Resource resource = new Resource(model, name, main);
+        resource.setPersistence(persistence);
         return resource;
     }
 
