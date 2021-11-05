@@ -1,4 +1,4 @@
-package gr2129.restapi;
+package rest.restapi;
 
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
