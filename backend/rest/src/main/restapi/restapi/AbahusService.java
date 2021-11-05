@@ -1,69 +1,31 @@
-package rest.restapi;
+package backend.restapi;
 
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.core.Context;
-import jakarta.ws.rs.core.MediaType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import backend.core.AbstractMain; 
-import backend.core.Model;
-import backend.jsonworker.Persistence; 
-import backend.core.Main;
+import backend.core.User; 
 
 
-@Path (ModelService.MODEL_SERVICE_PATH)
-@Procedures (MediaType.APPLICATION_JSON)
-public class ModelService {
 
-    public static final String MODEL_SERVICE_PATH = "lagdette?";
+@Path(AbahusService.ABAHUS_SERVICE_PATH)
+@Path ("/json/user")
+public class AbahusService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ModelService.class);
+    private String email;
+    private String password; 
 
-    @Context
-    private Model model;
 
-    @Context
-    private Persistence persistence;
-
-    @GET
-    public Model getModel(){
-        LOG.debug("getModel: " + model);
-        return model; 
+    @GET 
+    @Path ("/get")
+    @Produces ("app/json")
+    public User getUserinJSON(){
+        User user = new User(email, password);
+        user.getEmail();
+        user.getPassword();
     }
 
-    @Path
-    public SettingsResource getSettings(){
-        LOG.debug("Sub-resource for Settings");
-        return new SettingsResource(model);
-    }
+    @Path ("/json/logIn")
 
-    @Path("/house")
-    public Resource getMain (@PathParam("name" String name)) {
-        AbstractMain main = getModel().getMain(name);
-        LOG.debug("Sub-resource for Backend " + name + ":" + main);
-        Resource resource = new Resource(model, name, main);
-        resource.setPersistence(persistence);
-        return resource;
-    }
+    @Path ("json/house")
 
-    @Path("/user")
-    public Resource getUser (@PathParam ("user") String user) {
-        
-        Resource resource = 
-    }
-
-
-
-
-
-
-    
-
-    
-
+   
 
 
 
