@@ -12,3 +12,6 @@ org.eclipse.*.prefs
 
 # frontend
 frontend/node_modules
+
+# cypress
+**/videos/test/**
