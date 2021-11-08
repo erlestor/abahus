@@ -4,6 +4,10 @@ Written in react
 
 ## How to run tests
 
-Run the command "npx cypress run-ct" inside "frontend"
+### In command line
 
-If you want to see the tests visually run "npx cypress open-ct" instead
+- Run the command "npm test" inside "frontend"
+
+### In seperate window
+
+- Run the command "npm run open-tests" instead
