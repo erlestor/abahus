@@ -40,19 +40,19 @@ public class RestApplication {
  
 	@GetMapping("/logIn")
 	public String logIn(@RequestParam(value = "email", defaultValue = "email") String email) throws JsonParseException, JsonMappingException, IOException {
-		Main m = new Main("1@2.com", "123");
+		Main m = new Main("1@2345.com", "123");
 		return String.format("user: %s!", m.getCurrentUser());
 	}
 
 
-	/*
+	
 	//funker ikke
 	@DeleteMapping("/removeHouse")
 	public String removeHouse(@RequestParam(value= "house", defaultValue= "house??") String location, String email, String password ) throws IOException {
 		House house = jsonworker.removeHouse(location, email);
 		return house + "is deleted";  
 	}
-	*/
+	
 
 	@GetMapping("/houses")
 	public ArrayList<House> getHouses() throws JsonParseException, JsonMappingException, IOException {
@@ -62,16 +62,16 @@ public class RestApplication {
 	
 
 
-/*
+	/*
 	//funnker ikke
 	@PostMapping(path = "/addHouse", 
-			consumes = MediaType.APPLICATION_JSON_VALUE
-			produces = MediaType.APPLICATION_JSON_VALUE)
+			consumes = MediaType.APPLICATION_JSON_VALUE,
+			produces = MediaType.APPLICATION_JSON_VALUE);
 	public ResponseEntity<House> addNewHouse(@RequestBody House newHouse) throws JsonParseException, JsonMappingException, IOException, IllegalArgumentException {
 		House house = 
 		jsonworker.addHouse(location, email);
 	}
+	*/
 
-*/
 
 }
