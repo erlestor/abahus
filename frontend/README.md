@@ -1,4 +1,5 @@
 # Frontend
+
 Written in react. Created using facebook's create-react-app.
 Configured for tailwindcss as a replacement for normal css.
 
@@ -16,4 +17,4 @@ Configured for tailwindcss as a replacement for normal css.
 
 ### In seperate window
 
-- Run the command "npm run open-tests" instead
+- Run the command "npm run open-tests" inside "frontend"
