@@ -1,10 +1,10 @@
-import React from "react";
-import "./landing.css";
-import House from "./house";
-import Layout from "./layout";
+import React from "react"
+import "./landing.css"
+import House from "./house"
+import Layout from "./layout"
 
 function LandingPage({ houses }) {
-  console.log({ houses });
+  console.log({ houses })
   return (
     <Layout>
       <div className="page">
@@ -19,7 +19,7 @@ function LandingPage({ houses }) {
         </div>
       </div>
     </Layout>
-  );
+  )
 }
 
-export default LandingPage;
+export default LandingPage
