@@ -13,3 +13,11 @@
 .header h1 {
   @apply p-0 text-4xl leading-normal;
 }
+
+.header h2 {
+  @apply p-0 text-3xl leading-normal;
+}
+
+.user {
+  @apply flex items-center align-middle space-x-4;
+}

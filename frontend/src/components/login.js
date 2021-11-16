@@ -1,22 +1,19 @@
-import React, { useState } from "react";
-import Layout from "./layout";
-import "./login.css";
+import React, { useState } from "react"
+import "./login.css"
 
 const login = () => {
   return (
-    <Layout>
-      <div className="forms-container">
-        <RegisterForm />
-        <LoginForm />
-      </div>
-    </Layout>
-  );
-};
+    <div className="forms-container">
+      <RegisterForm />
+      <LoginForm />
+    </div>
+  )
+}
 
 const RegisterForm = () => {
-  const [email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
-  const [confirmPass, setConfirmPass] = useState("");
+  const [email, setEmail] = useState("")
+  const [pass, setPass] = useState("")
+  const [confirmPass, setConfirmPass] = useState("")
 
   return (
     <form className="registerForm">
@@ -41,12 +38,12 @@ const RegisterForm = () => {
       />
       <button>Register</button>
     </form>
-  );
-};
+  )
+}
 
 const LoginForm = () => {
-  const [email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
+  const [email, setEmail] = useState("")
+  const [pass, setPass] = useState("")
 
   return (
     <form className="loginForm">
@@ -65,7 +62,7 @@ const LoginForm = () => {
       />
       <button>Log in</button>
     </form>
-  );
-};
+  )
+}
 
-export default login;
+export default login

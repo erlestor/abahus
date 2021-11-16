@@ -15,7 +15,7 @@
 }
 
 .house {
-  @apply border-2 border-gray-400 rounded-xl p-4 flex items-center  h-24 space-x-4  my-4 text-2xl;
+  @apply text-left border-2 border-gray-400 rounded-xl p-4 flex items-center  h-24 space-x-4  my-4 text-2xl;
 }
 
 .house-location {
@@ -24,4 +24,12 @@
 
 .divider {
   @apply w-4;
+}
+
+.btn {
+  @apply p-3 rounded-xl bg-red-500;
+}
+
+.houses-group {
+  @apply flex flex-col items-center space-y-4 text-center;
 }

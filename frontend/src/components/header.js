@@ -1,9 +1,10 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import { ImHome } from "react-icons/im"
+import { FaUserCircle } from "react-icons/fa"
 import "./header.css"
 
-const Header = () => {
+const Header = ({ user }) => {
   return (
     <div className="header">
       <Link to="/" className="flex space-x-4">
@@ -11,9 +12,16 @@ const Header = () => {
         <h1>Abahus</h1>
       </Link>
 
-      <Link to="/login" className="signInButton">
-        Sign in
-      </Link>
+      {user ? (
+        <div className="user">
+          <FaUserCircle size="50" />
+          <h2>{user.email}</h2>
+        </div>
+      ) : (
+        <Link to="/login" className="signInButton">
+          Sign in
+        </Link>
+      )}
     </div>
   )
 }
