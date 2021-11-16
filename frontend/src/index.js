@@ -25,7 +25,7 @@ const RouterConfig = () => {
   return (
     <React.StrictMode>
       <Router>
-        <Layout user={user}>
+        <Layout user={user} setUser={setUser}>
           <Switch>
             <Route path="/" exact>
               <Landing houses={houses} user={user} />
