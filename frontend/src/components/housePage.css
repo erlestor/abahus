@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.page {
+  @apply flex flex-col justify-center items-center text-left my-8 space-y-8;
+}
+
+.location {
+  @apply text-4xl;
+}
+
+.btn {
+  @apply bg-red-500 p-3 text-white font-bold rounded-xl text-xl;
+}

@@ -1,13 +1,13 @@
 import React from "react"
 import "./landing.css"
 import House from "./house"
-import Layout from "./layout"
+import { Link } from "react-router-dom"
 
-function LandingPage({ houses }) {
+function LandingPage({ houses, user }) {
   console.log({ houses })
   return (
-    <Layout>
-      <div className="page">
+    <div className="page">
+      <div className="houses-group">
         <h2>Available houses</h2>
         <div className="houses">
           {houses.map((house) => (
@@ -18,7 +18,29 @@ function LandingPage({ houses }) {
           ))}
         </div>
       </div>
-    </Layout>
+      {user && (
+        <div className="houses-group">
+          <h2>Your houses</h2>
+          <Link to="add-house" className="btn">
+            Add new house
+          </Link>
+          <div className="houses">
+            {houses.map((house) => (
+              <>
+                {house.user.email === user.email ? (
+                  <>
+                    <House house={house} />
+                    <div className="divider" />
+                  </>
+                ) : (
+                  <></>
+                )}
+              </>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
   )
 }
 
