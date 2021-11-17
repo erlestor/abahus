@@ -35,43 +35,43 @@ import java.util.ArrayList;
 @RestController
 public class RestApplication {
 
-	private Jsonworker jsonworker; 
-	private User user;
-
+	private Main m;
 
 	public static void main(String[] args) {
 		SpringApplication.run(RestApplication.class, args);
 	}
 
+	/*
 	@GetMapping("/users")
 	public ArrayList<User> getUsers() throws JsonParseException, JsonMappingException, IOException {
 		ArrayList<User> allUsers = jsonworker.getAllUsers();
 		return allUsers; 
-	}
+	}*/
 
 	@GetMapping("/registerUser")
 	public User registerUser(@RequestParam(value = "email", defaultValue = "email") String email) throws JsonParseException, JsonMappingException, IOException {
-		Main m = new Main("1@234.com", "123", "123");
-		this.user = m.getCurrentUser();
-		return m.getCurrentUser();
+		this.m = new Main("1@234.com", "123", "123");
+		return this.m.getCurrentUser();
 		//String.format("user: %s!", m.getCurrentUser());
 	}
  
 	@GetMapping("/logIn")
 	public User logIn(@RequestParam(value = "email", defaultValue = "email") String email) throws JsonParseException, JsonMappingException, IOException {
-		Main m = new Main("1@2345.com", "123");
-		this.user = m.getCurrentUser();
+		this.m = new Main("1@2345.com", "123");
 		return m.getCurrentUser();
 		//String.format("user: %s!", m.getCurrentUser());
 	}
 
 	//denne metoden funker, men vi trenger noen feilmeldinger inni her et sted
 	@ResponseBody @RequestMapping(value="/removeHouse/{location}", method=RequestMethod.GET)
-	public String removeHouse(@PathVariable("location") String location, @RequestBody User user) throws IOException {
-	
+	public String removeHouse(@PathVariable("location") String location) throws IOException {
+		if (this.m == null){
+			return "You are not logged in";
+		}
+
 		String l = location.replace('_', ' ');
 
-		ArrayList<House> houses = Jsonworker.getAllHouses();
+		List<House> houses = m.getHousing();
 		List<House> hStream = houses.stream().filter(house -> house.getLocation().equals(l))
 				.collect(Collectors.toList());
 			if (hStream.size() < 1) {
@@ -79,25 +79,25 @@ public class RestApplication {
 			}
 
 			House h = hStream.get(0);
-
-			if (!h.getUser().equals(user)){
+			
+			if (!h.getUser().getEmail().equals(m.getCurrentUser().getEmail())){
 				return "The house is not registered to this user";
 			}
 
-			Jsonworker.removeHouse(l, user.getEmail());
+			m.removeHouse(h);
 			return h.toString() + "is deleted";  
 	}
 
-	@RequestMapping(value = "/house/{location}", method=RequestMethod.GET)
+	@RequestMapping(value = "/getHouse/{location}", method=RequestMethod.GET)
 	public String getHouse(@PathVariable("location") String location) throws IOException {
 
 		String l = location.replace('_', ' ');
 		
-		ArrayList<House> houses = Jsonworker.getAllHouses();
+		List<House> houses = m.getHousing();
 		List<House> hStream = houses.stream().filter(house -> house.getLocation().equals(l))
 				.collect(Collectors.toList());
 			if (hStream.size() < 1) {
-				return "can not get House";
+				return "House is not registered";
 			}
 
 			House h = hStream.get(0);
@@ -106,16 +106,19 @@ public class RestApplication {
 
 	
 	@GetMapping("/houses")
-	public ArrayList<House> getHouses() throws JsonParseException, JsonMappingException, IOException {
-		ArrayList<House> allHouses = jsonworker.getAllHouses();
+	public List<House> getHouses() throws JsonParseException, JsonMappingException, IOException {
+		List<House> allHouses = m.getHousing();
 		return allHouses; 
 	}
 
 	
 	@ResponseBody @RequestMapping("/addHouse/{location}")
-	public String addHouse(@PathVariable("location") String location, @RequestBody User user) throws  IOException{
-		House h = jsonworker.addHouse(location , user.getEmail());
-		return (h.toString() + "is added"); 
+	public String addHouse(@PathVariable("location") String location) throws  IOException{
+		if (this.m == null){
+			return "You are not logged in";
+		}
+		m.hostNewHouse(location);
+		return "House is added";
 	}
 	
 
