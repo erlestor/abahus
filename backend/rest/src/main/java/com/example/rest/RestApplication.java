@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import core.Main;
@@ -32,17 +34,17 @@ public class RestApplication {
 		SpringApplication.run(RestApplication.class, args);
 	}
 
-
-
 	@GetMapping("/registerUser")
-	public User registerUser(@RequestParam(value = "email", defaultValue = "email") String email) throws JsonParseException, JsonMappingException, IOException {
-		this.m = new Main("1@234.com", "123", "123");
+	public User registerUser(@RequestBody Map<String, String> request) throws JsonParseException, JsonMappingException, IOException {
+		
+		this.m = new Main(request.get("email"), request.get("password"), request.get("confirmPassword"));
 		return this.m.getCurrentUser();
 	}
  
 	@GetMapping("/logIn")
-	public User logIn(@RequestParam(value = "email", defaultValue = "email") String email) throws JsonParseException, JsonMappingException, IOException {
-		this.m = new Main("1@2345.com", "123");
+	public User logIn(@RequestBody Map<String, String> request) throws JsonParseException, JsonMappingException, IOException {
+		
+		this.m = new Main(request.get("email"), request.get("password"));
 		return m.getCurrentUser();
 		
 	}
