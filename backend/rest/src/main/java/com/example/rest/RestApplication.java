@@ -54,7 +54,7 @@ public class RestApplication {
 		Main m = new Main("1@234.com", "123", "123");
 		this.user = m.getCurrentUser();
 		return m.getCurrentUser();
-		//String.format("user: %s!", m.getCurrentUser());
+		
 	}
  
 	@GetMapping("/logIn")
@@ -62,7 +62,7 @@ public class RestApplication {
 		Main m = new Main("1@2345.com", "123");
 		this.user = m.getCurrentUser();
 		return m.getCurrentUser();
-		//String.format("user: %s!", m.getCurrentUser());
+		
 	}
 
 	//denne metoden funker, men vi trenger noen feilmeldinger inni her et sted
