@@ -41,12 +41,7 @@ public class RestApplication {
 		SpringApplication.run(RestApplication.class, args);
 	}
 
-	/*
-	@GetMapping("/users")
-	public ArrayList<User> getUsers() throws JsonParseException, JsonMappingException, IOException {
-		ArrayList<User> allUsers = jsonworker.getAllUsers();
-		return allUsers; 
-	}*/
+
 
 	@GetMapping("/registerUser")
 	public User registerUser(@RequestParam(value = "email", defaultValue = "email") String email) throws JsonParseException, JsonMappingException, IOException {
@@ -61,7 +56,7 @@ public class RestApplication {
 		
 	}
 
-	//denne metoden funker, men vi trenger noen feilmeldinger inni her et sted
+	/
 	@ResponseBody @RequestMapping(value="/removeHouse/{location}", method=RequestMethod.GET)
 	public String removeHouse(@PathVariable("location") String location) throws IOException {
 		if (this.m == null){
