@@ -50,16 +50,8 @@ public class RestApplication {
 
 	@GetMapping("/registerUser")
 	public User registerUser(@RequestParam(value = "email", defaultValue = "email") String email) throws JsonParseException, JsonMappingException, IOException {
-<<<<<<< HEAD
 		this.m = new Main("1@234.com", "123", "123");
 		return this.m.getCurrentUser();
-		//String.format("user: %s!", m.getCurrentUser());
-=======
-		Main m = new Main("1@234.com", "123", "123");
-		this.user = m.getCurrentUser();
-		return m.getCurrentUser();
-		
->>>>>>> fb3e553aa882764c899b052c5700a99ad9b94231
 	}
  
 	@GetMapping("/logIn")
