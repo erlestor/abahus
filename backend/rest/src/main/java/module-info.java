@@ -1,0 +1,15 @@
+module rest {
+    requires core;
+    requires com.fasterxml.jackson.databind;
+    requires spring.beans;
+    requires spring.core;
+    requires spring.context;
+    requires spring.web;
+    requires spring.webmvc;
+    requires spring.boot;
+    requires spring.boot.autoconfigure;
+    //requires springframework.databind;
+    //requires springframework.web.bind.annotation;
+    exports rest;
+    opens rest;
+}
