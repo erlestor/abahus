@@ -118,7 +118,7 @@ public class Main {
 
         List<House> myHouses = getMyHouses();
 
-        for(h in myHouses){
+        for (House h : myHouses) {
             removeHouse(h);
         }
         Jsonworker.removeUser(user.getEmail());
