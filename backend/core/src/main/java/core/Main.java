@@ -115,6 +115,12 @@ public class Main {
     }
 
     public void removeUser(User user) throws IOException {
+
+        List<House> myHouses = getMyHouses();
+
+        for(h in myHouses){
+            removeHouse(h);
+        }
         Jsonworker.removeUser(user.getEmail());
         loadJson();
 
