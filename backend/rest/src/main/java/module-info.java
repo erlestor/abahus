@@ -1,5 +1,5 @@
 module rest {
-    requires core;
+    requires transitive core;
     requires com.fasterxml.jackson.databind;
     requires spring.beans;
     requires spring.core;
