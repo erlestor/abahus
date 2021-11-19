@@ -94,9 +94,6 @@ public class Main {
     }
 
     public void hostNewHouse(String location) throws JsonParseException, JsonMappingException, IllegalArgumentException, IOException {
-        if (this.currentUser== null){
-            throw new IllegalStateException("you are not logged in");
-        }
         // må sjekke om lokasjonen er unik
         if (getHousesWithFilter(house -> house.getLocation().equals(location)).size() > 0)
             throw new IllegalArgumentException("this house is already registered");
@@ -126,6 +123,11 @@ public class Main {
         if (this.currentUser== null){
             throw new IllegalStateException("you are not logged in");
         }
+
+        if (!house.getUser().getEmail().equals(getCurrentUser().getEmail())){
+            throw new IllegalArgumentException("Its not your house");
+        }
+
         Jsonworker.removeHouse(house.getLocation(), house.getUser().getEmail());
         loadJson();
     }
