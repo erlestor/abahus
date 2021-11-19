@@ -114,10 +114,6 @@ public class Main {
         loadJson();
     }
 
-    private ArrayList<User> getAllUsers(){
-        return jsonworker.getAllUsers();
-    }
-
     public void removeUser(User user) throws IOException {
         Jsonworker.removeUser(user.getEmail());
         loadJson();
