@@ -104,6 +104,17 @@ public class RestApplication {
 		m.hostNewHouse(location);
 		return "House is added";
 	}
+
+	@ResponseBody @RequestMapping(value="/removeUser", method=RequestMethod.GET)
+    public String removeUser() throws IOException {
+
+        if(this.m == null){
+            return "you are not logged in";
+        }
+        m.removeUser(m.getCurrentUser());
+        return m.getCurrentUser().toString() + "is deleted";  
+    }
+
 	
 
 
