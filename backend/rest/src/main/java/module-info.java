@@ -8,8 +8,7 @@ module rest {
     requires spring.webmvc;
     requires spring.boot;
     requires spring.boot.autoconfigure;
-    //requires springframework.databind;
-    //requires springframework.web.bind.annotation;
+    
     exports rest;
     opens rest;
 }
