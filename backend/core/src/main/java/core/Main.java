@@ -114,11 +114,14 @@ public class Main {
         loadJson();
     }
 
-    /*
-    public static void main(String[] args) throws JsonParseException, JsonMappingException, IOException {
-        Main program = new Main("erl@mail.com", "123", "123");
-        program.hostNewHouse("adresse 72b");
-        System.out.println(program.getAvailableHousing());
+    private ArrayList<User> getAllUsers(){
+        return jsonworker.getAllUsers();
     }
-    */
+
+    public void removeUser(User user) throws IOException {
+        Jsonworker.removeUser(user.getEmail());
+        loadJson();
+
+    }
+
 }
