@@ -49,7 +49,7 @@ public class RestApplication {
 
 	@ResponseBody @RequestMapping(value="/removeHouse/{location}", method=RequestMethod.GET)
 	public String removeHouse(@PathVariable("location") String location) throws IOException {
-		if (this.m == null){
+		if (this.m == null || this.m.getCurrentUser() == null){
 			return "You are not logged in";
 		}
 
@@ -74,6 +74,7 @@ public class RestApplication {
 
 	@RequestMapping(value = "/getHouse/{location}", method=RequestMethod.GET)
 	public String getHouse(@PathVariable("location") String location) throws IOException {
+		this.m = new Main();
 
 		String l = location.replace('_', ' ');
 		
@@ -91,6 +92,7 @@ public class RestApplication {
 	
 	@GetMapping("/houses")
 	public List<House> getHouses() throws JsonParseException, JsonMappingException, IOException {
+		this.m = new Main();
 		List<House> allHouses = m.getHousing();
 		return allHouses; 
 	}
@@ -98,7 +100,7 @@ public class RestApplication {
 	
 	@ResponseBody @RequestMapping("/addHouse/{location}")
 	public String addHouse(@PathVariable("location") String location) throws  IOException{
-		if (this.m == null){
+		if (this.m == null || this.m.getCurrentUser() == null){
 			return "You are not logged in";
 		}
 		m.hostNewHouse(location);
@@ -108,7 +110,7 @@ public class RestApplication {
 	@ResponseBody @RequestMapping(value="/removeUser", method=RequestMethod.GET)
     public String removeUser() throws IOException {
 
-        if(this.m == null){
+        if(this.m == null || this.m.getCurrentUser() == null){
             return "you are not logged in";
         }
         m.removeUser(m.getCurrentUser());
