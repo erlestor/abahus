@@ -1,6 +1,7 @@
 package core;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -38,7 +39,7 @@ public class MainTest {
 
 		assertEquals("hei@hei.com", main1.getCurrentUser().getEmail());
 		
-		main1.removeUser(main1.getCurrentUser());
+		main1.removeUser();
 	}
 
 	//Sjekker at login funker slik det skal og at man ikke kan logge inn med en bruker som ikke finnes
@@ -90,24 +91,41 @@ public class MainTest {
 	}
 	
 	@Test
-	public void testHostNewHouse() throws JsonParseException, JsonMappingException, IllegalArgumentException, IOException{
+	public void testHostNewHouseNoFiles() throws JsonParseException, JsonMappingException, IllegalArgumentException, IOException{
 		assertThrows(IllegalStateException.class, () -> {mainNoUser.hostNewHouse("Gløshausen");});
 		
 		assertThrows(IllegalArgumentException.class, () -> {main.hostNewHouse("location");});
 		assertThrows(IllegalArgumentException.class, () -> {main.hostNewHouse("Oscar Wistings vei 6");});
-		/*
+	}
+	
+	@Test
+	public void testHostAndRemoveHouseFiles() throws JsonParseException, JsonMappingException, IllegalArgumentException, IOException{
+		
 		main.hostNewHouse("Gløshaugen");
 
 		assertEquals(1, 
 		main.getHousing().stream().filter(h -> h.getLocation().equals("Gløshaugen")).collect(Collectors.toList()).size());
-		*/
+		
+		List<House> availableHouses = getAllAvailableHouses();
+		
+		List<House> myHouses = availableHouses.stream()
+			.filter(h -> h.getUser().getEmail().equals(main.getCurrentUser().getEmail())).collect(Collectors.toList());
+
+		House house = null;
+		for (House h: myHouses){
+			if (h.getLocation().equals("Gløshaugen")){
+				house = h;
+			}
+		}
+
+		main.removeHouse(house); 
+
 	}
 	
-
-	
 	@Test
-	public void removeHouse() throws IOException{
-		List<House> availableHouses = main.getAvailableHousing();
+	public void testRemoveHouseNoFiles() throws IOException{
+		
+		List<House> availableHouses = getAllAvailableHouses();
 
 		if (availableHouses.size() > 0){
 			assertThrows(IllegalStateException.class, () -> {mainNoUser.removeHouse(availableHouses.get(0));});
@@ -115,28 +133,30 @@ public class MainTest {
 
 		List<House> notMyHouses = availableHouses.stream()
 			.filter(h -> !h.getUser().getEmail().equals(main.getCurrentUser().getEmail())).collect(Collectors.toList());
-		List<House> myHouses = availableHouses.stream()
-			.filter(h -> h.getUser().getEmail().equals(main.getCurrentUser().getEmail())).collect(Collectors.toList());
-
+		
 		if (notMyHouses.size() > 0){
 			assertThrows(IllegalArgumentException.class, () -> {main.removeHouse(notMyHouses.get(0));});
 		}
-
-		House house = null;
-		for (House h: availableHouses){
-			if (h.getLocation().equals("Gløshaugen")){
-				house = h;
-			}
-		}
-
-		//main.removeHouse(house); Denne funker ikke og må nesten funke
 		
 	}
 	
 
 	@Test
-	public void removeUser(){
-		
+	public void removeUser() throws JsonParseException, JsonMappingException, IllegalArgumentException, IOException{
+		assertThrows(IllegalStateException.class, () -> {mainNoUser.removeUser();});
+
+		Main main2 = new Main("h@e.ii", "hei", "hei");
+		main2.hostNewHouse("Ikke et hus");
+		main2.removeUser();
+
+		List<House> allHouses = main.getHousing();
+		for (House h: allHouses){
+			assertNotEquals("h@e.i", h.getUser().getEmail());
+		}
+	}
+
+	private List<House> getAllAvailableHouses(){
+		return main.getHousing().stream().filter(house -> house.isAvailable()).collect(Collectors.toList());
 	}
 
 }

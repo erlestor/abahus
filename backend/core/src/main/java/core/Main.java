@@ -132,7 +132,7 @@ public class Main {
         loadJson();
     }
 
-    public void removeUser(User user) throws IOException {
+    public void removeUser() throws IOException {
         if (this.currentUser== null){
             throw new IllegalStateException("you are not logged in");
         }
@@ -141,7 +141,7 @@ public class Main {
         for (House h : myHouses) {
             removeHouse(h);
         }
-        Jsonworker.removeUser(user.getEmail());
+        Jsonworker.removeUser(this.currentUser.getEmail());
         loadJson();
         this.currentUser = null;
 
