@@ -113,7 +113,7 @@ public class RestApplication {
         if(this.m == null || this.m.getCurrentUser() == null){
             return "you are not logged in";
         }
-        m.removeUser(m.getCurrentUser());
+        m.removeUser();
         return m.getCurrentUser().toString() + "is deleted";  
     }
 
