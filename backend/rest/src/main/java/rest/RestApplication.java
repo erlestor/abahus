@@ -16,10 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.HashMap;
 
-import core.Main;
-import core.House;
-import core.User; 
+import core.*;
 
 
 @SpringBootApplication
@@ -33,17 +32,16 @@ public class RestApplication {
 	}
 
 
-
 	@GetMapping("/registerUser")
-	public User registerUser(@RequestParam(value = "email", defaultValue = "email") String email) throws JsonParseException, JsonMappingException, IOException {
+	public String registerUser(@RequestParam(value = "email", defaultValue = "email") String email) throws JsonParseException, JsonMappingException, IOException {
 		this.m = new Main("1@234.com", "123", "123");
-		return this.m.getCurrentUser();
+		return this.m.getCurrentUser().getEmail();
 	}
  
 	@GetMapping("/logIn")
-	public User logIn(@RequestParam(value = "email", defaultValue = "email") String email) throws JsonParseException, JsonMappingException, IOException {
+	public String logIn(@RequestParam(value = "email", defaultValue = "email") String email) throws JsonParseException, JsonMappingException, IOException {
 		this.m = new Main("1@2345.com", "123");
-		return m.getCurrentUser();
+		return m.getCurrentUser().getEmail();
 		
 	}
 
@@ -81,20 +79,26 @@ public class RestApplication {
 		List<House> houses = m.getHousing();
 		List<House> hStream = houses.stream().filter(house -> house.getLocation().equals(l))
 				.collect(Collectors.toList());
-			if (hStream.size() < 1) {
-				return "House is not registered";
-			}
+		if (hStream.size() < 1) {
+			return "House is not registered";
+		}
 
-			House h = hStream.get(0);
-			return h.toString(); 
+		House h = hStream.get(0);
+		return h.toString(); 
 	} 
 
 	
 	@GetMapping("/houses")
-	public List<House> getHouses() throws JsonParseException, JsonMappingException, IOException {
-		this.m = new Main();
+	public HashMap<String, String> getHouses() throws JsonParseException, JsonMappingException, IOException {
+		//this.m = new Main();
 		List<House> allHouses = m.getHousing();
-		return allHouses; 
+
+		HashMap<String, String> houseMap = new HashMap<String, String>();
+
+		for (House h: allHouses){
+			houseMap.put(h.getLocation(), h.getUser().getEmail());
+		}
+		return houseMap; 
 	}
 
 	
@@ -113,8 +117,10 @@ public class RestApplication {
         if(this.m == null || this.m.getCurrentUser() == null){
             return "you are not logged in";
         }
-        m.removeUser(m.getCurrentUser());
-        return m.getCurrentUser().toString() + "is deleted";  
+		String eMail = m.getCurrentUser().getEmail();
+        m.removeUser();
+
+        return eMail + " is deleted";  
     }
 
 	
