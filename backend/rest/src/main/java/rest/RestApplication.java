@@ -7,12 +7,15 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,7 +35,15 @@ public class RestApplication {
 		SpringApplication.run(RestApplication.class, args);
 	}
 
-
+	@Bean
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/**").allowedMethods("*").allowedOrigins("http://localhost:3000");
+			}
+		};
+	}
 
 	@GetMapping("/registerUser")
 	public User registerUser(@RequestParam(value = "email", defaultValue = "email") String email) throws JsonParseException, JsonMappingException, IOException {
