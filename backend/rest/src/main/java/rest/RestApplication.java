@@ -9,8 +9,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -64,6 +62,12 @@ public class RestApplication {
 		Map<String, String> request = mapper.readValue(json, Map.class);
 		this.m = new Main(request.get("email"), request.get("password"));
 		return '"' + m.getCurrentUser().getEmail() + '"';
+	}
+
+	@GetMapping("/log")
+	public User log(@RequestParam(value = "email", defaultValue = "Email") String email) throws JsonParseException, JsonMappingException, IOException{
+		this.m = new Main("1@234.com", "123");
+		return m.getCurrentUser();
 	}
 
 	@DeleteMapping(value="/removeHouse/{location}")
@@ -121,23 +125,33 @@ public class RestApplication {
 	public String addHouse(@PathVariable("location") String location) throws  IOException{
 		if (this.m == null || this.m.getCurrentUser() == null){
 			throw new IllegalStateException("You are not logged in");
-		//	return "You are not logged in";
 		}
 		m.hostNewHouse(location);
 		return '"' + "'House is added'" + '"';
+	}
+
+	//Ikke enkapsulert
+	@PostMapping("/setAvailable/{location}/{available}")
+	public String setAvailable(@PathVariable("location") String location, @PathVariable("available") boolean available) throws  IOException{
+		this.m = new Main();
+		List<House> allHouses = m.getHousing();
+
+		for (House h: allHouses){
+			if (h.getLocation().equals(location)){
+				h.setAvailable(available);
+			}
+		}
+		return '"' + "'House is altered'" + '"';
 	}
 
 	@ResponseBody @RequestMapping(value="/removeUser", method=RequestMethod.GET)
     public String removeUser() throws IOException {
 
         if(this.m == null || this.m.getCurrentUser() == null){
-            return "you are not logged in";
+            throw new IllegalStateException("You are not logged in");
         }
         m.removeUser();
         return m.getCurrentUser().toString() + "is deleted";  
     }
-
-	
-
 
 }
