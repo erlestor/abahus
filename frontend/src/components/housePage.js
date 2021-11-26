@@ -55,7 +55,6 @@ const HousePage = ({ houses, user, fetchHouses }) => {
 
   return (
     <div className="page">
-      {handleToggleAvailability()}
       {house ? (
         <>
           <h1 className="location">{house.location}</h1>
