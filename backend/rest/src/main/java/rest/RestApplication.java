@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import core.*;
@@ -89,14 +90,18 @@ public class RestApplication {
 
 	
 	@GetMapping("/houses")
-	public HashMap<String, String> getHouses() throws JsonParseException, JsonMappingException, IOException {
+	public HashMap<String, List<Object>> getHouses() throws JsonParseException, JsonMappingException, IOException {
 		//this.m = new Main();
 		List<House> allHouses = m.getHousing();
 
-		HashMap<String, String> houseMap = new HashMap<String, String>();
+		HashMap<String, List<Object>> houseMap = new HashMap<String, List<Object>>();
 
 		for (House h: allHouses){
-			houseMap.put(h.getLocation(), h.getUser().getEmail());
+			List<Object> houseProperties= new ArrayList<Object>();
+			houseProperties.add(h.getUser().getEmail());
+			houseProperties.add(h.isAvailable());
+
+			houseMap.put(h.getLocation(), houseProperties);
 		}
 		return houseMap; 
 	}
