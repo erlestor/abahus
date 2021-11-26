@@ -35,3 +35,24 @@ The core module consits of multiple classes, implementing the core logic for the
 
 See image for illustation of the architecture of the modules.  
 ![diagram](diagram.png)
+
+## Git conventions
+
+- An issue should be either e user story or a specific technical issue. Eg. "add log-in form to frontend" and "make log in endpoint in rest-api". The issue should not include too many different files.
+- A branch is created when work is started on a specific issue. The branch should include the issue number. Eg. "2-add-login-form-to-frontend".
+- Commit messages should be concise. Instead of writing "added button and fixed filename" divide it up to two different commits.
+- When the issue is solved in the current branch a merge request is created with "Closes #issue_number" in its description. Another person then approves and tests the merge locally to make sure that the changes don't cause unexpected issues. Only then can it be merged.
+
+## Data
+
+User data is stored in json files. A user is a json object with username and password. A house is a json object with location, availability and the corresponding json user object.
+
+## Additional comments
+
+### Jsonworker
+
+We have chosen to use static methods in Jsonworker since the functions are equal for all instances of the class. This is because Jsonworker has no state and is simply a utility-class for writing to json.
+
+### Storage
+
+To store data a user needs to press a button instead of implicitly. This is because our data doesn't change that often. Eg. a house doesn't change location often and houses are not rented multiple times per day. This was written according to a remark from our student assistant.
