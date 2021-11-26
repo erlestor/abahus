@@ -11,9 +11,18 @@ public class AbahusService {
     
     private Main main;
 
-    public void setMain(Main main) throws JsonParseException, JsonMappingException, IOException{
-        this.main = new Main();
+    public AbahusService() throws JsonParseException, JsonMappingException, IOException{
+       this.main = new Main();
     }
+
+    public void logIn(String email, String passord){
+        this.main.logInUser(email, passord);
+    }
+
+    public void register(String email, String passord, String confirmPassord) throws IllegalArgumentException, IOException{
+        this.main.registerUser(email, passord, confirmPassord);
+    }
+
 
     public Main getMain(){
         return this.main;

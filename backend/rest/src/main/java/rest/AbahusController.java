@@ -31,21 +31,21 @@ public class AbahusController {
 	@Autowired
 	private AbahusService abahusService;
 	private Main m;
-	private ObjectMapper mapper = new ObjectMapper();
-
 
 	@PostMapping("/registerUser")
 	public String registerUser(@RequestBody String json) throws JsonParseException, JsonMappingException, IOException {
+		ObjectMapper mapper = new ObjectMapper();
 		Map<String, String> request = mapper.readValue(json, Map.class);
-		this.m = new Main(request.get("email"), request.get("password"), request.get("confirmPassword"));
-		return '"' + this.m.getCurrentUser().getEmail() + '"';
+		abahusService.register(request.get("email"), request.get("password"), request.get("confirmPassword"));
+		return '"' + abahusService.getMain().getCurrentUser().getEmail() + '"';
 	}
 
 	@PostMapping("/logIn")
 	public String logIn(@RequestBody String json) throws JsonParseException, JsonMappingException, IOException {
+		ObjectMapper mapper = new ObjectMapper();
 		Map<String, String> request = mapper.readValue(json, Map.class);
-		this.m = new Main(request.get("email"), request.get("password"));
-		return '"' + m.getCurrentUser().getEmail() + '"';
+		abahusService.logIn(request.get("email"), request.get("password"));
+		return '"' + abahusService.getMain().getCurrentUser().getEmail() + '"';
 	}
 
 	@DeleteMapping(value="/removeHouse/{location}")
