@@ -27,4 +27,4 @@ persistence - contains classes for writing to, and saving information in a file 
 The core module consits of multiple classes, implementing the core logic for the applications functionality. Since most methods in these classes Due to most classes in core are public, they can be called upon in the classes in other modules. This is done in the ui module to implement the logic in a graphical user interface. The persistence module creates objects of the core classes, and uses methods from them to implement correct file-manangement for the application. In this sense, the modules are codependent.
 
 See image for illustation of the architecture of the modules.  
-![packageDiagram](packageDiagram.png)
+![diagram](diagram.png)
