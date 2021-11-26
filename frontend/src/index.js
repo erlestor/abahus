@@ -30,7 +30,11 @@ const RouterConfig = () => {
         const locations = Object.keys(houseMap)
         for (const i in locations) {
           const location = locations[i]
-          houses.push({ location: location, user: houseMap[location] })
+          console.log(location)
+          console.log(houseMap[location])
+          const user = houseMap[location][0]
+          const available = houseMap[location][1]
+          houses.push({ location: location, user: user, available: available })
         }
         setHouses(houses)
       })
