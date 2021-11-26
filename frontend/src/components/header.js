@@ -4,6 +4,10 @@ import { ImHome } from "react-icons/im"
 import "./header.css"
 
 const Header = ({ user, setUser }) => {
+  const signOut = () => {
+    setUser("")
+    localStorage.setItem("user", "")
+  }
   return (
     <div className="header">
       <Link to="/" className="flex space-x-4">
@@ -12,13 +16,12 @@ const Header = ({ user, setUser }) => {
       </Link>
 
       {user ? (
-        <Link
-          onClick={() => setUser(null)}
-          to="/login"
-          className="signInButton"
-        >
-          Sign out
-        </Link>
+        <div className="logged-in">
+          <p>{user}</p>
+          <Link onClick={signOut} to="/login" className="signInButton">
+            Sign out
+          </Link>
+        </div>
       ) : (
         <Link to="/login" className="signInButton">
           Sign in
