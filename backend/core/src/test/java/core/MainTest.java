@@ -2,6 +2,8 @@ package core;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -142,7 +144,7 @@ public class MainTest {
 	
 
 	@Test
-	public void removeUser() throws JsonParseException, JsonMappingException, IllegalArgumentException, IOException{
+	public void testRemoveUser() throws JsonParseException, JsonMappingException, IllegalArgumentException, IOException{
 		assertThrows(IllegalStateException.class, () -> {mainNoUser.removeUser();});
 
 		Main main2 = new Main("h@e.ii", "hei", "hei");
@@ -153,6 +155,16 @@ public class MainTest {
 		for (House h: allHouses){
 			assertNotEquals("h@e.i", h.getUser().getEmail());
 		}
+	}
+
+	@Test
+	public void testLogOut(){
+		assertThrows(IllegalStateException.class, () -> {mainNoUser.logOut();});
+		assertNotNull(this.main.getCurrentUser());
+		this.main.logOut();
+		assertNull(this.main.getCurrentUser());
+		
+		assertThrows(IllegalStateException.class, () -> {main.getMyHouses();});
 	}
 
 	private List<House> getAllAvailableHouses(){
