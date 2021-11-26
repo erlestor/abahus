@@ -8,13 +8,15 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,17 +34,18 @@ public class RestApplication {
 		SpringApplication.run(RestApplication.class, args);
 	}
 
-
-	@GetMapping("/registerUser")
-	public String registerUser(@RequestParam(value = "email", defaultValue = "email") String email) throws JsonParseException, JsonMappingException, IOException {
-		this.m = new Main("1@234.com", "123", "123");
-		return this.m.getCurrentUser().getEmail();
+	@PostMapping("/registerUser")
+	public User registerUser(@RequestBody Map<String, String> request) throws JsonParseException, JsonMappingException, IOException {
+		
+		this.m = new Main(request.get("email"), request.get("password"), request.get("confirmPassword"));
+		return this.m.getCurrentUser();
 	}
  
-	@GetMapping("/logIn")
-	public String logIn(@RequestParam(value = "email", defaultValue = "email") String email) throws JsonParseException, JsonMappingException, IOException {
-		this.m = new Main("1@2345.com", "123");
-		return m.getCurrentUser().getEmail();
+	@PostMapping("/logIn")
+	public User logIn(@RequestBody Map<String, String> request) throws JsonParseException, JsonMappingException, IOException {
+		
+		this.m = new Main(request.get("email"), request.get("password"));
+		return m.getCurrentUser();
 		
 	}
 
@@ -122,10 +125,8 @@ public class RestApplication {
         if(this.m == null || this.m.getCurrentUser() == null){
             return "you are not logged in";
         }
-		String eMail = m.getCurrentUser().getEmail();
         m.removeUser();
-
-        return eMail + " is deleted";  
+        return m.getCurrentUser().toString() + "is deleted";  
     }
 
 	
