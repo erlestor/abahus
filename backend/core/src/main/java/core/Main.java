@@ -24,6 +24,10 @@ public class Main {
     private Collection<House> houses = new ArrayList<>();
     private User currentUser;
 
+    public Main() throws JsonParseException, JsonMappingException, IOException{
+        loadJson();
+    }
+
     // kalles ved registrering
     public Main(String email, String password, String confirmPassword) throws JsonParseException, JsonMappingException, IOException {
         loadJson();
@@ -53,7 +57,10 @@ public class Main {
         loadJson();
     } 
 
-    private void logInUser(String email, String password) {
+    public void logInUser(String email, String password) {
+        if (this.currentUser!= null){
+            throw new IllegalStateException("you are already logged in");
+        }
         User currentUser = users.stream()
                                 .filter(user -> user.getEmail().equals(email) && user.getPassword().equals(password))
                                 .findFirst().orElse(null);
@@ -72,6 +79,9 @@ public class Main {
 
     // returns list of houses that logged in user owns
     public List<House> getMyHouses() {
+        if (this.currentUser== null){
+            throw new IllegalStateException("you are not logged in");
+        }
         return getHousesWithFilter(h -> h.getUser().getEmail().equals(currentUser.getEmail()));
     }
 
@@ -110,15 +120,31 @@ public class Main {
     }
 
     public void removeHouse(House house) throws IOException {
+        if (this.currentUser== null){
+            throw new IllegalStateException("you are not logged in");
+        }
+
+        if (!house.getUser().getEmail().equals(getCurrentUser().getEmail())){
+            throw new IllegalArgumentException("Its not your house");
+        }
+
         Jsonworker.removeHouse(house.getLocation(), house.getUser().getEmail());
         loadJson();
     }
 
-    /*
-    public static void main(String[] args) throws JsonParseException, JsonMappingException, IOException {
-        Main program = new Main("erl@mail.com", "123", "123");
-        program.hostNewHouse("adresse 72b");
-        System.out.println(program.getAvailableHousing());
+    public void removeUser() throws IOException {
+        if (this.currentUser== null){
+            throw new IllegalStateException("you are not logged in");
+        }
+        List<House> myHouses = getMyHouses();
+
+        for (House h : myHouses) {
+            removeHouse(h);
+        }
+        Jsonworker.removeUser(this.currentUser.getEmail());
+        loadJson();
+        this.currentUser = null;
+
     }
-    */
+
 }
