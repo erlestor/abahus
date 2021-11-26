@@ -23,6 +23,10 @@
   @apply text-4xl;
 }
 
+.forms-container p {
+  @apply text-lg text-red-700;
+}
+
 .forms-container button {
   @apply w-full bg-red-600 rounded-xl p-2 text-white text-2xl;
 }
