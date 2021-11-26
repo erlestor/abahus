@@ -64,12 +64,6 @@ public class RestApplication {
 		return '"' + m.getCurrentUser().getEmail() + '"';
 	}
 
-	@GetMapping("/log")
-	public User log(@RequestParam(value = "email", defaultValue = "Email") String email) throws JsonParseException, JsonMappingException, IOException{
-		this.m = new Main("1@234.com", "123");
-		return m.getCurrentUser();
-	}
-
 	@DeleteMapping(value="/removeHouse/{location}")
 	public String removeHouse(@PathVariable("location") String location) throws IOException {
 		if (this.m == null || this.m.getCurrentUser() == null){
@@ -123,10 +117,12 @@ public class RestApplication {
 	
 	@PostMapping("/addHouse/{location}")
 	public String addHouse(@PathVariable("location") String location) throws  IOException{
+		String l = location.replace('_', ' ');
+		
 		if (this.m == null || this.m.getCurrentUser() == null){
 			throw new IllegalStateException("You are not logged in");
 		}
-		m.hostNewHouse(location);
+		m.hostNewHouse(l);
 		return '"' + "'House is added'" + '"';
 	}
 
@@ -136,22 +132,14 @@ public class RestApplication {
 		this.m = new Main();
 		List<House> allHouses = m.getHousing();
 
+		String l = location.replace('_', ' ');
+
 		for (House h: allHouses){
-			if (h.getLocation().equals(location)){
+			if (h.getLocation().equals(l)){
 				h.setAvailable(available);
 			}
 		}
 		return '"' + "'House is altered'" + '"';
 	}
-
-	@ResponseBody @RequestMapping(value="/removeUser", method=RequestMethod.GET)
-    public String removeUser() throws IOException {
-
-        if(this.m == null || this.m.getCurrentUser() == null){
-            throw new IllegalStateException("You are not logged in");
-        }
-        m.removeUser();
-        return m.getCurrentUser().toString() + "is deleted";  
-    }
 
 }
