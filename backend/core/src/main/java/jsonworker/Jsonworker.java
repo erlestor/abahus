@@ -14,23 +14,23 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SequenceWriter;
 
 public class Jsonworker {
-    private static String userHome = System.getProperty("user.home") + "/gr2129/";
-    private static Path dirPath = Paths.get(userHome).toAbsolutePath();
-    private static String housePath = "data/houses.json";
-    private static String userPath = "data/users.json";
-    private static ObjectMapper mapper = getDefaultObjectMapper();
+    private final static String userHome = System.getProperty("user.home") + "/gr2129/";
+    private final static Path dirPath = Paths.get(userHome).toAbsolutePath();
+    private final static String housePath = "data/houses.json";
+    private final static String userPath = "data/users.json";
+    private final static ObjectMapper mapper = getDefaultObjectMapper();
 
     private static ObjectMapper getDefaultObjectMapper() {
         ObjectMapper defaultObjectMapper = new ObjectMapper();
         return defaultObjectMapper;
     }
 
-    private static <T> ArrayList<T> readFileAsArray(String path_string, Class<T[]> clazz)
+    private <T> ArrayList<T> readFileAsArray(String path_string, Class<T[]> clazz)
             throws JsonParseException, JsonMappingException, IOException {
         return new ArrayList<T>(Arrays.asList(mapper.readValue(dirPath.resolve(path_string).toFile(), clazz)));
     }
 
-    private static <T> void writeFile(String path, ArrayList<T> data) throws IOException {
+    private <T> void writeFile(String path, ArrayList<T> data) throws IOException {
         File file = new File(dirPath.resolve(path).toString());
         FileWriter fileWriter = new FileWriter(file, false);
         SequenceWriter writer = mapper.writer().writeValues(fileWriter);
@@ -39,11 +39,11 @@ public class Jsonworker {
         writer.close();
     }
 
-    public static ArrayList<User> getAllUsers() throws JsonParseException, JsonMappingException, IOException {
+    public ArrayList<User> getAllUsers() throws JsonParseException, JsonMappingException, IOException {
         return readFileAsArray(userPath, User[].class);
     }
 
-    private static User getUser(String email) throws JsonParseException, JsonMappingException, IOException {
+    private User getUser(String email) throws JsonParseException, JsonMappingException, IOException {
         ArrayList<User> users = getAllUsers();
 
         for (User user : users) {
@@ -55,7 +55,7 @@ public class Jsonworker {
         return null;
     }
 
-    public static boolean checkPassword(String email, String pwd) throws IOException {
+    public boolean checkPassword(String email, String pwd) throws IOException {
         ArrayList<User> users = getAllUsers();
         for (User user : users) {
             if (user.getEmail().equals(email)) {
@@ -65,11 +65,11 @@ public class Jsonworker {
         return false;
     }
 
-    public static ArrayList<House> getAllHouses() throws JsonParseException, JsonMappingException, IOException {
+    public ArrayList<House> getAllHouses() throws JsonParseException, JsonMappingException, IOException {
         return readFileAsArray(housePath, House[].class);
     }
 
-    public static User addUser(String email, String pwd) throws IOException, IllegalArgumentException {
+    public User addUser(String email, String pwd) throws IOException, IllegalArgumentException {
         ArrayList<User> users = getAllUsers();
 
         for (User user : users) {
@@ -85,7 +85,7 @@ public class Jsonworker {
         return user;
     }
 
-    public static User removeUser(String email) throws IOException {
+    public User removeUser(String email) throws IOException {
         ArrayList<User> users = getAllUsers();
 
         Boolean found = false;
@@ -106,7 +106,7 @@ public class Jsonworker {
         return user;
     }
 
-    public static House addHouse(String location, String userEmail)
+    public House addHouse(String location, String userEmail)
             throws JsonParseException, JsonMappingException, IOException, IllegalArgumentException {
         User user;
         try {
@@ -129,7 +129,7 @@ public class Jsonworker {
         return house;
     }
 
-    public static House removeHouse(String location, String userEmail) throws IOException {
+    public House removeHouse(String location, String userEmail) throws IOException {
         ArrayList<House> houses = getAllHouses();
         Boolean found = false;
         House house = null;

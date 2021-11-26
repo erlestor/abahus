@@ -19,17 +19,20 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 // Antar her at lokasjon er unik til hvert hus
 
 public class Main {
-    // foreløpig starter users/houses som tomme hver gang, men de vil bli hentet fra lagring etterhvert
+    // foreløpig starter users/houses som tomme hver gang, men de vil bli hentet fra
+    // lagring etterhvert
     private Collection<User> users = new ArrayList<>();
     private Collection<House> houses = new ArrayList<>();
+    private Jsonworker worker = new Jsonworker();
     private User currentUser;
 
-    public Main() throws JsonParseException, JsonMappingException, IOException{
+    public Main() throws JsonParseException, JsonMappingException, IOException {
         loadJson();
     }
 
     // kalles ved registrering
-    public Main(String email, String password, String confirmPassword) throws JsonParseException, JsonMappingException, IOException {
+    public Main(String email, String password, String confirmPassword)
+            throws JsonParseException, JsonMappingException, IOException {
         loadJson();
         registerUser(email, password, confirmPassword);
         logInUser(email, password);
@@ -42,29 +45,30 @@ public class Main {
     }
 
     private void loadJson() throws JsonParseException, JsonMappingException, IOException {
-        houses = Jsonworker.getAllHouses();
-        users = Jsonworker.getAllUsers();
+        houses = worker.getAllHouses();
+        users = worker.getAllUsers();
     }
 
-    private void registerUser(String email, String password, String confirmPassword) throws IllegalArgumentException, IOException {
+    private void registerUser(String email, String password, String confirmPassword)
+            throws IllegalArgumentException, IOException {
         if (!password.equals(confirmPassword))
             throw new IllegalArgumentException("password must match confirmation");
 
         if (users.stream().anyMatch(user -> user.getEmail().equals(email)))
             throw new IllegalStateException("There already exists a user with the same email");
 
-        Jsonworker.addUser(email, password);
+        worker.addUser(email, password);
         loadJson();
-    } 
+    }
 
     public void logInUser(String email, String password) {
-        if (this.currentUser!= null){
+        if (this.currentUser != null) {
             throw new IllegalStateException("you are already logged in");
         }
         User currentUser = users.stream()
-                                .filter(user -> user.getEmail().equals(email) && user.getPassword().equals(password))
-                                .findFirst().orElse(null);
-        
+                .filter(user -> user.getEmail().equals(email) && user.getPassword().equals(password)).findFirst()
+                .orElse(null);
+
         if (currentUser == null)
             throw new IllegalStateException("no user found with that combination");
 
@@ -72,28 +76,28 @@ public class Main {
     }
 
     private List<House> getHousesWithFilter(Predicate<House> pr) {
-        return new ArrayList<House>(houses.stream()
-                                            .filter(pr)
-                                            .collect(Collectors.toList()));
+        return new ArrayList<House>(houses.stream().filter(pr).collect(Collectors.toList()));
     }
 
     // returns list of houses that logged in user owns
     public List<House> getMyHouses() {
-        if (this.currentUser== null){
+        if (this.currentUser == null) {
             throw new IllegalStateException("you are not logged in");
         }
         return getHousesWithFilter(h -> h.getUser().getEmail().equals(currentUser.getEmail()));
     }
 
     public List<House> getAvailableHousing() {
-        return getHousesWithFilter(house -> house.isAvailable() && !house.getUser().getEmail().equals(currentUser.getEmail()));
+        return getHousesWithFilter(
+                house -> house.isAvailable() && !house.getUser().getEmail().equals(currentUser.getEmail()));
     }
 
     public List<House> getHousing() {
         return new ArrayList<House>(houses);
     }
 
-    public void hostNewHouse(String location) throws JsonParseException, JsonMappingException, IllegalArgumentException, IOException {
+    public void hostNewHouse(String location)
+            throws JsonParseException, JsonMappingException, IllegalArgumentException, IOException {
         // må sjekke om lokasjonen er unik
         if (getHousesWithFilter(house -> house.getLocation().equals(location)).size() > 0)
             throw new IllegalArgumentException("this house is already registered");
@@ -101,7 +105,7 @@ public class Main {
         if (currentUser == null)
             throw new IllegalStateException("you must login before hosting a house");
 
-        Jsonworker.addHouse(location, currentUser.getEmail());
+        worker.addHouse(location, currentUser.getEmail());
         loadJson();
     }
 
@@ -120,20 +124,20 @@ public class Main {
     }
 
     public void removeHouse(House house) throws IOException {
-        if (this.currentUser== null){
+        if (this.currentUser == null) {
             throw new IllegalStateException("you are not logged in");
         }
 
-        if (!house.getUser().getEmail().equals(getCurrentUser().getEmail())){
+        if (!house.getUser().getEmail().equals(getCurrentUser().getEmail())) {
             throw new IllegalArgumentException("Its not your house");
         }
 
-        Jsonworker.removeHouse(house.getLocation(), house.getUser().getEmail());
+        worker.removeHouse(house.getLocation(), house.getUser().getEmail());
         loadJson();
     }
 
     public void removeUser() throws IOException {
-        if (this.currentUser== null){
+        if (this.currentUser == null) {
             throw new IllegalStateException("you are not logged in");
         }
         List<House> myHouses = getMyHouses();
@@ -141,7 +145,7 @@ public class Main {
         for (House h : myHouses) {
             removeHouse(h);
         }
-        Jsonworker.removeUser(this.currentUser.getEmail());
+        worker.removeUser(this.currentUser.getEmail());
         loadJson();
         this.currentUser = null;
 
