@@ -30,16 +30,45 @@ const HousePage = ({ houses, user, fetchHouses }) => {
       })
   }
 
+  const handleToggleAvailability = () => {
+    const requestOptions = {
+      method: "POST", // or 'PUT'
+      content: "application/json",
+    }
+    fetch(
+      `http://localhost:8080/setAvailable/${location}/${!house.available}`,
+      requestOptions
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText)
+        }
+        return response.json()
+      })
+      .then((msg) => {
+        console.log(msg)
+      })
+      .catch((error) => {
+        console.error("Error:", error)
+      })
+  }
+
   return (
     <div className="page">
+      {handleToggleAvailability()}
       {house ? (
         <>
           <h1 className="location">{house.location}</h1>
           <img src={Image} width="400px" alt="house" />
           {house.user === user ? (
-            <button className="btn" onClick={handleDeleteHouse}>
-              Delete
-            </button>
+            <>
+              <button className="btn" onClick={handleDeleteHouse}>
+                Delete
+              </button>
+              <button className="btn" onClick={handleToggleAvailability}>
+                Toggle availability
+              </button>
+            </>
           ) : (
             <h1 className="owner">Owner: {house.user}</h1>
           )}

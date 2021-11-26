@@ -24,7 +24,12 @@ const RouterConfig = () => {
     }
 
     fetch("http://localhost:8080/houses", requestOptions)
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(response.statusText)
+        }
+        return response.json()
+      })
       .then((houseMap) => {
         const houses = []
         const locations = Object.keys(houseMap)
