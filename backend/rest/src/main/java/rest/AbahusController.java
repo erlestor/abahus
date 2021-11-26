@@ -7,21 +7,16 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -30,26 +25,14 @@ import java.util.HashMap;
 import core.*;
 
 
-@SpringBootApplication
 @RestController
-public class RestApplication {
+public class AbahusController {
 
+	@Autowired
+	private AbahusService abahusService;
 	private Main m;
 	private ObjectMapper mapper = new ObjectMapper();
 
-	public static void main(String[] args) {
-		SpringApplication.run(RestApplication.class, args);
-	}
-
-	@Bean
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedMethods("*").allowedOrigins("http://localhost:3000");
-			}
-		};
-	}
 
 	@PostMapping("/registerUser")
 	public String registerUser(@RequestBody String json) throws JsonParseException, JsonMappingException, IOException {
