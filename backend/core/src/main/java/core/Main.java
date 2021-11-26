@@ -46,7 +46,10 @@ public class Main {
         users = Jsonworker.getAllUsers();
     }
 
-    private void registerUser(String email, String password, String confirmPassword) throws IllegalArgumentException, IOException {
+    public void registerUser(String email, String password, String confirmPassword) throws IllegalArgumentException, IOException {
+        if (this.currentUser!= null){
+            throw new IllegalStateException("you are already logged in");
+        }
         if (!password.equals(confirmPassword))
             throw new IllegalArgumentException("password must match confirmation");
 
@@ -137,6 +140,15 @@ public class Main {
         loadJson();
     }
 
+    public void logOut(){
+        if (this.currentUser== null){
+            throw new IllegalStateException("you are not logged in");
+        }
+
+        this.currentUser = null;
+    }
+
+    
     public void removeUser() throws IOException {
         if (this.currentUser== null){
             throw new IllegalStateException("you are not logged in");
