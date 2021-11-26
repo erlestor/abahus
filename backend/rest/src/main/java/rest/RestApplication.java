@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.HashMap;
 
-import core.Main;
-import core.House;
-import core.User; 
+import core.*;
 
 
 @SpringBootApplication
@@ -83,20 +83,30 @@ public class RestApplication {
 		List<House> houses = m.getHousing();
 		List<House> hStream = houses.stream().filter(house -> house.getLocation().equals(l))
 				.collect(Collectors.toList());
-			if (hStream.size() < 1) {
-				return "House is not registered";
-			}
+		if (hStream.size() < 1) {
+			return "House is not registered";
+		}
 
-			House h = hStream.get(0);
-			return h.toString(); 
+		House h = hStream.get(0);
+		return h.toString(); 
 	} 
 
 	
 	@GetMapping("/houses")
-	public List<House> getHouses() throws JsonParseException, JsonMappingException, IOException {
-		this.m = new Main();
+	public HashMap<String, List<Object>> getHouses() throws JsonParseException, JsonMappingException, IOException {
+		//this.m = new Main();
 		List<House> allHouses = m.getHousing();
-		return allHouses; 
+
+		HashMap<String, List<Object>> houseMap = new HashMap<String, List<Object>>();
+
+		for (House h: allHouses){
+			List<Object> houseProperties= new ArrayList<Object>();
+			houseProperties.add(h.getUser().getEmail());
+			houseProperties.add(h.isAvailable());
+
+			houseMap.put(h.getLocation(), houseProperties);
+		}
+		return houseMap; 
 	}
 
 	
