@@ -132,6 +132,11 @@ public class Main {
         loadJson();
     }
 
+    public void setAvailableHouse(String location, boolean status) throws IOException{
+        Jsonworker.setAvailableHouse(location, status, this.currentUser.getEmail());
+        loadJson();
+    }
+
     public void removeUser() throws IOException {
         if (this.currentUser== null){
             throw new IllegalStateException("you are not logged in");
