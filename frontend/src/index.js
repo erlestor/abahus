@@ -4,23 +4,40 @@ import "./index.css"
 import Landing from "./components/landing"
 import Login from "./components/login"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
-import data from "./dummyData.json"
 import HousePage from "./components/housePage"
 import Layout from "./components/layout"
 import AddHouse from "./components/addHouse"
 
 const RouterConfig = () => {
-  // const [user, setUser] = useState(null)
-  const [user, setUser] = useState({
-    email: "email@email.com",
-    password: "passord",
-  })
-
+  const [user, setUser] = useState("")
   const [houses, setHouses] = useState([])
 
   useEffect(() => {
-    setHouses(data.houses)
+    fetchHouses()
+    setUser(localStorage.getItem("user"))
   }, [])
+
+  const fetchHouses = () => {
+    const requestOptions = {
+      method: "GET", // or 'PUT'
+      content: "application/json",
+    }
+
+    fetch("http://localhost:8080/houses", requestOptions)
+      .then((response) => response.json())
+      .then((houseMap) => {
+        const houses = []
+        const locations = Object.keys(houseMap)
+        for (const i in locations) {
+          const location = locations[i]
+          houses.push({ location: location, user: houseMap[location] })
+        }
+        setHouses(houses)
+      })
+      .catch((error) => {
+        console.error("Error:", error)
+      })
+  }
 
   return (
     <React.StrictMode>
@@ -31,13 +48,17 @@ const RouterConfig = () => {
               <Landing houses={houses} user={user} />
             </Route>
             <Route path="/login" exact>
-              <Login />
+              <Login setUser={setUser} />
             </Route>
             <Route path="/add-house" exact>
-              <AddHouse />
+              <AddHouse fetchHouses={fetchHouses} />
             </Route>
             <Route path="/house/:location">
-              <HousePage houses={houses} user={user} />
+              <HousePage
+                houses={houses}
+                user={user}
+                fetchHouses={fetchHouses}
+              />
             </Route>
           </Switch>
         </Layout>
