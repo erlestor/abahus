@@ -81,5 +81,10 @@ public class AbahusController {
 		return abahusService.setAvailable(location, available);
 	}
 
-	//må legge til en logUt-metode
+	@PostMapping("/logOut")
+	public String logOut(){
+		abahusService.logOut();
+		
+		return "You are logged out";
+	}
 }

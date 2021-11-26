@@ -20,27 +20,33 @@ public class AbahusService {
     private Main main;
 
     public AbahusService() throws JsonParseException, JsonMappingException, IOException{
-       this.main = new Main();
+       this.main = new Main("email@email.com", "passord");
     }
 
-    //enkapsuleres
     public void logIn(String email, String passord){
+        if (main.getCurrentUser() != null){
+			throw new IllegalStateException("You are logged in");
+		}
+
         this.main.logInUser(email, passord);
     }
 
-    //enkapsuleres 
     public void register(String email, String passord, String confirmPassord) throws IllegalArgumentException, IOException{
+        if (main.getCurrentUser() != null){
+			throw new IllegalStateException("You are logged in");
+		}
+
         this.main.registerUser(email, passord, confirmPassord);
     }
 
     public House removeHouse(String location) throws IOException{
-        if (getMain() == null || getMain().getCurrentUser() == null){
+        if (main.getCurrentUser() == null){
 			throw new IllegalStateException("You are not logged in");
 		}
 
 		String l = location.replace('_', ' ');
 
-		List<House> houses = getMain().getHousing();
+		List<House> houses = main.getHousing();
 		List<House> hStream = houses.stream().filter(house -> house.getLocation().equals(l))
 				.collect(Collectors.toList());
 		if (hStream.size() < 1) {
@@ -49,11 +55,11 @@ public class AbahusService {
 
 		House h = hStream.get(0);
 			
-		if (!h.getUser().getEmail().equals(getMain().getCurrentUser().getEmail())){
+		if (!h.getUser().getEmail().equals(main.getCurrentUser().getEmail())){
             throw new IllegalStateException("The house is not registered to this user");
 		}
 
-		getMain().removeHouse(h);
+		main.removeHouse(h);
 
         return h;
 
@@ -62,7 +68,7 @@ public class AbahusService {
     public House getHouse(String location){
         String l = location.replace('_', ' ');
 		
-		List<House> houses = getMain().getHousing();
+		List<House> houses = main.getHousing();
 		List<House> hStream = houses.stream().filter(house -> house.getLocation().equals(l))
 				.collect(Collectors.toList());
 		if (hStream.size() < 1) {
@@ -74,7 +80,7 @@ public class AbahusService {
 
 
     public HashMap<String, List<Object>> getHouses(){
-        List<House> allHouses = getMain().getHousing();
+        List<House> allHouses = main.getHousing();
 
 		HashMap<String, List<Object>> houseMap = new HashMap<String, List<Object>>();
 
@@ -92,30 +98,30 @@ public class AbahusService {
     public String addHouse(String location) throws JsonParseException, JsonMappingException, IllegalArgumentException, IOException{
         String l = location.replace('_', ' ');
 		
-		if (getMain() == null || getMain().getCurrentUser() == null){
+		if (main.getCurrentUser() == null){
 			throw new IllegalStateException("You are not logged in");
 		}
 		
-        getMain().hostNewHouse(l);
+        main.hostNewHouse(l);
 
         return l;
     }
 
 
-    public String setAvailable(String location, boolean isAvailable){
-        if (getMain() == null || getMain().getCurrentUser() == null){
+    public String setAvailable(String location, boolean isAvailable) throws IOException{
+        if (main.getCurrentUser() == null){
 			throw new IllegalStateException("You are not logged in");
 		}
        
-        List<House> allHouses = getMain().getHousing();
+        List<House> allHouses = main.getHousing();
 
 		String l = location.replace('_', ' ');
 
         boolean altered = false;
 
 		for (House h: allHouses){
-			if (h.getLocation().equals(l) && h.getUser().getEmail().equals(getMain().getCurrentUser().getEmail())){
-				h.setAvailable(isAvailable);
+			if (h.getLocation().equals(l) && h.getUser().getEmail().equals(main.getCurrentUser().getEmail())){
+				main.setAvailableHouse(h.getLocation(), isAvailable);
                 altered = true;
 			}
 		}
@@ -127,6 +133,12 @@ public class AbahusService {
         return '"' + "'House is altered'" + '"';
     }
 
+    public void logOut(){
+        if (main.getCurrentUser() == null){
+            throw new IllegalStateException("You are not logged in");
+        }
+        main.logOut();
+    }
 
     public Main getMain(){
         return this.main;
