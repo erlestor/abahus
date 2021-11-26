@@ -1,16 +1,35 @@
 import React, { useState } from "react"
 import "./addHouse.css"
+import { useHistory } from "react-router-dom"
 
-const AddHouse = () => {
+const AddHouse = ({ fetchHouses }) => {
   const [location, setLocation] = useState("")
+  const history = useHistory()
 
   const handleAddHouse = () => {
-    // add house with api
-    // go back to home page
+    const requestOptions = {
+      method: "POST", // or 'PUT'
+      content: "application/json",
+    }
+    fetch(`http://localhost:8080/addHouse/${location}`, requestOptions)
+      .then((response) => {
+        if (!response.ok) {
+          throw Error(response.statusText)
+        }
+        return response.json()
+      })
+      .then((msg) => {
+        console.log(msg)
+        fetchHouses()
+        history.push("/")
+      })
+      .catch((error) => {
+        console.error("Error:", error)
+      })
   }
 
   return (
-    <form className="page">
+    <div className="page">
       <h1>Add a new house</h1>
       <input
         type="text"
@@ -19,7 +38,7 @@ const AddHouse = () => {
         onChange={(e) => setLocation(e.target.value)}
       />
       <button onClick={handleAddHouse}>Add house</button>
-    </form>
+    </div>
   )
 }
 
