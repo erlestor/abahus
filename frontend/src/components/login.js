@@ -29,7 +29,7 @@ const RegisterForm = ({ setUser }) => {
         confirmPassword: confirmPass,
       }),
     }
-    fetch(`http://localhost:8080/registerUser`, requestOptions)
+    fetch(`https://8080-white-coyote-7xo3ngjz.ws.gitpod.stud.ntnu.no/registerUser`, requestOptions)
       .then((response) => {
         if (!response.ok) {
           throw Error(response.statusText)
@@ -96,7 +96,7 @@ const LoginForm = ({ setUser }) => {
         password: pass,
       }),
     }
-    fetch(`http://localhost:8080/logIn`, requestOptions)
+    fetch(`https://8080-white-coyote-7xo3ngjz.ws.gitpod.stud.ntnu.no/logIn`, requestOptions)
       .then((response) => {
         if (!response.ok) {
           throw Error(response.statusText)

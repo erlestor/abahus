@@ -11,7 +11,7 @@ function LandingPage({ houses, user }) {
         <div className="houses">
           {houses.map(
             (house) =>
-              house.user !== user && (
+              house.user !== user && house.available && (
                 <>
                   <House house={house} />
                   <div className="divider" />

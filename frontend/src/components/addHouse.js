@@ -11,7 +11,7 @@ const AddHouse = ({ fetchHouses }) => {
       method: "POST", // or 'PUT'
       content: "application/json",
     }
-    fetch(`http://localhost:8080/addHouse/${location}`, requestOptions)
+    fetch(`https://8080-white-coyote-7xo3ngjz.ws.gitpod.stud.ntnu.no/addHouse/${location}`, requestOptions)
       .then((response) => {
         if (!response.ok) {
           throw Error(response.statusText)

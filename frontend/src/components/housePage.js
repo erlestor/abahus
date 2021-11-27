@@ -13,7 +13,7 @@ const HousePage = ({ houses, user, fetchHouses }) => {
       method: "DELETE", // or 'PUT'
       content: "application/json",
     }
-    fetch(`http://localhost:8080/removeHouse/${location}`, requestOptions)
+    fetch(`https://8080-white-coyote-7xo3ngjz.ws.gitpod.stud.ntnu.no/removeHouse/${location}`, requestOptions)
       .then((response) => {
         if (!response.ok) {
           throw Error(response.statusText)
@@ -23,10 +23,12 @@ const HousePage = ({ houses, user, fetchHouses }) => {
       .then((msg) => {
         console.log(msg)
         fetchHouses()
+        history.push("/")
         // history.push("/")
       })
       .catch((error) => {
         console.error("Error:", error)
+        fetchHouses()
       })
   }
 
@@ -36,7 +38,7 @@ const HousePage = ({ houses, user, fetchHouses }) => {
       content: "application/json",
     }
     fetch(
-      `http://localhost:8080/setAvailable/${location}/${!house.available}`,
+      `https://8080-white-coyote-7xo3ngjz.ws.gitpod.stud.ntnu.no/setAvailable/${location}/${!house.available}`,
       requestOptions
     )
       .then((response) => {
@@ -47,6 +49,7 @@ const HousePage = ({ houses, user, fetchHouses }) => {
       })
       .then((msg) => {
         console.log(msg)
+        fetchHouses()
       })
       .catch((error) => {
         console.error("Error:", error)
@@ -58,6 +61,7 @@ const HousePage = ({ houses, user, fetchHouses }) => {
       {house ? (
         <>
           <h1 className="location">{house.location}</h1>
+          <h1 className="owner">{house.available ? "Available" : "Not available"}</h1>
           <img src={Image} width="400px" alt="house" />
           {house.user === user ? (
             <>
@@ -69,7 +73,7 @@ const HousePage = ({ houses, user, fetchHouses }) => {
               </button>
             </>
           ) : (
-            <h1 className="owner">Owner: {house.user}</h1>
+            <h1 className="owner">Contact owner to rent: {house.user}</h1>
           )}
         </>
       ) : (

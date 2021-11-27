@@ -14,7 +14,7 @@ const RouterConfig = () => {
 
   useEffect(() => {
     fetchHouses()
-    setUser(localStorage.getItem("user"))
+    fetchUser()
   }, [])
 
   const fetchHouses = () => {
@@ -23,7 +23,7 @@ const RouterConfig = () => {
       content: "application/json",
     }
 
-    fetch("http://localhost:8080/houses", requestOptions)
+    fetch("https://8080-white-coyote-7xo3ngjz.ws.gitpod.stud.ntnu.no/houses", requestOptions)
       .then((response) => {
         if (!response.ok) {
           throw new Error(response.statusText)
@@ -48,10 +48,37 @@ const RouterConfig = () => {
       })
   }
 
+  const fetchUser = () => {
+    const requestOptions = {
+      method: "GET", // or 'PUT'
+      content: "application/json",
+    }
+
+    fetch("https://8080-white-coyote-7xo3ngjz.ws.gitpod.stud.ntnu.no/getUser", requestOptions)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(response.statusText)
+        }
+        return response.json()
+      })
+      .then((email) => {
+        console.log(email)
+        if (email == "null") {
+          setUser("") 
+          return
+        }
+        setUser(email)
+      })
+      .catch((error) => {
+        console.error("Error:", error)
+        setUser("")
+      })
+  }
+
   return (
     <React.StrictMode>
       <Router>
-        <Layout user={user} setUser={setUser}>
+        <Layout user={user} fetchUser={fetchUser}>
           <Switch>
             <Route path="/" exact>
               <Landing houses={houses} user={user} />
