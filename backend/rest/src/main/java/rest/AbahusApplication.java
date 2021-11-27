@@ -15,7 +15,7 @@ public class AbahusApplication {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedMethods("*").allowedOrigins("http://localhost:3000");
+				registry.addMapping("/**").allowedMethods("*").allowedOrigins("https://3000-white-coyote-7xo3ngjz.ws.gitpod.stud.ntnu.no");
 			}
 		};
 	}

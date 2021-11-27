@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +18,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 import core.House;
+import core.User;
 
 
 @RestController
@@ -27,6 +26,14 @@ public class AbahusController {
 
 	@Autowired
 	private AbahusService abahusService;
+
+	@GetMapping("/getUser") 
+	public String getUser() {
+		User user = abahusService.getUser();
+		if (user == null || user.getEmail().equals("email@email.com"))
+			return '"' + "null" + '"';
+		return '"' + abahusService.getUser().getEmail() + '"';
+	}
 
 	@PostMapping("/registerUser")
 	public String registerUser(@RequestBody String json) throws JsonParseException, JsonMappingException, IOException {
@@ -48,18 +55,8 @@ public class AbahusController {
 	public String removeHouse(@PathVariable("location") String location) throws IOException {
 		
 		House house = abahusService.removeHouse(location);
-		return house.getLocation() + "is deleted";  
+		return '"' + house.getLocation() + "is deleted" + '"';  
 	}
-
-	//return map with house and isAvailable
-	@RequestMapping(value = "/getHouse/{location}", method=RequestMethod.GET)
-	public String getHouse(@PathVariable("location") String location) throws IOException {
-		
-		House house = abahusService.getHouse(location);
-		return house.getLocation() + " " + 
-			String.valueOf(house.isAvailable()) + " " + house.getUser().getEmail(); 
-	} 
-
 	
 	@GetMapping("/houses")
 	public HashMap<String, List<Object>> getHouses() throws JsonParseException, JsonMappingException, IOException {
@@ -78,13 +75,13 @@ public class AbahusController {
 	@PostMapping("/setAvailable/{location}/{available}")
 	public String setAvailable(@PathVariable("location") String location, @PathVariable("available") boolean available) throws  IOException{
 		
-		return abahusService.setAvailable(location, available);
+		return '"' + abahusService.setAvailable(location, available) + '"';
 	}
 
 	@PostMapping("/logOut")
 	public String logOut(){
 		abahusService.logOut();
 		
-		return "You are logged out";
+		return '"' + "'You are logged out'" + '"';
 	}
 }

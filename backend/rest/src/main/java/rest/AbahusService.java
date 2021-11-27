@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import org.springframework.stereotype.Service;
 
 import core.Main;
+import core.User;
 import core.House;
 
 @Service
@@ -23,7 +24,15 @@ public class AbahusService {
        this.main = new Main("email@email.com", "passord");
     }
 
-    public void logIn(String email, String passord){
+    private boolean isUserDefault() {
+        System.out.println(main.getCurrentUser());
+        return main.getCurrentUser() != null && main.getCurrentUser().getEmail().equals("email@email.com");
+    }
+
+    public void logIn(String email, String passord) {
+        if (isUserDefault())
+            logOut();
+
         if (main.getCurrentUser() != null){
 			throw new IllegalStateException("You are logged in");
 		}
@@ -31,7 +40,10 @@ public class AbahusService {
         this.main.logInUser(email, passord);
     }
 
-    public void register(String email, String passord, String confirmPassord) throws IllegalArgumentException, IOException{
+    public void register(String email, String passord, String confirmPassord) throws IllegalArgumentException, IOException {
+        if (isUserDefault())
+            logOut();
+
         if (main.getCurrentUser() != null){
 			throw new IllegalStateException("You are logged in");
 		}
@@ -130,7 +142,7 @@ public class AbahusService {
             throw new IllegalStateException("House does not excist or it is not your house");
         }   
 
-        return '"' + "'House is altered'" + '"';
+        return "House is altered";
     }
 
     public void logOut(){
@@ -138,6 +150,10 @@ public class AbahusService {
             throw new IllegalStateException("You are not logged in");
         }
         main.logOut();
+    }
+
+    public User getUser() {
+        return main.getCurrentUser();
     }
 
     public Main getMain(){
