@@ -129,6 +129,27 @@ public class Jsonworker {
         return house;
     }
 
+    public House setAvailableHouse(String location, boolean status, String userEmail) throws IOException {
+        ArrayList<House> houses = getAllHouses();
+        for (House h : houses) {
+            if (h.getLocation().equals(location)) {
+                if (h.isAvailable() == false && h.isAvailable() == status) {
+                    throw new IllegalArgumentException("House is already unavailable");
+                }
+            }
+        }
+
+        House house = removeHouse(location, userEmail);
+
+        house.setAvailable(status);
+
+        ArrayList<House> houses2 = getAllHouses();
+
+        houses2.add(house);
+        writeFile(housePath, houses2);
+        return house;
+    }
+
     public House removeHouse(String location, String userEmail) throws IOException {
         ArrayList<House> houses = getAllHouses();
         Boolean found = false;

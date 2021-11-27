@@ -49,8 +49,11 @@ public class Main {
         users = worker.getAllUsers();
     }
 
-    private void registerUser(String email, String password, String confirmPassword)
+    public void registerUser(String email, String password, String confirmPassword)
             throws IllegalArgumentException, IOException {
+        if (this.currentUser != null) {
+            throw new IllegalStateException("you are already logged in");
+        }
         if (!password.equals(confirmPassword))
             throw new IllegalArgumentException("password must match confirmation");
 
@@ -134,6 +137,19 @@ public class Main {
 
         worker.removeHouse(house.getLocation(), house.getUser().getEmail());
         loadJson();
+    }
+
+    public void setAvailableHouse(String location, boolean status) throws IOException {
+        worker.setAvailableHouse(location, status, this.currentUser.getEmail());
+        loadJson();
+    }
+
+    public void logOut() {
+        if (this.currentUser == null) {
+            throw new IllegalStateException("you are not logged in");
+        }
+
+        this.currentUser = null;
     }
 
     public void removeUser() throws IOException {

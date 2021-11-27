@@ -1,6 +1,7 @@
 package jsonworker;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import core.*;
 
@@ -58,15 +59,33 @@ public class JsonworkerTest {
     }
 
     @Test
-    public void addHouse() throws JsonParseException, JsonMappingException, IOException {
+    public void addHouseAndRemoveHouse() throws JsonParseException, JsonMappingException, IOException {
         System.out.println("Adding house...");
         worker.addHouse("Min Gate 4", "netteland97@gmail.com");
+        assertThrows(IllegalArgumentException.class, () -> {
+            worker.addHouse("Min Gate 4", "netteland97@gmail.com");
+        });
+
+        System.out.println("Removing house...");
+        worker.removeHouse("Min Gate 4", "netteland97@gmail.com");
+        assertThrows(IllegalArgumentException.class, () -> {
+            worker.removeHouse("Min Gate 4", "netteland97@gmail.com");
+        });
     }
 
     @Test
-    public void removeHouse() throws IOException {
-        System.out.println("Removing house...");
+    public void testSetAvailableHouse() throws IOException {
+        worker.addHouse("Min Gate 4", "netteland97@gmail.com");
+
+        worker.setAvailableHouse("Min Gate 4", false, "netteland97@gmail.com");
+        assertThrows(IllegalArgumentException.class, () -> {
+            worker.setAvailableHouse("Min Gate 4", false, "netteland97@gmail.com");
+        });
+
+        worker.setAvailableHouse("Min Gate 4", true, "netteland97@gmail.com");
+
         worker.removeHouse("Min Gate 4", "netteland97@gmail.com");
+        System.out.println("House can be set as available and unavailable");
     }
 
     @Test
