@@ -2,15 +2,15 @@ import React from "react"
 import { Link } from "react-router-dom"
 import { ImHome } from "react-icons/im"
 import "./header.css"
+import url from "../url"
 
 const Header = ({ user, fetchUser }) => {
-
   const signOut = () => {
     const requestOptions = {
       method: "POST",
       content: "application/json",
     }
-    fetch(`https://8080-white-coyote-7xo3ngjz.ws.gitpod.stud.ntnu.no/logOut`, requestOptions)
+    fetch(`${url}/logOut`, requestOptions)
       .then((response) => {
         if (!response.ok) {
           throw Error(response.statusText)
@@ -26,8 +26,6 @@ const Header = ({ user, fetchUser }) => {
         fetchUser()
       })
   }
-
-  
 
   return (
     <div className="header">

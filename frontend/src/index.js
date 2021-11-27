@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import HousePage from "./components/housePage"
 import Layout from "./components/layout"
 import AddHouse from "./components/addHouse"
+import url from "./url"
 
 const RouterConfig = () => {
   const [user, setUser] = useState("")
@@ -23,7 +24,7 @@ const RouterConfig = () => {
       content: "application/json",
     }
 
-    fetch("https://8080-white-coyote-7xo3ngjz.ws.gitpod.stud.ntnu.no/houses", requestOptions)
+    fetch(`${url}/houses`, requestOptions)
       .then((response) => {
         if (!response.ok) {
           throw new Error(response.statusText)
@@ -54,7 +55,7 @@ const RouterConfig = () => {
       content: "application/json",
     }
 
-    fetch("https://8080-white-coyote-7xo3ngjz.ws.gitpod.stud.ntnu.no/getUser", requestOptions)
+    fetch(`${url}/getUser`, requestOptions)
       .then((response) => {
         if (!response.ok) {
           throw new Error(response.statusText)
@@ -64,7 +65,7 @@ const RouterConfig = () => {
       .then((email) => {
         console.log(email)
         if (email == "null") {
-          setUser("") 
+          setUser("")
           return
         }
         setUser(email)

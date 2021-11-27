@@ -2,6 +2,7 @@ import React from "react"
 import { useParams, useHistory } from "react-router-dom"
 import Image from "../resources/default-house.jpg"
 import "./housePage.css"
+import url from "../url"
 
 const HousePage = ({ houses, user, fetchHouses }) => {
   const history = useHistory()
@@ -13,7 +14,7 @@ const HousePage = ({ houses, user, fetchHouses }) => {
       method: "DELETE", // or 'PUT'
       content: "application/json",
     }
-    fetch(`https://8080-white-coyote-7xo3ngjz.ws.gitpod.stud.ntnu.no/removeHouse/${location}`, requestOptions)
+    fetch(`${url}/removeHouse/${location}`, requestOptions)
       .then((response) => {
         if (!response.ok) {
           throw Error(response.statusText)
@@ -37,10 +38,7 @@ const HousePage = ({ houses, user, fetchHouses }) => {
       method: "POST", // or 'PUT'
       content: "application/json",
     }
-    fetch(
-      `https://8080-white-coyote-7xo3ngjz.ws.gitpod.stud.ntnu.no/setAvailable/${location}/${!house.available}`,
-      requestOptions
-    )
+    fetch(`${url}/setAvailable/${location}/${!house.available}`, requestOptions)
       .then((response) => {
         if (!response.ok) {
           throw Error(response.statusText)
@@ -61,7 +59,9 @@ const HousePage = ({ houses, user, fetchHouses }) => {
       {house ? (
         <>
           <h1 className="location">{house.location}</h1>
-          <h1 className="owner">{house.available ? "Available" : "Not available"}</h1>
+          <h1 className="owner">
+            {house.available ? "Available" : "Not available"}
+          </h1>
           <img src={Image} width="400px" alt="house" />
           {house.user === user ? (
             <>

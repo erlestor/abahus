@@ -1,8 +1,11 @@
 import React, { useState } from "react"
 import "./login.css"
 import { useHistory } from "react-router-dom"
+import url from "../url"
 
 const login = ({ setUser }) => {
+  console.log(url)
+
   return (
     <div className="forms-container">
       <RegisterForm setUser={setUser} />
@@ -29,7 +32,7 @@ const RegisterForm = ({ setUser }) => {
         confirmPassword: confirmPass,
       }),
     }
-    fetch(`https://8080-white-coyote-7xo3ngjz.ws.gitpod.stud.ntnu.no/registerUser`, requestOptions)
+    fetch(`${url}/registerUser`, requestOptions)
       .then((response) => {
         if (!response.ok) {
           throw Error(response.statusText)
@@ -96,7 +99,7 @@ const LoginForm = ({ setUser }) => {
         password: pass,
       }),
     }
-    fetch(`https://8080-white-coyote-7xo3ngjz.ws.gitpod.stud.ntnu.no/logIn`, requestOptions)
+    fetch(`${url}/logIn`, requestOptions)
       .then((response) => {
         if (!response.ok) {
           throw Error(response.statusText)

@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import "./addHouse.css"
 import { useHistory } from "react-router-dom"
+import url from "../url"
 
 const AddHouse = ({ fetchHouses }) => {
   const [location, setLocation] = useState("")
@@ -11,7 +12,7 @@ const AddHouse = ({ fetchHouses }) => {
       method: "POST", // or 'PUT'
       content: "application/json",
     }
-    fetch(`https://8080-white-coyote-7xo3ngjz.ws.gitpod.stud.ntnu.no/addHouse/${location}`, requestOptions)
+    fetch(`${url}/addHouse/${location}`, requestOptions)
       .then((response) => {
         if (!response.ok) {
           throw Error(response.statusText)
