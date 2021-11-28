@@ -6,17 +6,18 @@
 
 We are making an app for renting houses. A user should be able to register/log in and then see available houses. The user can then contact the owner. Additionally, the user can add his own house to the app and rent it by changing the availability or delete the house.
 
-Our code is divided into our backend and frontend folders. Backend consists of the domain and rest-api written in java. Frontend is written in react. Tests for frontend are located in frontend/src/tests. Tests for backend are located in each modules src/main/test folder. See their respective readmes for more information. 
+Our code is divided into our backend and frontend folders. Backend consists of the domain and rest-api written in java. Frontend is written in react. Tests for frontend are located in frontend/src/tests. Tests for backend are located in each modules src/main/test folder. See their respective readmes for more information.
 
 ## How to run
 
+- Follow both of these instruction:
 - How to run frontend: [frontend/readme.md](frontend/readme.md)
 - How to run backend: [backend/readme.md](backend/readme.md)
 
 ## Tools for testing code quality
 
 - Prettier: in frontend prettier makes sure that code is properly formatted.
-- Checkstyle: checks that our source code corresponds to java standards
+- Checkstyle: checks that our backend code corresponds to java standards
 - Jacoco: gives us test-covereage as percentage
 
 ## Architecture
@@ -25,7 +26,7 @@ The application is divided into backend and frontend folder. Frontend is a creat
 
 core - contains the domain-layer of the application.
 
-rest - contains our rest-api which connects our frontend to our backend. 
+rest - contains our rest-api which connects our frontend to our backend.
 
 The core module consits of multiple classes, implementing the core logic for the applications functionality. Due to most classes in core being public, they can be called upon in our rest module.
 
