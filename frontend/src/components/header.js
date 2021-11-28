@@ -29,11 +29,13 @@ const Header = ({ user, fetchUser }) => {
 
   return (
     <div className="header">
+      {/* links to landing */}
       <Link to="/" className="flex space-x-4">
         <ImHome color="red" size="60" />
         <h1>Abahus</h1>
       </Link>
 
+    {/* if user is logged in show username and signout btn, if not show sign in btn */}
       {user ? (
         <div className="logged-in">
           <p>{user}</p>

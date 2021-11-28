@@ -3,7 +3,8 @@ package jsonworker;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import core.*;
+import core.User;
+import core.House;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,30 +18,35 @@ public class JsonworkerTest {
 
     private static Jsonworker worker = new Jsonworker();
 
+    //Tester sjekking av passord
     @Test
     public void checkPassword() throws IOException {
         System.out.println("Asserting equality for test email netteland97@gmail.com");
         assertEquals(worker.checkPassword("netteland97@gmail.com", "123"), true);
     }
 
+    //Tester at man kan få alle hus
     @Test
     public void getHouses() throws JsonParseException, JsonMappingException, IOException {
         System.out.println("Reading all houses...");
         worker.getAllHouses();
     }
 
+    //Tester at bruker kan legges til
     @Test
     public void addUser() throws IOException {
         System.out.println("Adding user...");
         worker.addUser("testing@gmail.com", "123");
     }
 
+    //Tester at bruker kan fjernes
     @Test
     void removeUser() throws IOException {
         System.out.println("Removing user...");
         worker.removeUser("testing@gmail.com");
     }
 
+    //Tester at man ikke kan legge til bruker med samme epost som en eksisterende bruker
     @Test
     public void noDuplicateUsers() throws JsonParseException, JsonMappingException, IOException {
         System.out.println("Doesn't write duplicate users...");
@@ -58,6 +64,7 @@ public class JsonworkerTest {
         assertEquals(beforeUsers.size(), afterUsers.size());
     }
 
+    //Tester at man kan legge til og fjerne hus
     @Test
     public void addHouseAndRemoveHouse() throws JsonParseException, JsonMappingException, IOException {
         System.out.println("Adding house...");
@@ -73,6 +80,8 @@ public class JsonworkerTest {
         });
     }
 
+    //Tester at man kan sette hus tilgjengelig og utilgjengelig 
+    //og at man ikke kan sette et utilgjengelig hus utilgjengelig
     @Test
     public void testSetAvailableHouse() throws IOException {
         worker.addHouse("Min Gate 4", "netteland97@gmail.com");
@@ -88,6 +97,7 @@ public class JsonworkerTest {
         System.out.println("House can be set as available and unavailable");
     }
 
+    //Tester at man ikke kan legge til samme hus flere ganger
     @Test
     public void noDuplicateHouses() throws JsonParseException, JsonMappingException, IOException {
         System.out.println("Doesn't write duplicate houses...");

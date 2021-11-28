@@ -11,6 +11,7 @@ const setup = () => {
   )
 }
 
+// sjekker at header viser riktig info
 describe("Header", () => {
   it("renders main logo", () => {
     setup()

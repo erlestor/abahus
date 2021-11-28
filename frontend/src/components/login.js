@@ -46,8 +46,6 @@ const RegisterForm = ({ setUser }) => {
         setEmail("")
         setPass("")
         setConfirmPass("")
-        // store the user in localStorage
-        localStorage.setItem("user", user)
         // redirect to landing
         history.push("/")
       })
@@ -112,8 +110,6 @@ const LoginForm = ({ setUser }) => {
         setUser(user)
         setEmail("")
         setPass("")
-        // store the user in localStorage
-        localStorage.setItem("user", user)
         // redirect to landing
         history.push("/")
       })

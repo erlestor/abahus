@@ -1,17 +1,19 @@
 package core;
 
-// Et hus skal inneholde adresse, beskrivelse og tilhørende bruker
+// A house contains an address, user and availability
 
 public class House {
     private final String location;
     private User user;
     private boolean isAvailable = true;
 
+    //Constructor without parameters
     public House() {
         user = new User();
         location = "";
     }
 
+    //Constructor with two parameters
     public House(String location, User user) {
         if (location == null || user == null)
             throw new NullPointerException("input cannot be null");
@@ -35,6 +37,7 @@ public class House {
         return this.isAvailable;
     }
 
+    //A setter for availability that can only be used if the argument is different than the state
     public void setAvailable(boolean isAvailable) {
         if (isAvailable == false && isAvailable() == false){
             throw new IllegalArgumentException("House is already in use");

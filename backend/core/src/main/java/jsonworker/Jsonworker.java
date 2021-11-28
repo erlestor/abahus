@@ -1,6 +1,7 @@
 package jsonworker;
 
-import core.*;
+import core.House;
+import core.User;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -28,13 +29,13 @@ public class Jsonworker {
         return defaultObjectMapper;
     }
     
-
+    //method for reading files as array
     private static <T> ArrayList<T> readFileAsArray (String path_string, Class<T[]> clazz) throws JsonParseException, JsonMappingException, IOException {
         return new ArrayList<T>(Arrays.asList(mapper.readValue(dirPath.resolve(path_string).toFile(), clazz)));
     }
 
     
-
+    //method for writing to file
     private static <T> void writeFile(String path, ArrayList<T> data) throws IOException {
         File file = new File(dirPath.resolve(path).toString());
         FileWriter fileWriter = new FileWriter(file, false);
@@ -44,10 +45,12 @@ public class Jsonworker {
         writer.close();
     }
 
+    //returns all users
     public ArrayList<User> getAllUsers() throws JsonParseException, JsonMappingException, IOException {
         return readFileAsArray(userPath, User[].class);
     }
 
+    //returns a user with the email in the argument, if there are no such user the method returns null
     private User getUser(String email) throws JsonParseException, JsonMappingException, IOException {
         ArrayList<User> users = getAllUsers();
 
@@ -60,6 +63,8 @@ public class Jsonworker {
         return null;
      }
 
+    
+     //checks if password is correct, returns false if not
     public boolean checkPassword(String email, String pwd) throws IOException {
         ArrayList<User> users = getAllUsers();
         for (User user : users) {
@@ -70,10 +75,12 @@ public class Jsonworker {
         return false;        
      }
 
+     //returns all houses
      public ArrayList<House> getAllHouses() throws JsonParseException, JsonMappingException, IOException {
          return readFileAsArray(housePath, House[].class);
      }
      
+     //adds a user and returns it, if a user with the same email exists, it throws an exception
      public User addUser(String email, String pwd) throws IOException, IllegalArgumentException {
         ArrayList<User> users = getAllUsers();
 
@@ -90,6 +97,7 @@ public class Jsonworker {
             return user;         
      }
 
+     //remove user 
      public User removeUser(String email) throws IOException {
         ArrayList<User> users = getAllUsers();
 
@@ -111,6 +119,7 @@ public class Jsonworker {
         return user;         
      }
 
+     //adds house to a user
      public House addHouse(String location, String userEmail) throws JsonParseException, JsonMappingException, IOException, IllegalArgumentException {
         User user;
         try {
@@ -133,7 +142,7 @@ public class Jsonworker {
         return house;
      }
 
-
+     //sets house available, if the house is already unavailable and the status is false it throws an exception
      public House setAvailableHouse(String location, boolean status, String userEmail) throws IOException{
         ArrayList<House> houses = getAllHouses();
         for (House h: houses){
@@ -155,7 +164,8 @@ public class Jsonworker {
         return house;
      }
 
-
+    //removes a house connected to the email
+    //if the house does not exist or it is nor connected to the email it throws an exception
     public House removeHouse(String location, String userEmail) throws IOException {
         ArrayList<House> houses = getAllHouses();
         Boolean found = false;
