@@ -99,6 +99,7 @@ public class MainTest {
 		}
 	}
 
+	//Sjekker at getAvailableHousing() kun returnerer hus som er available
 	@Test
 	public void testGetAvailableHousing() {
 		List<House> availableHouses = main.getAvailableHousing();
@@ -110,6 +111,8 @@ public class MainTest {
 		}
 	}
 
+	//Sjekker at det ikke går an å legge ut et hus når man ikke er logget in
+	//Sjekker også at det ikke går an å legge til et hus som allerede er lagt til
 	@Test
 	public void testHostNewHouseNoFiles()
 			throws JsonParseException, JsonMappingException, IllegalArgumentException, IOException {
@@ -125,6 +128,8 @@ public class MainTest {
 		});
 	}
 
+	//Tester at det går an å legge ut et hus og at det blir registrert
+	//Tester også at man kan fjerne huset og at huset faktisk fjernes
 	@Test
 	public void testHostAndRemoveHouseFiles()
 			throws JsonParseException, JsonMappingException, IllegalArgumentException, IOException {
@@ -147,10 +152,14 @@ public class MainTest {
 			}
 		}
 
+		assertTrue(house.getLocation().equals("Gloshaugen"));
+
 		main.removeHouse(house);
 
 	}
 
+	//Tester at man ikke kan fjerne et hus når man ikke er logget inn
+	//Tester at man ikke kan fjerne et hus som ikke er sitt eget
 	@Test
 	public void testRemoveHouseNoFiles() throws IOException {
 
@@ -174,6 +183,8 @@ public class MainTest {
 
 	}
 
+	//Tester at man ikke kan fjerne en bruker når man ikke er logget in
+	//Tester at man fjerner alle hus som tilhører brukeren man fjerner
 	@Test
 	public void testRemoveUser()
 			throws JsonParseException, JsonMappingException, IllegalArgumentException, IOException {
@@ -191,6 +202,9 @@ public class MainTest {
 		}
 	}
 
+	//Tester at man ikke kan logge ut når man ikke er logget in
+	//Tester at man faktisk blir logget ut
+	//Tester at man ikke kan hente egne hus når man ikke er logget in
 	@Test
 	public void testLogOut() {
 		assertThrows(IllegalStateException.class, () -> {
@@ -205,6 +219,7 @@ public class MainTest {
 		});
 	}
 
+	//Intern hjelpemetode
 	private List<House> getAllAvailableHouses() {
 		return main.getHousing().stream().filter(house -> house.isAvailable()).collect(Collectors.toList());
 	}
