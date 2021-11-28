@@ -34,3 +34,8 @@ returns "House is added" if successful
 
 location is sent in header.
 returns feedback message
+
+### setAvailable/{location}/{available}
+
+location and available (boolean) is sent in header.
+returns feedback message
