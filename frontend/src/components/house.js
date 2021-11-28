@@ -4,8 +4,7 @@ import { Link } from "react-router-dom"
 
 const house = ({ house }) => {
   return (
-    // links to housePage
-    <Link to={"/house/" + house.location}>
+    <Link to={"/house/" + house.location} className="house-link">
       <div className="house">
         {/* image is a default one to keep things simple */}
         <img src={Image} className="w-24 h-16" alt="house" />
