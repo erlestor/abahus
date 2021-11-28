@@ -9,10 +9,12 @@ import Layout from "./components/layout"
 import AddHouse from "./components/addHouse"
 import url from "./url"
 
+// this is the root component
 const RouterConfig = () => {
   const [user, setUser] = useState("")
   const [houses, setHouses] = useState([])
 
+  // when component loads, load houses and logged in user from rest api into state
   useEffect(() => {
     console.log(url)
     fetchHouses()
@@ -34,6 +36,7 @@ const RouterConfig = () => {
         return response.json()
       })
       .then((houseMap) => {
+        // rest returns a map with location as key and [location, availability] as value
         const houses = []
         const locations = Object.keys(houseMap)
         for (const i in locations) {
@@ -81,18 +84,23 @@ const RouterConfig = () => {
   return (
     <React.StrictMode>
       <Router>
+        {/* layers renders a header and footer around the page selected by the user */}
         <Layout user={user} fetchUser={fetchUser}>
+          {/* switch and router selects the first page that matches with the url */}
           <Switch>
             <Route path="/" exact>
+              {/* this is the main page where houses are shown */}
               <Landing houses={houses} user={user} />
             </Route>
             <Route path="/login" exact>
               <Login setUser={setUser} />
             </Route>
             <Route path="/add-house" exact>
+              {/* where you get sent to when clicking add house in landing page */}
               <AddHouse fetchHouses={fetchHouses} />
             </Route>
             <Route path="/house/:location">
+              {/* when you click a house on landing a page with the house loads */}
               <HousePage
                 houses={houses}
                 user={user}

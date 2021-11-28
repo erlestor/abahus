@@ -6,6 +6,7 @@ import url from "../url"
 
 const HousePage = ({ houses, user, fetchHouses }) => {
   const history = useHistory()
+  // this location is the browser location, not of the house :)
   const { location } = useParams()
   const house = houses.filter((house) => location === house.location)[0]
 
@@ -24,8 +25,8 @@ const HousePage = ({ houses, user, fetchHouses }) => {
       .then((msg) => {
         console.log(msg)
         fetchHouses()
+        // redirect to landing page
         history.push("/")
-        // history.push("/")
       })
       .catch((error) => {
         console.error("Error:", error)
@@ -62,7 +63,9 @@ const HousePage = ({ houses, user, fetchHouses }) => {
           <h1 className="owner">
             {house.available ? "Available" : "Not available"}
           </h1>
+          {/* we used a default to improve looks without overcomplicating the app */}
           <img src={Image} width="400px" alt="house" />
+          {/* if the user is the owner show buttons */}
           {house.user === user ? (
             <>
               <button className="btn" onClick={handleDeleteHouse}>
@@ -77,6 +80,7 @@ const HousePage = ({ houses, user, fetchHouses }) => {
           )}
         </>
       ) : (
+        // house is undefined it means the house doesn't exist
         <h1>404 house not found</h1>
       )}
     </div>

@@ -11,6 +11,7 @@ const setup = () => {
   )
 }
 
+// sjekker om en et en html <input> viser riktig tekst når man skriver inn noe
 const checkValidTextInput = (htmlElement, textInput) => {
   cy.get(htmlElement).type(textInput).invoke("val").should("equal", textInput)
 }

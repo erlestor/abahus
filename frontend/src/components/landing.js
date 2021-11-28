@@ -9,6 +9,7 @@ function LandingPage({ houses, user }) {
       <div className="houses-group">
         <h2>Available houses</h2>
         <div className="houses">
+          {/* show houses which are available and not owned by the user */}
           {houses.map(
             (house) =>
               house.user !== user && house.available && (
@@ -27,6 +28,7 @@ function LandingPage({ houses, user }) {
             Add new house
           </Link>
           <div className="houses">
+            {/* show houses which the user owns */}
             {houses.map((house) => (
               <>
                 {house.user === user ? (

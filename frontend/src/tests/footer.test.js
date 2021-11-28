@@ -1,6 +1,7 @@
 import { mount } from "@cypress/react"
 import Footer from "../components/footer"
 
+// tester om footer viser riktig info
 describe("Footer", () => {
   it("renders contact us text", () => {
     mount(<Footer />)
