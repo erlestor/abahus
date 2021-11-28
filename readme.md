@@ -11,8 +11,8 @@ Our code is divided into our backend and frontend folders. Backend consists of t
 ## How to run
 
 - Follow both of these instruction:
-- How to run frontend: [frontend/readme.md](frontend/readme.md)
 - How to run backend: [backend/readme.md](backend/readme.md)
+- How to run frontend: [frontend/readme.md](frontend/readme.md)
 
 ## Tools for testing code quality
 
@@ -24,7 +24,7 @@ Our code is divided into our backend and frontend folders. Backend consists of t
 
 The application is divided into backend and frontend folder. Frontend is a create-react-app project which used react and tailwind. Backend is a multi-module maven project which is divided into the following modules:
 
-core - contains the domain-layer of the application.
+core - contains the domain-layer of the application, as well as the persistence layer.
 
 rest - contains our rest-api which connects our frontend to our backend.
 
