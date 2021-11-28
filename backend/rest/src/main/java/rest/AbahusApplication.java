@@ -15,7 +15,9 @@ public class AbahusApplication {
 		return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedMethods("*").allowedOrigins("https://3000-white-coyote-7xo3ngjz.ws.gitpod.stud.ntnu.no");
+				// if using gitpod. you need to change the url to your gitpod url
+				// it should be in the same format as https://3000-white-coyote-7xo3ngjz.ws.gitpod.stud.ntnu.no
+				registry.addMapping("/**").allowedMethods("*").allowedOrigins("http://localhost:3000");
 			}
 		};
 	}

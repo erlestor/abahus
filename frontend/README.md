@@ -18,3 +18,7 @@ Configured for tailwindcss as a replacement for normal css.
 ### In seperate window
 
 - Run the command "npm run open-tests" inside "frontend"
+
+## How to check formatting
+
+- Inside frontend run 'npx prettier --check "src/\*_\*/_\*.js"'

@@ -1,5 +1,5 @@
-import React from "react";
-import "./footer.css";
+import React from "react"
+import "./footer.css"
 
 const Footer = () => (
   <div className="footerContainer">
@@ -8,6 +8,6 @@ const Footer = () => (
       nobody@abahus.com
     </a>
   </div>
-);
+)
 
-export default Footer;
+export default Footer

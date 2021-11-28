@@ -18,6 +18,14 @@
   @apply p-0 text-3xl leading-normal;
 }
 
+.header p {
+  @apply text-2xl;
+}
+
+.header .logged-in {
+  @apply flex space-x-4 items-center place-content-center;
+}
+
 .user {
   @apply flex items-center align-middle space-x-4;
 }

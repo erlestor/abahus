@@ -4,40 +4,100 @@ import "./index.css"
 import Landing from "./components/landing"
 import Login from "./components/login"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
-import data from "./dummyData.json"
 import HousePage from "./components/housePage"
 import Layout from "./components/layout"
 import AddHouse from "./components/addHouse"
+import url from "./url"
 
 const RouterConfig = () => {
-  // const [user, setUser] = useState(null)
-  const [user, setUser] = useState({
-    email: "email@email.com",
-    password: "passord",
-  })
-
+  const [user, setUser] = useState("")
   const [houses, setHouses] = useState([])
 
   useEffect(() => {
-    setHouses(data.houses)
+    console.log(url)
+    fetchHouses()
+    fetchUser()
   }, [])
+
+  const fetchHouses = () => {
+    const requestOptions = {
+      method: "GET", // or 'PUT'
+      content: "application/json",
+    }
+
+    fetch(`${url}/houses`, requestOptions)
+      .then((response) => {
+        console.log(`${url}/houses`)
+        if (!response.ok) {
+          throw new Error(response.statusText)
+        }
+        return response.json()
+      })
+      .then((houseMap) => {
+        const houses = []
+        const locations = Object.keys(houseMap)
+        for (const i in locations) {
+          const location = locations[i]
+          console.log(location)
+          console.log(houseMap[location])
+          const user = houseMap[location][0]
+          const available = houseMap[location][1]
+          houses.push({ location: location, user: user, available: available })
+        }
+        setHouses(houses)
+      })
+      .catch((error) => {
+        console.error("Error:", error)
+      })
+  }
+
+  const fetchUser = () => {
+    const requestOptions = {
+      method: "GET", // or 'PUT'
+      content: "application/json",
+    }
+
+    fetch(`${url}/getUser`, requestOptions)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(response.statusText)
+        }
+        return response.json()
+      })
+      .then((email) => {
+        console.log(email)
+        if (email === "null") {
+          setUser("")
+          return
+        }
+        setUser(email)
+      })
+      .catch((error) => {
+        console.error("Error:", error)
+        setUser("")
+      })
+  }
 
   return (
     <React.StrictMode>
       <Router>
-        <Layout user={user} setUser={setUser}>
+        <Layout user={user} fetchUser={fetchUser}>
           <Switch>
             <Route path="/" exact>
               <Landing houses={houses} user={user} />
             </Route>
             <Route path="/login" exact>
-              <Login />
+              <Login setUser={setUser} />
             </Route>
             <Route path="/add-house" exact>
-              <AddHouse />
+              <AddHouse fetchHouses={fetchHouses} />
             </Route>
             <Route path="/house/:location">
-              <HousePage houses={houses} user={user} />
+              <HousePage
+                houses={houses}
+                user={user}
+                fetchHouses={fetchHouses}
+              />
             </Route>
           </Switch>
         </Layout>
