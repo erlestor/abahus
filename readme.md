@@ -39,6 +39,7 @@ See image for illustation of the architecture of the modules.
 - A branch is created when work is started on a specific issue. The branch should include the issue number. Eg. "2-add-login-form-to-frontend".
 - Commit messages should be concise. Instead of writing "added button and fixed filename" divide it up to two different commits.
 - When the issue is solved in the current branch a merge request is created with "Closes #issue_number" in its description. Another person then approves and tests the merge locally to make sure that the changes don't cause unexpected issues. Only then can it be merged.
+- Each pair can have one person responsible for pushing to git. The VSCode extension Live Share can then be used.
 
 ## Data
 
@@ -48,7 +49,7 @@ User data is stored in json files. A user is a json object with username and pas
 
 ### Jsonworker
 
-We have chosen to use static methods in Jsonworker since the functions are equal for all instances of the class. This is because Jsonworker has no state and is simply a utility-class for writing to json.
+We got feedback about our path in Jsonworker, but when implementing changes from student assistent our app no longer worker. Optimally the path should be userHome so that it's not as dependent on operating systems and is less vulnerable to errors.
 
 ### Storage
 
