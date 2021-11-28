@@ -80,9 +80,6 @@ public class AbahusApplicationTest {
                 .andReturn();
 
         assertEquals('"' + "Nissemor@gmail.com" + '"', result.getResponse().getContentAsString());
-
-        Main m = new Main();
-
         
     }
 
@@ -98,14 +95,38 @@ public class AbahusApplicationTest {
 
         assertEquals("\"'House is added'\"", result.getResponse().getContentAsString());
 
+        Main m = new Main();
+        List<House> houses = m.getHousing();
+
+        boolean found = false;
+        
+        for (House h: houses){
+            if (h.getLocation().equals("Gloeshaugen1")){
+                found = true;
+            }
+        }
+
+        assertTrue(found);
     }
 
     @Test
     @Order(5)
+    public void testSetAvailable() throws Exception{
+        MvcResult result = this.mvc.perform(MockMvcRequestBuilders
+                .post("/setAvailable/Gloeshaugen1/false")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
+        
+        assertEquals('"' + "House is altered" + '"', result.getResponse().getContentAsString());
+    }
+
+    @Test
+    @Order(6)
     public void testRemoveHouse() throws Exception {
         this.mvc.perform(MockMvcRequestBuilders
                 .delete("/removeHouse/Gloeshaugen1")
-                // .param("location", "Gloeshaugen1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -121,7 +142,7 @@ public class AbahusApplicationTest {
     }
 
     @Test
-    @Order(6)
+    @Order(7)
     public void testGetHouses() throws Exception {
         MvcResult result = mvc.perform(MockMvcRequestBuilders
                 .get("/houses")
