@@ -12,6 +12,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.io.IOException;
 import java.util.List;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.web.servlet.MockMvc;
@@ -35,6 +38,7 @@ public class AbahusApplicationTest {
     @Autowired
     private MockMvc mvc;
 
+    //Test for logInMethod in RestAPI
     @Test
     @Order(1)
     public void testLogIn() throws Exception {
@@ -51,6 +55,7 @@ public class AbahusApplicationTest {
         assertEquals('"' + "email@email.com" + '"', result.getResponse().getContentAsString());
     }
 
+    //Test for logOutMethod in RestAPI
     @Test
     @Order(2)
     public void testLogOut() throws Exception {
@@ -64,9 +69,10 @@ public class AbahusApplicationTest {
         assertEquals('"' + "'You are logged out'" + '"', result.getResponse().getContentAsString());
     }
 
+    //Test for RegisterMethod in RestAPI
     @Test
     @Order(3)
-    public void testRegisterUserAndLogIn() throws Exception {
+    public void testRegisterUser() throws Exception {
 
         JSONObject body = new JSONObject();
         body.put("email", "Nissemor@gmail.com");
@@ -83,6 +89,7 @@ public class AbahusApplicationTest {
         
     }
 
+    //Testing AddHouse in restAPI
     @Test
     @Order(4)
     public void testAddHouse() throws Exception {
@@ -95,8 +102,8 @@ public class AbahusApplicationTest {
 
         assertEquals("\"'House is added'\"", result.getResponse().getContentAsString());
 
-        Main m = new Main();
-        List<House> houses = m.getHousing();
+        //Testing that the house is in fact added to Houses.json
+        List<House> houses = getHousesTest();
 
         boolean found = false;
         
@@ -109,6 +116,7 @@ public class AbahusApplicationTest {
         assertTrue(found);
     }
 
+    //Test of setAvailable
     @Test
     @Order(5)
     public void testSetAvailable() throws Exception{
@@ -120,8 +128,39 @@ public class AbahusApplicationTest {
                 .andReturn();
         
         assertEquals('"' + "House is altered" + '"', result.getResponse().getContentAsString());
+
+        //Testing if the house is in fact set as available and unavailable in Data/Houses
+        List<House> houses = getHousesTest();
+
+        for (House h: houses){
+            if (h.getLocation().equals("Gloeshaugen1")){
+                assertFalse(h.isAvailable());
+            }
+        }
+
+        this.mvc.perform(MockMvcRequestBuilders
+                .post("/setAvailable/Gloeshaugen1/true")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
+
+        List<House> newHouses = getHousesTest();
+
+        for (House h: newHouses){
+            if (h.getLocation().equals("Gloeshaugen1")){
+                assertTrue(h.isAvailable());
+            }
+        }
     }
 
+    //Private method for getting all houses from data/houses
+    private List<House> getHousesTest() throws JsonParseException, JsonMappingException, IOException{
+        Main m = new Main();
+        return m.getHousing();
+    }
+
+    //test for removing house
     @Test
     @Order(6)
     public void testRemoveHouse() throws Exception {
@@ -132,15 +171,16 @@ public class AbahusApplicationTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
 
-        Main m = new Main();
-        List<House> houses = m.getHousing();
+        List<House> houses = getHousesTest();
 
+        //testing that the house is removed
         for (House h : houses) {
             assertNotEquals(h.getLocation(), "Gloeshaugen1");
         }
 
     }
 
+    //Test for getting all houses
     @Test
     @Order(7)
     public void testGetHouses() throws Exception {
@@ -151,6 +191,8 @@ public class AbahusApplicationTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
 
+
+        //testing that the result is the same as Data/houses
         Main m2 = new Main();
         List<House> houses = m2.getHousing();
 
@@ -161,6 +203,7 @@ public class AbahusApplicationTest {
         }
     }
 
+    //Removing the new user so the test can run again
     @AfterAll
     public void tearDown() throws IOException {
         Main m = new Main();
