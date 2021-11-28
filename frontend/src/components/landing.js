@@ -4,18 +4,20 @@ import House from "./house"
 import { Link } from "react-router-dom"
 
 function LandingPage({ houses, user }) {
-  console.log({ houses })
   return (
     <div className="page">
       <div className="houses-group">
         <h2>Available houses</h2>
         <div className="houses">
-          {houses.map((house) => (
-            <>
-              {house.available ? <House house={house} /> : <></>}
-              <div className="divider" />
-            </>
-          ))}
+          {houses.map(
+            (house) =>
+              house.user !== user && house.available && (
+                <>
+                  <House house={house} />
+                  <div className="divider" />
+                </>
+              )
+          )}
         </div>
       </div>
       {user && (
@@ -27,7 +29,7 @@ function LandingPage({ houses, user }) {
           <div className="houses">
             {houses.map((house) => (
               <>
-                {house.user.email === user.email ? (
+                {house.user === user ? (
                   <>
                     <House house={house} />
                     <div className="divider" />
