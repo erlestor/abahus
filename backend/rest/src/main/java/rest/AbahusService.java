@@ -21,18 +21,16 @@ public class AbahusService {
     private Main main;
 
     public AbahusService() throws JsonParseException, JsonMappingException, IOException{
-       this.main = new Main("email@email.com", "passord");
+       this.main = new Main();
     }
 
+    /*
     private boolean isUserDefault() {
         System.out.println(main.getCurrentUser());
         return main.getCurrentUser() != null && main.getCurrentUser().getEmail().equals("email@email.com");
-    }
+    }*/
 
     public void logIn(String email, String passord) {
-        if (isUserDefault())
-            logOut();
-
         if (main.getCurrentUser() != null){
 			throw new IllegalStateException("You are logged in");
 		}
@@ -41,9 +39,6 @@ public class AbahusService {
     }
 
     public void register(String email, String passord, String confirmPassord) throws IllegalArgumentException, IOException {
-        if (isUserDefault())
-            logOut();
-
         if (main.getCurrentUser() != null){
 			throw new IllegalStateException("You are logged in");
 		}
