@@ -49,6 +49,7 @@ public class AbahusService {
 		}
 
         this.main.registerUser(email, passord, confirmPassord);
+        this.main.logInUser(email, passord);
     }
 
     public House removeHouse(String location) throws IOException{
