@@ -1,9 +1,11 @@
 package rest;
 
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.springframework.test.context.ContextConfiguration;
 import org.json.JSONObject;
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,12 +21,11 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import core.House;
 import core.Main;
-import core.User;
-import jsonworker.Jsonworker;
 import org.springframework.http.MediaType;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 
+@TestMethodOrder(OrderAnnotation.class)
 @AutoConfigureMockMvc
 @ContextConfiguration(classes = { AbahusApplication.class, AbahusService.class, AbahusController.class })
 @WebMvcTest
@@ -34,27 +35,12 @@ public class AbahusApplicationTest {
     @Autowired
     private MockMvc mvc;
 
-    private User user = new User("email@email.com", "passord");
-    private Main m;
-    private House house;
-    private Jsonworker worker = new Jsonworker();
-
-    public AbahusApplicationTest() throws Exception {
-        this.m = new Main(this.user.getEmail(), this.user.getPassword());
-        this.house = setUpHouse();
-    }
-
-    public House setUpHouse() throws Exception {
-        House house = new House("Gloeshaugen1", this.user);
-        m.hostNewHouse(house.getLocation());
-        return house;
-    }
-
-    @BeforeAll
-    public void setUp() throws Exception {
+    @Test
+    @Order(1)
+    public void testLogIn() throws Exception {
         JSONObject body = new JSONObject();
-        body.put("email", this.user.getEmail());
-        body.put("password", this.user.getPassword());
+        body.put("email", "email@email.com");
+        body.put("password", "passord");
         mvc.perform(MockMvcRequestBuilders.post("/logIn")
                 .content(body.toString())
                 .contentType(MediaType.APPLICATION_JSON)
@@ -64,13 +50,27 @@ public class AbahusApplicationTest {
     }
 
     @Test
-    public void testRegisterUser() throws Exception {
-        mvc.perform(MockMvcRequestBuilders
+    @Order(2)
+    public void testLogOut() throws Exception {
+        MvcResult result = mvc.perform(MockMvcRequestBuilders
                 .post("/logOut")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
+
+        //assert throw feilmelding
+    }
+
+    @Test
+    @Order(3)
+    public void testRegisterUserAndLogIn() throws Exception {
+        /*mvc.perform(MockMvcRequestBuilders
+                .post("/logOut")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();*/
 
         JSONObject body = new JSONObject();
         body.put("email", "Nissemor@gmail.com");
@@ -83,115 +83,51 @@ public class AbahusApplicationTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
 
-        assertEquals("success", result.getResponse().getContentAsString());
-        worker.removeUser("Nissemor@gmail.com"); // kanskje ikke gjøres rett på JSONworker??
+        assertEquals('"' + "Nissemor@gmail.com" + '"', result.getResponse().getContentAsString());
+        
+        //remove User so that tests can be run multiple times
+        /*Main m = new Main();
+        m.logInUser("Nissemor@gmail.com", "123");
+        m.removeUser();*/
 
     }
 
     @Test
-    public void testLogOut() throws Exception {
-        MvcResult result = mvc.perform(MockMvcRequestBuilders
-                .post("/logOut")
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();
-
-        JSONObject body = new JSONObject();
-        body.put("email", this.user.getEmail());
-        body.put("password", this.user.getPassword());
-        mvc.perform(MockMvcRequestBuilders.post("/logIn")
-                .content(body.toString())
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();
-        // asserte false at vi er logget ut
-    }
-
-    /*
-     * @Test
-     * public void testLogIn() throws Exception {
-     * mvc.perform(MockMvcRequestBuilders
-     * .post("/logOut")
-     * .contentType(MediaType.APPLICATION_JSON)
-     * .accept(MediaType.APPLICATION_JSON))
-     * .andExpect(MockMvcResultMatchers.status().isOk())
-     * .andReturn();
-     * 
-     * MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/logIn")
-     * // .content(body.toString())
-     * .contentType(MediaType.APPLICATION_JSON)
-     * .accept(MediaType.APPLICATION_JSON))
-     * .andExpect(MockMvcResultMatchers.status().isOk())
-     * .andReturn();
-     * 
-     * assertEquals('"' + this.user.getEmail() + '"',
-     * result.getResponse().getContentAsString());
-     * }
-     */
-
-    @Test
+    @Order(4)
     public void testAddHouse() throws Exception {
-        /*
-         * JSONObject body = new JSONObject();
-         * body.put("email", this.user.getEmail());
-         * body.put("password", this.user.getPassword());
-         */
-        try {
-            MvcResult result = mvc.perform(MockMvcRequestBuilders
-                    .post("/addHouse/" + this.house.getLocation())
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .accept(MediaType.APPLICATION_JSON))
-                    .andExpect(MockMvcResultMatchers.status().isOk())
-                    .andReturn();
+        MvcResult result = mvc.perform(MockMvcRequestBuilders
+                .post("/addHouse/Gloeshaugen1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
 
-            assertEquals("\"'House is added'\"", result.getResponse().getContentAsString());
-
-        } catch (Exception e) {
-            // TODO: handle exception
-            e.getCause().printStackTrace();
-        }
+        assertEquals("\"'House is added'\"", result.getResponse().getContentAsString());
 
     }
 
-    /*
-     * @Test
-     * public void testGetHouse() throws Exception {
-     * MvcResult result = mvc.perform(MockMvcRequestBuilders
-     * .get("/getHouse/{location}", this.house.getLocation())
-     * .contentType(MediaType.APPLICATION_JSON)
-     * .accept(MediaType.APPLICATION_JSON))
-     * .andExpect(MockMvcResultMatchers.status().isOk())
-     * .andReturn();
-     * 
-     * MockHttpServletResponse res = result.getResponse();
-     * 
-     * assertEquals("Gloeshaugen1", res.getContentAsString().split(" ")[0]);
-     * 
-     * }
-     */
-
     @Test
+    @Order(5)
     public void testRemoveHouse() throws Exception {
         this.mvc.perform(MockMvcRequestBuilders
-                .delete("/removeHouse/" + this.house.getLocation())
+                .delete("/removeHouse/Gloeshaugen1")
                 // .param("location", "Gloeshaugen1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
 
-        Main m2 = new Main();
-        List<House> houses = m2.getHousing();
+        Main m = new Main();
+        List<House> houses = m.getHousing();
 
         for (House h : houses) {
-            assertNotEquals(h.getLocation(), this.house.getLocation());
+            assertNotEquals(h.getLocation(), "Gloeshaugen1");
         }
 
     }
 
     @Test
+    @Order(6)
     public void testGetHouses() throws Exception {
         MvcResult result = mvc.perform(MockMvcRequestBuilders
                 .get("/houses")
@@ -212,8 +148,9 @@ public class AbahusApplicationTest {
 
     @AfterAll
     public void tearDown() throws IOException {
-        // worker.removeHouse(house.getLocation(), user.getEmail());
-        worker.removeUser(user.getEmail());
+        Main m = new Main();
+        m.logInUser("Nissemor@gmail.com", "123");
+        m.removeUser();
     }
 
 }
