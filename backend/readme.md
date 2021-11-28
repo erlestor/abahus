@@ -2,7 +2,9 @@
 
 ## tests
 
-- For information about how and what it tested see [core readme](core/src/test/java/core/readme.md) and [jsonworker readme](core/src/test/java/jsonworker/readme.md)
+- Running `mvn test` will run tests
+- Running `mvn jacoco:report` will generate the file `housing/json/target/site/jacoco/index.html`. Open this file in the browser to view the test coverage report.
+- For information about what it tested see [core readme](core/src/test/java/core/readme.md) and [jsonworker readme](core/src/test/java/jsonworker/readme.md)
 
 ## how to run rest server
 
