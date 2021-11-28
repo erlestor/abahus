@@ -12,7 +12,8 @@ function LandingPage({ houses, user }) {
           {/* show houses which are available and not owned by the user */}
           {houses.map(
             (house) =>
-              house.user !== user && house.available && (
+              house.user !== user &&
+              house.available && (
                 <>
                   <House house={house} />
                   <div className="divider" />
