@@ -41,12 +41,14 @@ public class AbahusApplicationTest {
         JSONObject body = new JSONObject();
         body.put("email", "email@email.com");
         body.put("password", "passord");
-        mvc.perform(MockMvcRequestBuilders.post("/logIn")
+        MvcResult result = mvc.perform(MockMvcRequestBuilders.post("/logIn")
                 .content(body.toString())
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
+
+        assertEquals('"' + "email@email.com" + '"', result.getResponse().getContentAsString());
     }
 
     @Test
@@ -59,18 +61,12 @@ public class AbahusApplicationTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
 
-        //assert throw feilmelding
+        assertEquals('"' + "'You are logged out'" + '"', result.getResponse().getContentAsString());
     }
 
     @Test
     @Order(3)
     public void testRegisterUserAndLogIn() throws Exception {
-        /*mvc.perform(MockMvcRequestBuilders
-                .post("/logOut")
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andReturn();*/
 
         JSONObject body = new JSONObject();
         body.put("email", "Nissemor@gmail.com");
@@ -84,12 +80,10 @@ public class AbahusApplicationTest {
                 .andReturn();
 
         assertEquals('"' + "Nissemor@gmail.com" + '"', result.getResponse().getContentAsString());
-        
-        //remove User so that tests can be run multiple times
-        /*Main m = new Main();
-        m.logInUser("Nissemor@gmail.com", "123");
-        m.removeUser();*/
 
+        Main m = new Main();
+
+        
     }
 
     @Test
