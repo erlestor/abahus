@@ -14,7 +14,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-//import static org.junit.jupiter.api.Assertions.;
 import java.io.IOException;
 import java.util.List;
 
@@ -143,7 +142,8 @@ public class AbahusApplicationTest {
                 assertFalse(h.isAvailable());
             }
         }
-
+        
+        //sets house as available and asserts that the house is availeble
         this.mvc.perform(MockMvcRequestBuilders
                 .post("/setAvailable/Gloeshaugen1/true")
                 .contentType(MediaType.APPLICATION_JSON)
