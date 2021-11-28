@@ -1,0 +1,12 @@
+[
+  {
+    "location": "Oscar Wistings vei 6",
+    "user": { "email": "netteland97@gmail.com", "password": "123" },
+    "available": true
+  },
+  {
+    "location": "location",
+    "user": { "email": "email@email.com", "password": "passord" },
+    "available": true
+  }
+]

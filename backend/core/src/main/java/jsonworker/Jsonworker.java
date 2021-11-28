@@ -13,24 +13,29 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SequenceWriter;
 
+
+
+
 public class Jsonworker {
-    private final static String userHome = System.getProperty("user.home") + "/gr2129/";
-    private final static Path dirPath = Paths.get(userHome).toAbsolutePath();
-    private final static String housePath = "data/houses.json";
-    private final static String userPath = "data/users.json";
-    private final static ObjectMapper mapper = getDefaultObjectMapper();
+
+    private static Path dirPath = Paths.get("").toAbsolutePath();
+    private static String housePath = "data/houses.json";
+    private static String userPath = "data/users.json";
+    private static ObjectMapper mapper = getDefaultObjectMapper();
 
     private static ObjectMapper getDefaultObjectMapper() {
         ObjectMapper defaultObjectMapper = new ObjectMapper();
         return defaultObjectMapper;
     }
+    
 
-    private <T> ArrayList<T> readFileAsArray(String path_string, Class<T[]> clazz)
-            throws JsonParseException, JsonMappingException, IOException {
+    private static <T> ArrayList<T> readFileAsArray (String path_string, Class<T[]> clazz) throws JsonParseException, JsonMappingException, IOException {
         return new ArrayList<T>(Arrays.asList(mapper.readValue(dirPath.resolve(path_string).toFile(), clazz)));
     }
 
-    private <T> void writeFile(String path, ArrayList<T> data) throws IOException {
+    
+
+    private static <T> void writeFile(String path, ArrayList<T> data) throws IOException {
         File file = new File(dirPath.resolve(path).toString());
         FileWriter fileWriter = new FileWriter(file, false);
         SequenceWriter writer = mapper.writer().writeValues(fileWriter);
@@ -53,7 +58,7 @@ public class Jsonworker {
         }
 
         return null;
-    }
+     }
 
     public boolean checkPassword(String email, String pwd) throws IOException {
         ArrayList<User> users = getAllUsers();
@@ -62,14 +67,14 @@ public class Jsonworker {
                 return user.getPassword().equals(pwd);
             }
         }
-        return false;
-    }
+        return false;        
+     }
 
-    public ArrayList<House> getAllHouses() throws JsonParseException, JsonMappingException, IOException {
-        return readFileAsArray(housePath, House[].class);
-    }
-
-    public User addUser(String email, String pwd) throws IOException, IllegalArgumentException {
+     public ArrayList<House> getAllHouses() throws JsonParseException, JsonMappingException, IOException {
+         return readFileAsArray(housePath, House[].class);
+     }
+     
+     public User addUser(String email, String pwd) throws IOException, IllegalArgumentException {
         ArrayList<User> users = getAllUsers();
 
         for (User user : users) {
@@ -78,14 +83,14 @@ public class Jsonworker {
             }
         }
 
-        User user = new User(email, pwd);
-        users.add(user);
-        writeFile(userPath, users);
+            User user = new User(email, pwd);
+            users.add(user);
+            writeFile(userPath, users);
 
-        return user;
-    }
+            return user;         
+     }
 
-    public User removeUser(String email) throws IOException {
+     public User removeUser(String email) throws IOException {
         ArrayList<User> users = getAllUsers();
 
         Boolean found = false;
@@ -94,7 +99,7 @@ public class Jsonworker {
         for (User _user : users) {
             if (_user.getEmail().equals(email)) {
                 found = true;
-                user = _user;
+                user = _user; 
             }
         }
         if (!found) {
@@ -103,17 +108,16 @@ public class Jsonworker {
 
         users.remove(user);
         writeFile(userPath, users);
-        return user;
-    }
+        return user;         
+     }
 
-    public House addHouse(String location, String userEmail)
-            throws JsonParseException, JsonMappingException, IOException, IllegalArgumentException {
+     public House addHouse(String location, String userEmail) throws JsonParseException, JsonMappingException, IOException, IllegalArgumentException {
         User user;
         try {
-            user = getUser(userEmail);
-
+           user = getUser(userEmail);
+            
         } catch (Exception e) {
-            throw new IllegalArgumentException("user does not exist");
+           throw new IllegalArgumentException("user does not exist");
         }
         ArrayList<House> houses = getAllHouses();
 
@@ -127,20 +131,21 @@ public class Jsonworker {
         houses.add(house);
         writeFile(housePath, houses);
         return house;
-    }
+     }
 
-    public House setAvailableHouse(String location, boolean status, String userEmail) throws IOException {
+
+     public House setAvailableHouse(String location, boolean status, String userEmail) throws IOException{
         ArrayList<House> houses = getAllHouses();
-        for (House h : houses) {
-            if (h.getLocation().equals(location)) {
-                if (h.isAvailable() == false && h.isAvailable() == status) {
+        for (House h: houses){
+            if (h.getLocation().equals(location)){
+                if (h.isAvailable() == false && h.isAvailable() == status){
                     throw new IllegalArgumentException("House is already unavailable");
                 }
             }
         }
-
+       
         House house = removeHouse(location, userEmail);
-
+        
         house.setAvailable(status);
 
         ArrayList<House> houses2 = getAllHouses();
@@ -148,7 +153,8 @@ public class Jsonworker {
         houses2.add(house);
         writeFile(housePath, houses2);
         return house;
-    }
+     }
+
 
     public House removeHouse(String location, String userEmail) throws IOException {
         ArrayList<House> houses = getAllHouses();
@@ -158,7 +164,7 @@ public class Jsonworker {
         for (House _house : houses) {
             if (_house.getLocation().equals(location) && _house.getUser().getEmail().equals(userEmail)) {
                 found = true;
-                house = _house;
+                house = _house; 
             }
         }
         if (!found) {
@@ -168,5 +174,5 @@ public class Jsonworker {
         houses.remove(house);
         writeFile(housePath, houses);
         return house;
-    }
+     }
 }
