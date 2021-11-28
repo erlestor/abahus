@@ -1,6 +1,6 @@
 package core;
 
-import jsonworker.*;
+import jsonworker.Jsonworker;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,25 +12,22 @@ import java.util.stream.Collectors;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
-// Main klassen inneholder listen over boliger og brukere og består av hovedfunksjonaliteten
-// Det er denne kontrolleren skal ha tilgang til
-// Vurder å lag flere hjelpeklasser til denne
-// Funksjoner: registrer bruker, logg inn bruker, få liste over tilgjengelige hus, legge ut hus
-// Antar her at lokasjon er unik til hvert hus
+// The main class contains a list over users and houses and the core functionality
+// This is the one the controller can access
+// Assumes that houses cannot have same address
 
 public class Main {
-    // foreløpig starter users/houses som tomme hver gang, men de vil bli hentet fra
-    // lagring etterhvert
     private Collection<User> users = new ArrayList<>();
     private Collection<House> houses = new ArrayList<>();
     private Jsonworker worker = new Jsonworker();
     private User currentUser;
 
+    //empty constructor
     public Main() throws JsonParseException, JsonMappingException, IOException {
         loadJson();
     }
 
-    // kalles ved registrering
+    //constructor for registering
     public Main(String email, String password, String confirmPassword)
             throws JsonParseException, JsonMappingException, IOException {
         loadJson();
@@ -38,17 +35,19 @@ public class Main {
         logInUser(email, password);
     }
 
-    // kalles ved innlogging
+    //constructor for login 
     public Main(String email, String password) throws JsonParseException, JsonMappingException, IOException {
         loadJson();
         logInUser(email, password);
     }
 
+    //method for loading list in main after every change
     private void loadJson() throws JsonParseException, JsonMappingException, IOException {
         houses = worker.getAllHouses();
         users = worker.getAllUsers();
     }
 
+    //method for registering
     public void registerUser(String email, String password, String confirmPassword)
             throws IllegalArgumentException, IOException {
         if (this.currentUser != null) {
@@ -64,6 +63,7 @@ public class Main {
         loadJson();
     }
 
+    //method for login
     public void logInUser(String email, String password) {
         if (this.currentUser != null) {
             throw new IllegalStateException("you are already logged in");
@@ -78,6 +78,7 @@ public class Main {
         this.currentUser = currentUser;
     }
 
+    //private help method for getting houses with a predicate
     private List<House> getHousesWithFilter(Predicate<House> pr) {
         return new ArrayList<House>(houses.stream().filter(pr).collect(Collectors.toList()));
     }
@@ -90,18 +91,21 @@ public class Main {
         return getHousesWithFilter(h -> h.getUser().getEmail().equals(currentUser.getEmail()));
     }
 
+    //returns list of available houses
     public List<House> getAvailableHousing() {
         return getHousesWithFilter(
                 house -> house.isAvailable() && !house.getUser().getEmail().equals(currentUser.getEmail()));
     }
 
+    //returns all houses
     public List<House> getHousing() {
         return new ArrayList<House>(houses);
     }
 
+    //hosts new house
+    //location has to be unique and a user must be logged in
     public void hostNewHouse(String location)
             throws JsonParseException, JsonMappingException, IllegalArgumentException, IOException {
-        // må sjekke om lokasjonen er unik
         if (getHousesWithFilter(house -> house.getLocation().equals(location)).size() > 0)
             throw new IllegalArgumentException("this house is already registered");
 
@@ -126,6 +130,8 @@ public class Main {
         return s.substring(0, s.length() - 2);
     }
 
+    //removes a house
+    //has to be your house and you need to be loged in
     public void removeHouse(House house) throws IOException {
         if (this.currentUser == null) {
             throw new IllegalStateException("you are not logged in");
@@ -139,11 +145,14 @@ public class Main {
         loadJson();
     }
 
+    //sets a house as available
     public void setAvailableHouse(String location, boolean status) throws IOException {
         worker.setAvailableHouse(location, status, this.currentUser.getEmail());
         loadJson();
     }
 
+    //logout
+    //have to be logged in
     public void logOut() {
         if (this.currentUser == null) {
             throw new IllegalStateException("you are not logged in");
@@ -152,6 +161,7 @@ public class Main {
         this.currentUser = null;
     }
 
+    //removes currentuser and all houses registered to that user
     public void removeUser() throws IOException {
         if (this.currentUser == null) {
             throw new IllegalStateException("you are not logged in");
